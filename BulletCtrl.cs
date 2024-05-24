@@ -20,4 +20,4 @@ public class BulletCtrl : MonoBehaviour
         rb.AddForce(transform.forward * force);
     }
 }
-
+// 한글 주석 추가
