@@ -14,6 +14,8 @@ public class WiresModule : BombModule
     int wireCnt;
     int correctWireNum;
 
+    int num = 0;
+
     private void Start()
     {
         InitiallizeModule();
