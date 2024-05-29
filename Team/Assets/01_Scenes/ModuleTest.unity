@@ -247,7 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3398ce33c28c1e4b9bce0dd0b7cf999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  module1: {fileID: 5365832914944265769, guid: a5e817d5c90deb74f9591c67f224093a, type: 3}
+  wireModule: {fileID: 5365832914944265769, guid: 05a185ea226972d4784139350ab2f267,
+    type: 3}
   modulesTr:
   - {fileID: 2057716527}
   - {fileID: 147778786}
