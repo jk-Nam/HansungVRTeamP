@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    public GameObject module1;
+    public GameObject wireModule;
 
     public Transform[] modulesTr;
 
 
     void Start()
     {
-        for (int i = 0; i < modulesTr.Length; i++)
-        {
-            GameObject module =  Instantiate(module1, modulesTr[i].transform.position, modulesTr[i].transform.rotation);
-            module.name = modulesTr[i].name;
-            module.transform.SetParent(modulesTr[i].transform);
-        }
+        Instantiate(wireModule, modulesTr[0].transform.position, modulesTr[0].transform.rotation);
         
     }
 
