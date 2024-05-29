@@ -14,8 +14,6 @@ public class WiresModule : BombModule
     int wireCnt;
     int correctWireNum;
 
-    int num = 0;
-
     private void Start()
     {
         InitiallizeModule();
@@ -34,16 +32,69 @@ public class WiresModule : BombModule
         switch (wireCnt)
         {
             case 3:
-                GetRandomColors(wireColor, 3);
-                Debug.Log(wireColor);
-                break;
+                List<string> ThreeColor = GetRandomColors(wireColor, 3);
+                wireColor = ThreeColor;
+                if (wireColor.Contains("Red"))
+                {
+                    if (wireColor[2] == "White")
+                    {
+                        correctWireNum = 2;
+                    }
+                    else
+                    {
+                        if (wireColor.FindAll(w => w == "Blue").Count >= 2)
+                        {
+                            //»¡ ÆÄ ÆÄ, ÆÄ »¡ ÆÄ, ÆÄ ÆÄ »¡
+                            if (wireColor[2] == "Blue")
+                            {
+                                correctWireNum = 2;
+                            }
+                            else
+                            {
+                                correctWireNum = 1;
+                            }
+                        }
+                        else
+                        {
+                            correctWireNum = 2;
+                        }
+                    }
+                }
+                else
+                {
+                    correctWireNum = 1;
+                }
+                    break;
             case 4:
-                GetRandomColors(wireColor, 4);
-                Debug.Log(GetRandomColors(wireColor, 4));
+                List<string> fourColor = GetRandomColors(wireColor, 4);
+                wireColor = fourColor;
+                if (wireColor.FindAll(w => w == "Red").Count >= 2)
+                {
+                    correctWireNum = wireColor.FindLastIndex(str => str == "Red");
+                }
+                else
+                {
+                    if (wireColor[3] == "Yellow" && !wireColor.Contains("Red"))
+                    {
+                        incorrectCnt = 1;
+                    }
+                    else
+                    {
+                        if(wireColor.FindAll(w => w == "Blue").Count == 1)
+                        {
+                            incorrectCnt = 1;
+                        }
+                        else
+                        {
+                            incorrectCnt = 2;
+                        }
+                    }
+                }
                 break;
             case 5:
-                GetRandomColors(wireColor, 5);
-                Debug.Log(GetRandomColors(wireColor, 5));
+                List<string> fiveColor = GetRandomColors(wireColor, 5);
+                wireColor = fiveColor;
+
                 break;
         }
     }
@@ -66,4 +117,19 @@ public class WiresModule : BombModule
         return rColors;
     }
     
+    public void CutWire(int idx)
+    {
+        if (idx == incorrectCnt)
+        {
+            isDefused = true;
+        }
+        else
+        {
+            incorrectCnt++;
+            if (incorrectCnt >= 3)
+            {
+                Fail();
+            }
+        }
+    }
 }

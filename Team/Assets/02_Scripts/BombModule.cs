@@ -9,14 +9,12 @@ public abstract class BombModule : MonoBehaviour
         Wire,
         Keypad,
         Maze
-
     }
 
     public BombMoudleType moduleType;
 
     protected int incorrectCnt = 0;
     protected bool isDefused = false;
-    int num = 0;
 
     public abstract void InitiallizeModule();
 
