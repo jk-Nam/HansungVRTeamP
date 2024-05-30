@@ -9,10 +9,17 @@ public class WiresModule : BombModule
         moduleType = BombMoudleType.Wire;
     }
 
+    Bomb bomb;
+
     public List<string> wireColor = new List<string> { "Red", "Blue", "Black", "White", "Yellow"};
 
     int wireCnt;
     public int correctWireNum;
+
+    private void Awake()
+    {
+        bomb = GameObject.FindGameObjectWithTag("BOMB").GetComponent<Bomb>();
+    }
 
     private void Start()
     {
@@ -22,7 +29,8 @@ public class WiresModule : BombModule
 
     public override void InitiallizeModule()
     {
-        incorrectCnt = 0;
+        GameManager.Instance.defuesedCnt = 0;
+        GameManager.Instance.incorrectCnt = 0;
         wireCnt = Random.Range(3, 6);
         //wireCnt = 5;
         Debug.Log("Wire의 수는 " + wireCnt + "개 입니다.");
@@ -152,11 +160,6 @@ public class WiresModule : BombModule
         
     }
 
-    public override void Fail()
-    {
-        //게임오버
-    }
-
     List<string> GetRandomColors(List<string> colors, int count)
     {
         List<string> rColors = new List<string>();
@@ -172,20 +175,24 @@ public class WiresModule : BombModule
     
     public void CutWire(int idx)
     {
-        if (idx == incorrectCnt)
+        if (!isDefused && GameManager.Instance.isGameStart && !GameManager.Instance.isGameOver)
         {
-            isDefused = true;
-            Debug.Log("해제 성공");
-        }
-        else
-        {
-            incorrectCnt++;
-            Debug.Log("오답 수 : " + incorrectCnt);
-            if (incorrectCnt >= 3)
+            if (idx == GameManager.Instance.incorrectCnt)
             {
-                Fail();
-                Debug.Log("Game Over!!!");
+                isDefused = true;
+                GameManager.Instance.defuesedCnt++;
+                Debug.Log("해제 성공");
             }
-        }
+            else
+            {
+                GameManager.Instance.incorrectCnt++;
+                Debug.Log("오답 수 : " + GameManager.Instance.incorrectCnt);
+                if (GameManager.Instance.incorrectCnt >= 3)
+                {
+                    bomb.Fail();
+                    Debug.Log("Game Over!!!");
+                }
+            }
+        }        
     }
 }

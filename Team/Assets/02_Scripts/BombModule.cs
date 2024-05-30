@@ -13,7 +13,6 @@ public abstract class BombModule : MonoBehaviour
 
     public BombMoudleType moduleType;
 
-    protected int incorrectCnt = 0;
     protected bool isDefused = false;
 
     public abstract void InitiallizeModule();
@@ -24,6 +23,4 @@ public abstract class BombModule : MonoBehaviour
     }
 
     public abstract void DefuseModule();
-
-    public abstract void Fail();
 }
