@@ -23,8 +23,8 @@ public class WiresModule : BombModule
     public override void InitiallizeModule()
     {
         incorrectCnt = 0;
-        //wireCnt = Random.Range(3, 6);
-        wireCnt = 5;
+        wireCnt = Random.Range(3, 6);
+        //wireCnt = 5;
         Debug.Log("Wire의 수는 " + wireCnt + "개 입니다.");
     }
 
@@ -105,7 +105,7 @@ public class WiresModule : BombModule
                         {
                             if (wireColor.FindAll(w => w == "Yellow").Count >= 2)
                             {
-                                correctWireNum = wireColor.FindLastIndex(str => str == "Yellow") + 1;
+                                correctWireNum = 4;
                                 Debug.Log("4-4 잘라야 하는 와이어 : " + correctWireNum + "번");
                             }
                             correctWireNum = 2;
@@ -154,7 +154,7 @@ public class WiresModule : BombModule
 
     public override void Fail()
     {
-        
+        //게임오버
     }
 
     List<string> GetRandomColors(List<string> colors, int count)
@@ -175,13 +175,16 @@ public class WiresModule : BombModule
         if (idx == incorrectCnt)
         {
             isDefused = true;
+            Debug.Log("해제 성공");
         }
         else
         {
             incorrectCnt++;
+            Debug.Log("오답 수 : " + incorrectCnt);
             if (incorrectCnt >= 3)
             {
                 Fail();
+                Debug.Log("Game Over!!!");
             }
         }
     }
