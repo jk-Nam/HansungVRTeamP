@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6798719498026991059}
   - component: {fileID: 2143980955282642664}
   m_Layer: 0
-  m_Name: WireModule
+  m_Name: TestModule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,4 +125,3 @@ MonoBehaviour:
   - Black
   - White
   - Yellow
-  correctWireNum: 0

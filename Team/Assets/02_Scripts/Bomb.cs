@@ -20,6 +20,7 @@ public class Bomb : MonoBehaviour
 
         GameObject module = Instantiate(wireModule, modulesTr[0].transform.position, modulesTr[0].transform.rotation);
         module.transform.SetParent(modulesTr[0]);
+        module.transform.localScale = new Vector3(0.2f, 0.8f, 0.8f);
     }
 
 }
