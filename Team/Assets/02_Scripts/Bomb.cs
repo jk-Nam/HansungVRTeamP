@@ -8,7 +8,6 @@ public class Bomb : MonoBehaviour
 
     public Transform[] modulesTr;
 
-    int num = 0;
 
     void Start()
     {
