@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
+    
+
     public GameObject module1;
-    public List<GameObject> modules;
     public GameObject expEffect;
 
-    public Transform[] modulesTr;
+    public List<GameObject> modules;
+    public List<Transform> modulesTr;
 
     void Start()
     {
@@ -18,11 +20,29 @@ public class Bomb : MonoBehaviour
         //    module.name = modulesTr[i].name;
         //    module.transform.SetParent(modulesTr[i].transform);
         //}
+        
 
-        GameObject module = Instantiate(modules[0], modulesTr[0].transform.position, modulesTr[0].transform.rotation);
-        module.transform.SetParent(modulesTr[0]);
-        module.transform.localScale = new Vector3(0.2f, 0.8f, 0.8f);
-        module.name = "WireModule";
+        for (int i = 0; i < modules.Count + 1 ; i++)
+        {
+            int rModuleNum = Random.Range(0, modules.Count);
+            int rPos = Random.Range(0, modulesTr.Count);
+            GameObject module = Instantiate(modules[rModuleNum], modulesTr[rPos].transform.position, modulesTr[rPos].transform.rotation);
+            module.transform.SetParent(modulesTr[rPos]);
+            module.transform.localScale = new Vector3(0.2f, 0.8f, 0.8f);
+            module.name = module.name.Replace("(Clone)", "");
+            //switch(rModuleNum)
+            //{
+            //    case 0:
+            //        module.name = "WireModule";
+            //        break;
+            //    case 1:
+            //        module.name = "KepadModule";
+            //        break;
+            //}
+            modulesTr.RemoveAt(rPos);
+            modules.RemoveAt(rModuleNum);
+        }
+        
     }
 
     public void Fail()

@@ -181,7 +181,11 @@ public class WiresModule : BombModule
             {
                 isDefused = true;
                 GameManager.Instance.defuesedCnt++;
-                Debug.Log("해제 성공");
+                Debug.Log("와이어 모듈 해제 성공");
+                if (GameManager.Instance.defuesedCnt == GameManager.Instance.totalModuleCnt)
+                {
+                    GameManager.Instance.GameClear();
+                }
             }
             else
             {

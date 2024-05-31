@@ -20,12 +20,12 @@ public class GameManager : MonoBehaviour
     public float timer = 300.0f;
     public int defuesedCnt = 0;
     public int incorrectCnt = 0;
+    public int totalModuleCnt;
 
     public bool isGameStart = false;
     public bool isGameOver = false;
     public bool isClear = false;
 
-    int moduleCnt;
 
     private void Awake()
     {
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         //≈∏¿Ã∏”
-        if (isGameStart && !isGameOver)
+        if (isGameStart && (!isGameOver || isClear))
         {
             float dwTime = 0;
             dwTime += Time.deltaTime;
@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
             if (timer <= 0)
             {
                 isGameOver = true;
+                Debug.Log("∆¯≈∫¿Ã ∆¯πﬂ«œø¥Ω¿¥œ¥Ÿ!!!");
                 return;
             }
         }
@@ -70,13 +71,13 @@ public class GameManager : MonoBehaviour
         switch (difficulty)
         {
             case Difficulty.Easy:
-                moduleCnt = 2;
+                totalModuleCnt = 2;
                 break;
             case Difficulty.Hard:
-                moduleCnt = 3;
+                totalModuleCnt = 3;
                 break;
             default:
-                moduleCnt = 2;
+                totalModuleCnt = 2;
                 break;
         }
     }
@@ -94,9 +95,10 @@ public class GameManager : MonoBehaviour
         ShowResultUI();
     }
 
-    public void Clear()
+    public void GameClear()
     {
-
+        isGameStart = false;
+        isClear = true;
     }
 
     public void ShowResultUI()

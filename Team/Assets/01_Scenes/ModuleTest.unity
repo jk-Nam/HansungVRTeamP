@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 130220955}
   - component: {fileID: 130220954}
   m_Layer: 5
-  m_Name: SetUp
+  m_Name: StartBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -346,6 +346,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1153721997}
         m_TargetAssemblyTypeName: CutTest, Assembly-CSharp
         m_MethodName: OnClickSetUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1834216079}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: GameStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1806,7 +1818,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SetUp
+  m_Text: Start
 --- !u!222 &1523164558
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2070,10 +2082,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ded272eae70f7c4a851b82992b91f17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficulty: 0
   bomb: {fileID: 8314425121067101438, guid: 7592795d3facbef4aa1072449bb1c300, type: 3}
   timer: 300
   defuesedCnt: 0
   incorrectCnt: 0
+  totalModuleCnt: 0
   isGameStart: 0
   isGameOver: 0
   isClear: 0
@@ -2100,6 +2114,23 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4838381400257971914, guid: 7592795d3facbef4aa1072449bb1c300,
+        type: 3}
+      propertyPath: modules.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4838381400257971914, guid: 7592795d3facbef4aa1072449bb1c300,
+        type: 3}
+      propertyPath: modules.Array.data[0]
+      value: 
+      objectReference: {fileID: 5365832914944265769, guid: 05a185ea226972d4784139350ab2f267,
+        type: 3}
+    - target: {fileID: 4838381400257971914, guid: 7592795d3facbef4aa1072449bb1c300,
+        type: 3}
+      propertyPath: modules.Array.data[1]
+      value: 
+      objectReference: {fileID: 5365832914944265769, guid: 32292f34e00729347875e715356f40f0,
+        type: 3}
     - target: {fileID: 8314425121067101438, guid: 7592795d3facbef4aa1072449bb1c300,
         type: 3}
       propertyPath: m_Name

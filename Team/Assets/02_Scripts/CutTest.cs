@@ -21,6 +21,7 @@ public class CutTest : MonoBehaviour
     public void OnClickSetUp()
     {
         wire = GameObject.Find("WireModule").GetComponent<WiresModule>();
+        
 
         cut1.onClick.AddListener(() => wire.CutWire(1));
         cut2.onClick.AddListener(() => wire.CutWire(2));
