@@ -4,15 +4,54 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    public GameObject wireModule;
+    
 
-    public Transform[] modulesTr;
+    public GameObject module1;
+    public GameObject expEffect;
+
+
+    public List<GameObject> modules;
+    public List<Transform> modulesTr;
 
 
     void Start()
     {
-        Instantiate(wireModule, modulesTr[0].transform.position, modulesTr[0].transform.rotation);
+        //for (int i = 0; i < 5; i++)
+        //{
+        //    GameObject module = Instantiate(module1, modulesTr[i].transform.position, modulesTr[i].transform.rotation);
+        //    module.name = modulesTr[i].name;
+        //    module.transform.SetParent(modulesTr[i].transform);
+        //}
+        
+
+        for (int i = 0; i < modules.Count + 1 ; i++)
+        {
+            int rModuleNum = Random.Range(0, modules.Count);
+            int rPos = Random.Range(0, modulesTr.Count);
+            GameObject module = Instantiate(modules[rModuleNum], modulesTr[rPos].transform.position, modulesTr[rPos].transform.rotation);
+            module.transform.SetParent(modulesTr[rPos]);
+            module.transform.localScale = new Vector3(0.2f, 0.8f, 0.8f);
+            module.name = module.name.Replace("(Clone)", "");
+            //switch(rModuleNum)
+            //{
+            //    case 0:
+            //        module.name = "WireModule";
+            //        break;
+            //    case 1:
+            //        module.name = "KepadModule";
+            //        break;
+            //}
+            modulesTr.RemoveAt(rPos);
+            modules.RemoveAt(rModuleNum);
+        }
         
     }
 
+    public void Fail()
+    {
+        //���ӿ���
+        GameManager.Instance.GameOver();
+        //���� ����Ʈ ����
+        //Instantiate(bomb.expEffect, bomb.transform.position, bomb.transform.rotation);
+    }
 }
