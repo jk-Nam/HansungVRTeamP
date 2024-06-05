@@ -9,7 +9,7 @@ public class SceneMgr : MonoBehaviour
     //변수
     public int sceneNum = 0; //씬 번호
 
-    //오브젝트
+    //필수 오브젝트
     //public GameObject menuPan; //프리팹
     public GameObject menu_0; //통신기
     public GameObject menu_1; //결과 조회
@@ -18,6 +18,14 @@ public class SceneMgr : MonoBehaviour
     public GameObject bombOBJ; //폭탄
     public GameObject manualBook; //매뉴얼
     public GameObject resultPan; //결과패널
+    
+    //ISDK_HandGrabInteraction 좌표이동 권한관련
+    public GameObject grab_0; //통신기
+    public GameObject grab_1; //결과 조회
+    public GameObject grab_2; //언어설정
+    public GameObject grab_3; //옵션메뉴
+    public GameObject grab_bomb; //폭탄
+    public GameObject grab_Book; //매뉴얼
 
     //위치 모음
     public Transform menuPos_0; //왼쪽 1번 자리
@@ -34,58 +42,79 @@ public class SceneMgr : MonoBehaviour
     public Transform backPos_5; //매뉴얼 보관위치
     public Transform backPos_6; //폭탄 보관위치
 
+    //옵션패널 교체용
+    public bool isOptionPan = true; //옵션교체
+    public GameObject optionPan; //옵션패널
+    public GameObject langPan; //언어설정
+    //게임패널 UI
+    public bool isGamePen = true; //게임패널 교체
+    public GameObject gameSelect; //게임설정 선택
+    public GameObject gameInPan; //역할 선택
 
     void Start()
     {
+
         sceneNum = 1; //처음 씬번호 넣기
         SceneSwitch(sceneNum); //해당 번호 씬 호출
     }
 
-    public void 
-
-    //씬 스위치
+    //씬변경 스위치
     public void SceneSwitch(int Rooms)
     {
 
-        if (Rooms >= 5)
+        if (Rooms >= 6)
         {
-            Rooms = 0; //5번씬 대신에 0번으로
+            Rooms = 1; //없는 씬 대신에 메인씬으로
         }
+
+        // 화면 페이드 인 또는 블라인드 예정
+
+        RoomReset(); //오브젝트를 치운다
 
         switch (Rooms)
         {
             case 0:
-                RoomReset(); //오브젝트를 치운다
+                //로그인? 같은 메인씬보다 먼저 호출의 겨우
                 //Debug.Log(Rooms + "번 씬으로 변경 되었다.");
                 break;
             case 1:
-                RoomReset();
                 MainScene(); //메인씬 배치
                 Debug.Log(Rooms + "번 메인씬으로 변경 되었다.");
                 break;
             case 2:
-                RoomReset();
                 DefuserScene(); //인게임 해체반
                 Debug.Log(Rooms + "번 해체씬으로 변경 되었다.");
                 break;
             case 3:
-                RoomReset();
                 ExpertsScene(); //인게임 분석반
                 Debug.Log(Rooms + "번 분석씬으로 변경 되었다.");
                 break;
             case 4:
-                RoomReset();
                 GameOver(); //게임오버씬 배치
                 Debug.Log(Rooms + "번 게임오버 되었다.");
                 break;
+            case 5:
+                GameRetry(); //게임 패널 소환
+                Debug.Log(Rooms + "번 게임 재도전 연출");
+                break;
         }
+
+        //화면 블라인드 제거 또는 페이드 아웃 예정
 
         sceneNum = Rooms; //씬에 직접 들어온 경우 씬번호 반영
     }
 
     //오브젝트 치우기 0
-    public void RoomReset()
+    void RoomReset()
     {
+        // 핸드그랩을 비활성 하여, 포지션을 풀어준다.
+        grab_0.SetActive(false);
+        grab_1.SetActive(false);
+        grab_2.SetActive(false);
+        grab_3.SetActive(false);
+        grab_bomb.SetActive(false);
+        grab_Book.SetActive(false);
+
         // 모든 오브젝트를 벡룸에 정리한다.
         menu_0.transform.position = backPos_0.position;
         menu_0.transform.rotation = backPos_0.rotation;
@@ -108,12 +137,19 @@ public class SceneMgr : MonoBehaviour
         manualBook.transform.position = backPos_6.position;
         manualBook.transform.rotation = backPos_6.rotation;
 
+        // 핸드그랩을 활성화 해준다.
+        grab_0.SetActive(true);
+        grab_1.SetActive(true);
+        grab_2.SetActive(true);
+        grab_3.SetActive(true);
+        grab_bomb.SetActive(true);
+        grab_Book.SetActive(true);
 
         //Debug.Log("백룸으로 모두 보냈다.");
     }
 
     //게임 메인씬 1
-    public void MainScene()
+    void MainScene()
     {
 
         //메뉴판 4개의 위치를 옮긴다.
@@ -133,7 +169,7 @@ public class SceneMgr : MonoBehaviour
     }
 
     //인 게임 씬 (해체반) 2
-    public void DefuserScene()
+    void DefuserScene()
     {
 
         //필요한 OBJ 기본위치
@@ -150,7 +186,7 @@ public class SceneMgr : MonoBehaviour
     }
 
     //인 게임 씬 (분석반) 3
-    public void ExpertsScene()
+    void ExpertsScene()
     {
 
         //필요한 OBJ 기본위치
@@ -167,7 +203,7 @@ public class SceneMgr : MonoBehaviour
     }
 
     //게임 오버 연출 4
-    public void GameOver()
+    void GameOver()
     {
         //게임 결과 표시
         resultPan.transform.position = menuPos_4.position;
@@ -175,17 +211,62 @@ public class SceneMgr : MonoBehaviour
         //Debug.Log("게임결과 호출 되었다.");
     }
 
-    //씬 변경 테스트
-    public void SceneChange()
+    //게임 재도전 5
+    void GameRetry()
     {
-        sceneNum++;
-        SceneSwitch(sceneNum);
+        //게임 매뉴 소환
+        menu_0.transform.position = menuPos_4.position;
     }
 
-    //오브젝트 위치 초기화
+    // 옵션메뉴 패널변경 
+    public void LanguageBtn() 
+    {
+        //옵션 Language 누르면 오브젝트가 교체
+        isOptionPan = !isOptionPan;
+
+        if (isOptionPan)
+        {
+            optionPan.SetActive(true);
+            langPan.SetActive(false);
+        }
+        else
+        {
+            optionPan.SetActive(false);
+            langPan.SetActive(true);
+        }
+    }
+
+    // 게임메뉴 패널변경
+    public void GmaePenBtn()
+    {
+        //반드시 게임 속성(난이도, 네트워크 참여)이 완료된 후 호출
+        //채널입장 누르면 오브젝트가 교체
+        isGamePen = !isGamePen;
+
+        if (isGamePen)
+        {
+            gameSelect.SetActive(true);
+            gameInPan.SetActive(false);
+        }
+        else
+        {
+            gameSelect.SetActive(false);
+            gameInPan.SetActive(true);
+        }
+    }
+
+    //해당 씬 오브젝트 위치 초기화
     public void SceneReset()
     {
         SceneSwitch(sceneNum);
         Debug.Log(sceneNum + "번 씬을 재호출");
     }
+
+    //씬 변경 테스트 용
+    public void SceneChange()
+    {
+        sceneNum++;
+        SceneSwitch(sceneNum);
+    }
+    
 }
