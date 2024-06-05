@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 8064208348855247446}
   - component: {fileID: 3527187536873481626}
   - component: {fileID: 6798719498026991059}
-  - component: {fileID: 2143980955282642664}
+  - component: {fileID: -2689880525270198634}
   m_Layer: 0
-  m_Name: WireModule
+  m_Name: TestModule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2143980955282642664
+--- !u!114 &-2689880525270198634
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,14 +115,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5365832914944265769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8180897b982175840bb6f3695180e932, type: 3}
+  m_Script: {fileID: 11500000, guid: 685843ea4b6218f40a039b6e8d5e7dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moduleType: 0
-  wireColor:
-  - Red
-  - Blue
-  - Black
-  - White
-  - Yellow
-  correctWireNum: 0
