@@ -50,6 +50,7 @@ public class SceneMgr : MonoBehaviour
     public bool isGamePen = true; //게임패널 교체
     public GameObject gameSelect; //게임설정 선택
     public GameObject gameInPan; //역할 선택
+    public GameObject onlyVoice; //온리보이스 문구
 
     void Start()
     {
@@ -151,6 +152,9 @@ public class SceneMgr : MonoBehaviour
     //게임 메인씬 1
     void MainScene()
     {
+        //메인화면은 게임채널 접속전 상태이다.
+        isGamePen = true; //게임채널 접속전
+        GmaePenBtn(false); //게임패널을 초기화 시킨다
 
         //메뉴판 4개의 위치를 옮긴다.
         menu_0.transform.position = menuPos_0.position;
@@ -207,6 +211,8 @@ public class SceneMgr : MonoBehaviour
     {
         //게임 결과 표시
         resultPan.transform.position = menuPos_4.position;
+        isGamePen = false; //재도전 준비
+        GmaePenBtn(false); //온리보이스 해제
 
         //Debug.Log("게임결과 호출 되었다.");
     }
@@ -216,6 +222,9 @@ public class SceneMgr : MonoBehaviour
     {
         //게임 매뉴 소환
         menu_0.transform.position = menuPos_4.position;
+
+        menu_3.transform.position = menuPos_3.position;
+        menu_3.transform.rotation = menuPos_3.rotation;
     }
 
     // 옵션메뉴 패널변경 
@@ -237,22 +246,34 @@ public class SceneMgr : MonoBehaviour
     }
 
     // 게임메뉴 패널변경
-    public void GmaePenBtn()
+    public void GmaePenBtn(bool isonlyVoice)
     {
-        //반드시 게임 속성(난이도, 네트워크 참여)이 완료된 후 호출
         //채널입장 누르면 오브젝트가 교체
-        isGamePen = !isGamePen;
-
-        if (isGamePen)
+        if (isonlyVoice)
         {
+            //isonlyVoice가 들어오면 게임중! 작동불가!
+            gameSelect.SetActive(false);
+            gameInPan.SetActive(false);
+            onlyVoice.SetActive(true);
+        }else if(isGamePen)
+        {
+            //게임채널 접속 화면
+            onlyVoice.SetActive(false);
             gameSelect.SetActive(true);
             gameInPan.SetActive(false);
+
+            isGamePen = false;
         }
         else
         {
+            //게임채널 접속 후
+            onlyVoice.SetActive(false);
             gameSelect.SetActive(false);
             gameInPan.SetActive(true);
+
+            isGamePen = true;
         }
+                
     }
 
     //해당 씬 오브젝트 위치 초기화
