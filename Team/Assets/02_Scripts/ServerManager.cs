@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using SimpleJSON;
 using UnityEngine.Networking;
+using System;
 
 
 public class ServerManager : MonoBehaviour
 {
     public static ServerManager Instance;
 
-    public long uniqueId;
+    public string uniqueId;
 
     [Header("===URLS===")]
     public string loginURL;
@@ -26,9 +27,11 @@ public class ServerManager : MonoBehaviour
 
     [Header("===Variables===")]
     public float timer;
+    public bool isClear;
+    
 
     [Header("===UI_Text===")]
-    public Text playerUniqueID;
+    public Text playerUniqueIDText;
     public Text timerText;
 
     int rankingCnt = 0;
@@ -45,21 +48,12 @@ public class ServerManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(this.gameObject);
-
-        //ObjectID 중복 확인
-        //if ()
-        //{
-        //    uniqueId = long.Parse(PlayerPrefs.GetString("UniqueID"));
-        //}
-        //else
-        //{
-        //    uniqueId = 
-        //}
     }
 
     private void Start()
     {
-        
+        //ObjectID 중복 확인
+        StartCoroutine(CheckUserId());
     }
 
     IEnumerator LogIn()
@@ -81,7 +75,8 @@ public class ServerManager : MonoBehaviour
             {
                 Debug.Log(www.downloadHandler.text);
                 Debug.Log("로그인 성공!!!");
-                PlayerPrefs.SetString("PlayerID", uniqueId.ToString());             
+                PlayerPrefs.SetString("PlayerID", uniqueId.ToString());
+                StartCoroutine(GetUserInfo());
             }
             else
             {
@@ -94,10 +89,19 @@ public class ServerManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        form.AddField("userId", uniqueId.ToString());
+        form.AddField("userId", uniqueId);
 
         UnityWebRequest www = UnityWebRequest.Post(checkIdURL, form);
         yield return www.SendWebRequest();
+        UnityWebRequest www2 = UnityWebRequest.Post(userInfoURL, form);
+        yield return www2.SendWebRequest();
+        var jsonData = SimpleJSON.JSON.Parse(www2.downloadHandler.text);
+        Debug.Log(www2.downloadHandler.text);
+        if (www2.downloadHandler.text !="")
+        {
+            uniqueId = jsonData["_id"];
+        }
+        
 
         if (www.result != UnityWebRequest.Result.Success)
         {
@@ -108,7 +112,12 @@ public class ServerManager : MonoBehaviour
             if (www.downloadHandler.text == "Exist")
             {
                 Debug.Log("아이디 중복");
-                //StartCoroutine(Signin());
+                StartCoroutine(LogIn());
+            }
+            else
+            {
+                Debug.Log("아이디 생성");
+                StartCoroutine(Signin());
             }
         }
     }
@@ -117,7 +126,7 @@ public class ServerManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        form.AddField("userId", uniqueId.ToString());
+        form.AddField("userId", uniqueId);
 
         UnityWebRequest www = UnityWebRequest.Post(signInURL, form);
         yield return www.SendWebRequest();
@@ -130,16 +139,68 @@ public class ServerManager : MonoBehaviour
         {
             Debug.Log(www.downloadHandler.text);
             Debug.Log("고유 아이디 생성 완료");
+            UnityWebRequest www2 = UnityWebRequest.Post(userInfoURL, form);
+            yield return www2.SendWebRequest();
+            var jsonData = SimpleJSON.JSON.Parse(www2.downloadHandler.text);
+            Debug.Log(www2.downloadHandler.text);
+            if (www2.downloadHandler.text != "")
+            {
+                uniqueId = jsonData["_id"];
+            }
+            StartCoroutine(LogIn());
         }
     }
 
-    //ObjectID 받아오기
-    //IEnumerator GetUserInfo()
-    //{
-    //    WWWForm form = new WWWForm();
+    IEnumerator GetUserInfo()
+    {
+        WWWForm form = new WWWForm();
 
-    //    form.AddField("_id")
-    //}
+        form.AddField("userId", PlayerPrefs.GetString("PlayerID"));
+        
+        UnityWebRequest www = UnityWebRequest.Post(userInfoURL, form);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log(www.downloadHandler.text);
+            playerUniqueIDText.text = "ID : " + PlayerPrefs.GetString("PlayerID");
+            var jsonData = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+            timer = jsonData["timer"];
+            timerText.text = timer.ToString();
+        }
+    }
+
+    public IEnumerator UpdateDate()
+    {
+        WWWForm form = new WWWForm();
+
+        form.AddField("timer", GameManager.Instance.timer.ToString());
+        form.AddField("isclear",GameManager.Instance.isClear.ToString());
+        form.AddField("difficulty", Convert.ToInt32(GameManager.Instance.difficulty).ToString());
+
+        UnityWebRequest www = UnityWebRequest.Post(updateURL, form);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            if (www.downloadHandler.text == "Success")
+            {
+                Debug.Log("업데이트 성공!!!");
+            }
+            else
+            {
+                Debug.Log("업데이트 실패!!!");
+            }
+        }
+    }
 
     IEnumerator GetRanking()
     {
