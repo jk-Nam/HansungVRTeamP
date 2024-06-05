@@ -34,12 +34,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     List<RoomInfo> myList = new List<RoomInfo>();
     int currentPage = 1, maxPage, multiple;
     
-    //하고 싶은 것 리스트, 
+  
 
     //포톤 펀2 활용하기~ ♠
     //RPC를 활용 해서 폭탄이 해체 됐는지, 폭파 됐는지를 알려주기♥
     //서버 접속 후 방 생성은 빠른 입장(랜덤한 숫자로 방생성) 버튼만 남겨두고 서버 만들기는 버리는 게 좋겠음 
-    //are you here with me,
+
   
 
     #region 방리스트 갱신
