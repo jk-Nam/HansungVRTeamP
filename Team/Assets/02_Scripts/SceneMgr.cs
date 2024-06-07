@@ -48,7 +48,7 @@ public class SceneMgr : MonoBehaviour
     public GameObject langPan; //언어설정
     //게임패널 UI 교체
     public bool isGamePen = true; //true입장전 / false입장후
-    bool isonlyVoice = false; //true게임중 / false게임아님
+    public bool isonlyVoice = false; //true게임중 / false게임아님
     public GameObject gameSelect; //게임설정 선택
     public GameObject gameInPan; //역할 선택
     public GameObject onlyVoice; //온리보이스 문구
