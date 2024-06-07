@@ -116,8 +116,11 @@ public class WiresModule : BombModule
                                 correctWireNum = 4;
                                 Debug.Log("4-4 잘라야 하는 와이어 : " + correctWireNum + "번");
                             }
-                            correctWireNum = 2;
-                            Debug.Log("4-5 잘라야 하는 와이어 : " + correctWireNum + "번");
+                            else
+                            {
+                                correctWireNum = 2;
+                                Debug.Log("4-5 잘라야 하는 와이어 : " + correctWireNum + "번");
+                            }                            
                         }
                     }
                 }
@@ -177,7 +180,7 @@ public class WiresModule : BombModule
     {
         if (!isDefused && GameManager.Instance.isGameStart && !GameManager.Instance.isGameOver)
         {
-            if (idx == GameManager.Instance.incorrectCnt)
+            if (idx == correctWireNum)
             {
                 isDefused = true;
                 GameManager.Instance.defuesedCnt++;
