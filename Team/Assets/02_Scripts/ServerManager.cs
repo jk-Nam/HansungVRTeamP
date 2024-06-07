@@ -17,6 +17,7 @@ public class ServerManager : MonoBehaviour
     public string loginURL;
     public string signInURL;
     public string checkIdURL;
+    public string newResultURL;
     public string updateURL;
     public string userInfoURL;
     public string rankingURL;
@@ -33,6 +34,8 @@ public class ServerManager : MonoBehaviour
     [Header("===UI_Text===")]
     public Text playerUniqueIDText;
     public Text timerText;
+    public Text player1IDText;
+    public Text player2IDText;
 
     int rankingCnt = 0;
 
@@ -89,7 +92,7 @@ public class ServerManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        form.AddField("userId", uniqueId);
+        //form.AddField("userId", uniqueId);
 
         UnityWebRequest www = UnityWebRequest.Post(checkIdURL, form);
         yield return www.SendWebRequest();
@@ -151,6 +154,41 @@ public class ServerManager : MonoBehaviour
         }
     }
 
+    public void OnClickResult()
+    {
+        StartCoroutine(Result());
+    }
+
+    IEnumerator Result()
+    {
+        WWWForm form = new WWWForm();
+
+        form.AddField("userId", uniqueId);
+
+        UnityWebRequest www = UnityWebRequest.Post(newResultURL, form);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log(www.downloadHandler.text);
+            Debug.Log("게임 결과 저장 완료");
+            UnityWebRequest www2 = UnityWebRequest.Post(userInfoURL, form);
+            yield return www2.SendWebRequest();
+            var jsonData = SimpleJSON.JSON.Parse(www2.downloadHandler.text);
+            Debug.Log(www2.downloadHandler.text);
+            if (www2.downloadHandler.text != "")
+            {
+                //player1IDText.text = jsonData["id1"];
+                //player2IDText.text = jsonData["id2"];
+
+            }
+        }
+    }
+
     IEnumerator GetUserInfo()
     {
         WWWForm form = new WWWForm();
@@ -170,6 +208,8 @@ public class ServerManager : MonoBehaviour
             playerUniqueIDText.text = "ID : " + PlayerPrefs.GetString("PlayerID");
             var jsonData = SimpleJSON.JSON.Parse(www.downloadHandler.text);
             timer = jsonData["timer"];
+            isClear = jsonData["isclear"];
+
             timerText.text = timer.ToString();
         }
     }
@@ -222,8 +262,10 @@ public class ServerManager : MonoBehaviour
             rankingCnt = rankingJson.Count;
             for (int i = 0; i < rankingCnt; i++)
             {
-                Debug.Log(rankingJson[i]["userId"]);
+                Debug.Log(rankingJson[i]["player1"]);
+                Debug.Log(rankingJson[i]["player2"]);
                 Debug.Log(rankingJson[i]["timer"]);
+                Debug.Log(rankingJson[i]["difficulty"]);
             }
         }
     }
