@@ -46,8 +46,9 @@ public class SceneMgr : MonoBehaviour
     public bool isOptionPan = true; //옵션교체
     public GameObject optionPan; //옵션패널
     public GameObject langPan; //언어설정
-    //게임패널 UI
-    public bool isGamePen = true; //게임패널 교체
+    //게임패널 UI 교체
+    public bool isGamePen = true; //true입장전 / false입장후
+    bool isonlyVoice = false; //true게임중 / false게임아님
     public GameObject gameSelect; //게임설정 선택
     public GameObject gameInPan; //역할 선택
     public GameObject onlyVoice; //온리보이스 문구
@@ -57,6 +58,15 @@ public class SceneMgr : MonoBehaviour
 
         sceneNum = 1; //처음 씬번호 넣기
         SceneSwitch(sceneNum); //해당 번호 씬 호출
+    }
+
+    //게임채널 접속 상태 더미 함수
+    public void RoomInOut()
+    {
+        //게임채널 입장 / 나가기
+        isGamePen = !isGamePen;
+        //외부 호출시 bool isGamePen 를 통해서 사용가능
+        GmaePenBtn(); //패널 상태를 갱신한다
     }
 
     //씬변경 스위치
@@ -154,7 +164,8 @@ public class SceneMgr : MonoBehaviour
     {
         //메인화면은 게임채널 접속전 상태이다.
         isGamePen = true; //게임채널 접속전
-        GmaePenBtn(false); //게임패널을 초기화 시킨다
+        isonlyVoice = false;
+        GmaePenBtn(); //게임패널을 초기화 시킨다
 
         //메뉴판 4개의 위치를 옮긴다.
         menu_0.transform.position = menuPos_0.position;
@@ -175,6 +186,9 @@ public class SceneMgr : MonoBehaviour
     //인 게임 씬 (해체반) 2
     void DefuserScene()
     {
+        //게임중 통신기
+        isonlyVoice = true;
+        GmaePenBtn(); //온리보이스
 
         //필요한 OBJ 기본위치
         menu_0.transform.position = menuPos_0.position;
@@ -192,6 +206,9 @@ public class SceneMgr : MonoBehaviour
     //인 게임 씬 (분석반) 3
     void ExpertsScene()
     {
+        //게임중 통신기
+        isonlyVoice = true;
+        GmaePenBtn(); //온리보이스
 
         //필요한 OBJ 기본위치
         menu_0.transform.position = menuPos_0.position;
@@ -211,8 +228,9 @@ public class SceneMgr : MonoBehaviour
     {
         //게임 결과 표시
         resultPan.transform.position = menuPos_4.position;
-        isGamePen = false; //재도전 준비
-        GmaePenBtn(false); //온리보이스 해제
+        //isGamePen = false; //재도전 준비
+        isonlyVoice = false;
+        GmaePenBtn(); //온리보이스 해제
 
         //Debug.Log("게임결과 호출 되었다.");
     }
@@ -245,10 +263,10 @@ public class SceneMgr : MonoBehaviour
         }
     }
 
-    // 게임메뉴 패널변경
-    public void GmaePenBtn(bool isonlyVoice)
+    // 게임메뉴 패널변경 갱신
+    public void GmaePenBtn()
     {
-        //채널입장 누르면 오브젝트가 교체
+        //채널입장 또는 게임중 패널상태를 구분함
         if (isonlyVoice)
         {
             //isonlyVoice가 들어오면 게임중! 작동불가!
@@ -261,8 +279,6 @@ public class SceneMgr : MonoBehaviour
             onlyVoice.SetActive(false);
             gameSelect.SetActive(true);
             gameInPan.SetActive(false);
-
-            isGamePen = false;
         }
         else
         {
@@ -270,8 +286,6 @@ public class SceneMgr : MonoBehaviour
             onlyVoice.SetActive(false);
             gameSelect.SetActive(false);
             gameInPan.SetActive(true);
-
-            isGamePen = true;
         }
                 
     }

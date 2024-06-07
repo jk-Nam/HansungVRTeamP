@@ -449,8 +449,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1449163704}
         m_TargetAssemblyTypeName: SceneMgr, Assembly-CSharp
-        m_MethodName: GmaePenBtn
-        m_Mode: 6
+        m_MethodName: RoomInOut
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1764,8 +1764,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1449163704}
         m_TargetAssemblyTypeName: SceneMgr, Assembly-CSharp
-        m_MethodName: GmaePenBtn
-        m_Mode: 6
+        m_MethodName: RoomInOut
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3949,8 +3949,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1449163704}
         m_TargetAssemblyTypeName: SceneMgr, Assembly-CSharp
-        m_MethodName: GmaePenBtn
-        m_Mode: 6
+        m_MethodName: RoomInOut
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5280,8 +5280,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1449163704}
         m_TargetAssemblyTypeName: SceneMgr, Assembly-CSharp
-        m_MethodName: GmaePenBtn
-        m_Mode: 6
+        m_MethodName: RoomInOut
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6802,12 +6802,12 @@ PrefabInstance:
     - target: {fileID: 4018134331551107815, guid: fe4f9f38ad88ecf4e8c03ea23ca7374f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4018134331551107815, guid: fe4f9f38ad88ecf4e8c03ea23ca7374f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4018134331551107815, guid: fe4f9f38ad88ecf4e8c03ea23ca7374f,
         type: 3}
@@ -6837,7 +6837,7 @@ PrefabInstance:
     - target: {fileID: 4018134331551107815, guid: fe4f9f38ad88ecf4e8c03ea23ca7374f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GmaePenBtn
+      value: SceneSwitch
       objectReference: {fileID: 0}
     - target: {fileID: 4018134331551107815, guid: fe4f9f38ad88ecf4e8c03ea23ca7374f,
         type: 3}
@@ -6857,7 +6857,7 @@ PrefabInstance:
     - target: {fileID: 4018134331551107815, guid: fe4f9f38ad88ecf4e8c03ea23ca7374f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4018134331551107815, guid: fe4f9f38ad88ecf4e8c03ea23ca7374f,
         type: 3}
@@ -6867,7 +6867,7 @@ PrefabInstance:
     - target: {fileID: 4018134331551107815, guid: fe4f9f38ad88ecf4e8c03ea23ca7374f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4018134331551107815, guid: fe4f9f38ad88ecf4e8c03ea23ca7374f,
         type: 3}
@@ -7971,18 +7971,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1449163704}
         m_TargetAssemblyTypeName: SceneMgr, Assembly-CSharp
-        m_MethodName: GmaePenBtn
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1449163704}
-        m_TargetAssemblyTypeName: SceneMgr, Assembly-CSharp
         m_MethodName: SceneSwitch
         m_Mode: 3
         m_Arguments:
@@ -8116,8 +8104,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1449163704}
         m_TargetAssemblyTypeName: SceneMgr, Assembly-CSharp
-        m_MethodName: GmaePenBtn
-        m_Mode: 6
+        m_MethodName: RoomInOut
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9959,18 +9947,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1449163704}
-        m_TargetAssemblyTypeName: SceneMgr, Assembly-CSharp
-        m_MethodName: GmaePenBtn
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 1449163704}
         m_TargetAssemblyTypeName: SceneMgr, Assembly-CSharp
         m_MethodName: SceneSwitch
@@ -14182,7 +14158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2109932576
 MonoBehaviour:
   m_ObjectHideFlags: 0
