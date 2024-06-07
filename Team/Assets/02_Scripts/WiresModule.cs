@@ -117,8 +117,13 @@ public class WiresModule : BombModule
                                 correctWireNum = 4;
                                 Debug.Log("4-4 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
                             }
-                            correctWireNum = 2;
-                            Debug.Log("4-5 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+
+                            else
+                            {
+                                correctWireNum = 2;
+                                Debug.Log("4-5 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                            }                            
+
                         }
                     }
                 }
@@ -178,7 +183,7 @@ public class WiresModule : BombModule
     {
         if (!isDefused && GameManager.Instance.isGameStart && !GameManager.Instance.isGameOver)
         {
-            if (idx == GameManager.Instance.incorrectCnt)
+            if (idx == correctWireNum)
             {
                 isDefused = true;
                 GameManager.Instance.defuesedCnt++;
