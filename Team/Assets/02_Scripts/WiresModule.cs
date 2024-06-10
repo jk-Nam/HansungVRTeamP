@@ -21,6 +21,7 @@ public class WiresModule : BombModule
         bomb = GameObject.FindGameObjectWithTag("BOMB").GetComponent<Bomb>();
     }
 
+
     private void Start()
     {
         InitiallizeModule();
@@ -33,7 +34,7 @@ public class WiresModule : BombModule
         GameManager.Instance.incorrectCnt = 0;
         wireCnt = Random.Range(3, 6);
         //wireCnt = 5;
-        Debug.Log("WireÀÇ ¼ö´Â " + wireCnt + "°³ ÀÔ´Ï´Ù.");
+        Debug.Log("Wireï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ " + wireCnt + "ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.");
     }
 
     public override void DefuseModule()
@@ -52,35 +53,35 @@ public class WiresModule : BombModule
                     if (wireColor[2] == "White")
                     {
                         correctWireNum = 3;
-                        Debug.Log("1-1 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                        Debug.Log("1-1 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                     }
                     else
                     {
                         if (wireColor.FindAll(w => w == "Blue").Count >= 2)
                         {
-                            //»¡ ÆÄ ÆÄ, ÆÄ »¡ ÆÄ, ÆÄ ÆÄ »¡
+                            //ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
                             if (wireColor[2] == "Blue")
                             {
                                 correctWireNum = 3;
-                                Debug.Log("1-2 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                                Debug.Log("1-2 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                             }
                             else
                             {
                                 correctWireNum = 2;
-                                Debug.Log("1-3 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                                Debug.Log("1-3 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                             }
                         }
                         else
                         {
                             correctWireNum = 3;
-                            Debug.Log("1-4 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                            Debug.Log("1-4 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                         }
                     }
                 }
                 else
                 {
                     correctWireNum = 2;
-                    Debug.Log("1-5 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                    Debug.Log("1-5 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                 }
                     break;
             case 4:
@@ -93,34 +94,36 @@ public class WiresModule : BombModule
                 if (wireColor.FindAll(w => w == "Red").Count >= 2)
                 {
                     correctWireNum = wireColor.FindLastIndex(str => str == "Red") + 1;
-                    Debug.Log("4-1 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                    Debug.Log("4-1 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                 }
                 else
                 {
                     if (wireColor[3] == "Yellow" && !wireColor.Contains("Red"))
                     {
                         correctWireNum = 1;
-                        Debug.Log("4-2 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                        Debug.Log("4-2 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                     }
                     else
                     {
                         if(wireColor.FindAll(w => w == "Blue").Count == 1)
                         {
                             correctWireNum = 1;
-                            Debug.Log("4-3 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                            Debug.Log("4-3 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                         }
                         else
                         {
                             if (wireColor.FindAll(w => w == "Yellow").Count >= 2)
                             {
                                 correctWireNum = 4;
-                                Debug.Log("4-4 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                                Debug.Log("4-4 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                             }
+
                             else
                             {
                                 correctWireNum = 2;
-                                Debug.Log("4-5 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                                Debug.Log("4-5 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                             }                            
+
                         }
                     }
                 }
@@ -135,26 +138,26 @@ public class WiresModule : BombModule
                 if (wireColor[4] == "Black")
                 {
                     correctWireNum = 4;
-                    Debug.Log("5-1 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                    Debug.Log("5-1 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                 }
                 else
                 {
                     if (wireColor.FindAll(w => w == "Red").Count == 1 && wireColor.FindAll(w => w == "Yellow").Count >= 2)
                     {
                         correctWireNum = 1;
-                        Debug.Log("5-2 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                        Debug.Log("5-2 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                     }
                     else
                     {
                         if (!wireColor.Contains("Black"))
                         {
                             correctWireNum = 2;
-                            Debug.Log("5-3 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                            Debug.Log("5-3 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                         }
                         else
                         {
                             correctWireNum = 1;
-                            Debug.Log("5-4 Àß¶ó¾ß ÇÏ´Â ¿ÍÀÌ¾î : " + correctWireNum + "¹ø");
+                            Debug.Log("5-4 ï¿½ß¶ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ : " + correctWireNum + "ï¿½ï¿½");
                         }
                     }
                 }
@@ -184,7 +187,7 @@ public class WiresModule : BombModule
             {
                 isDefused = true;
                 GameManager.Instance.defuesedCnt++;
-                Debug.Log("¿ÍÀÌ¾î ¸ðµâ ÇØÁ¦ ¼º°ø");
+                Debug.Log("ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 if (GameManager.Instance.defuesedCnt == GameManager.Instance.totalModuleCnt)
                 {
                     GameManager.Instance.GameClear();
@@ -193,7 +196,7 @@ public class WiresModule : BombModule
             else
             {
                 GameManager.Instance.incorrectCnt++;
-                Debug.Log("¿À´ä ¼ö : " + GameManager.Instance.incorrectCnt);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ : " + GameManager.Instance.incorrectCnt);
                 if (GameManager.Instance.incorrectCnt >= 3)
                 {
                     bomb.Fail();
