@@ -1348,6 +1348,7 @@ MonoBehaviour:
   loginURL: http://localhost:3000/login
   signInURL: http://localhost:3000/new
   checkIdURL: http://localhost:3000/checkid
+  newResultURL: 
   updateURL: http://localhost:3000/update
   userInfoURL: http://localhost:3000/select
   rankingURL: 
@@ -1357,6 +1358,8 @@ MonoBehaviour:
   isClear: 0
   playerUniqueIDText: {fileID: 0}
   timerText: {fileID: 0}
+  player1IDText: {fileID: 0}
+  player2IDText: {fileID: 0}
 --- !u!4 &625424807
 Transform:
   m_ObjectHideFlags: 0
@@ -1850,10 +1853,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3429,6 +3429,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4356251899262972018, guid: 7592795d3facbef4aa1072449bb1c300,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1662645313f979842b804edd4f095d27, type: 2}
     - target: {fileID: 4838381400257971914, guid: 7592795d3facbef4aa1072449bb1c300,
         type: 3}
       propertyPath: modules.Array.size
