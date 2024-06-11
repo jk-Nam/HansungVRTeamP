@@ -249,6 +249,11 @@ public class ServerManager : MonoBehaviour
         }
     }
 
+    public void OnClickRankingBtn()
+    {
+        StartCoroutine(GetRanking());
+    }
+
     IEnumerator GetRanking()
     {
         WWWForm form = new WWWForm();
@@ -267,13 +272,13 @@ public class ServerManager : MonoBehaviour
             Debug.Log(www.downloadHandler.text);
             var rankingJson = JSON.Parse(www.downloadHandler.text);
             rankingCnt = rankingJson.Count;
-            for (int i = 0; i < rankingCnt; i++)
-            {
-                Debug.Log(rankingJson[i]["player1"]);
-                //Debug.Log(rankingJson[i]["player2"]);
-                Debug.Log(rankingJson[i]["timer"]);
-                Debug.Log(rankingJson[i]["difficulty"]);
-            }
+            //for (int i = 0; i < rankingCnt; i++)
+            //{
+            //    Debug.Log(rankingJson[i]["player1"]);
+            //    Debug.Log(rankingJson[i]["player2"]);
+            //    Debug.Log(rankingJson[i]["timer"]);
+            //    Debug.Log(rankingJson[i]["difficulty"]);
+            //}
         }
     }
 }

@@ -75,7 +75,8 @@ public class GameManager : MonoBehaviour
         switch (difficulty)
         {
             case Difficulty.Easy:
-                totalModuleCnt = 2;
+                //totalModuleCnt = 2;
+                totalModuleCnt = 1;
                 break;
             case Difficulty.Hard:
                 //totalModuleCnt = 3;
