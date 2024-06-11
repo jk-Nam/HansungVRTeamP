@@ -14,6 +14,7 @@ public class ServerManager : MonoBehaviour
     public string player1ID;
     public string player2ID;
     public string resultID;
+    public int difficultyNum = 1;
 
     [Header("===URLS===")]
     public string loginURL;
@@ -224,7 +225,7 @@ public class ServerManager : MonoBehaviour
         WWWForm form = new WWWForm();
 
         form.AddField("_id", resultID);
-        form.AddField("timer", GameManager.Instance.timer.ToString());
+        form.AddField("timer", GameManager.Instance.timer.ToString("n2"));
         form.AddField("isclear",GameManager.Instance.isClear.ToString());
         form.AddField("difficulty", Convert.ToInt32(GameManager.Instance.difficulty).ToString());
 
@@ -249,8 +250,15 @@ public class ServerManager : MonoBehaviour
         }
     }
 
-    public void OnClickRankingBtn()
+    public void OnClickEasyRankingBtn()
     {
+        difficultyNum = 1;
+        StartCoroutine(GetRanking());
+    }
+
+    public void OnClickHardRankingBtn()
+    {
+        difficultyNum = 2;
         StartCoroutine(GetRanking());
     }
 
@@ -258,9 +266,11 @@ public class ServerManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        form.AddField("userId", PlayerPrefs.GetString("PlayerID"));
+        //form.AddField("userId", PlayerPrefs.GetString("PlayerID"));
+        form.AddField("difficulty", difficultyNum);
 
         UnityWebRequest www = UnityWebRequest.Post(rankingURL, form);
+
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)

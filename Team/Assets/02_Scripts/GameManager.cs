@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
             dwTime += Time.deltaTime;
 
             timer -= dwTime;
+            
             if (timer <= 0)
             {
                 isGameOver = true;
