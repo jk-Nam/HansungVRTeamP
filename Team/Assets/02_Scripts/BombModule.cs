@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BombMoudleType
-{
-    Wire,
-    Keypad,
-    Maze
-}
+
 
 public abstract class BombModule : MonoBehaviour
 {
-    
+
+    public enum BombMoudleType
+    {
+        Wire,
+        Keypad,
+        Maze
+    }
+
 
     public BombMoudleType moduleType;
 

@@ -1,4 +1,3 @@
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -11,15 +10,6 @@ public class ManualSlot : MonoBehaviour
     public ItemBuffer itemBuffer; //아이템 리스트
     public Transform mRoot; //심볼이 들어갈 장소
     private List<Slot> mSlot; //메뉴얼 심볼 리스트
-
-    public Transform ranRoot; //선택된 리스트 들어갈 장소
-    private List<Slot> ranSlot; //랜덤으로 선택된 심볼들
-
-    public Transform tRoot; //정답용 심볼 들어갈 장소
-    private List<Slot> tSlot; //정답으로 선택된 심볼들
-
-    public Transform qRoot; //문제용 버튼이미지들
-    private List<Slot> qSlot; //문제용 버튼 리스트
 
     void Start()
     {

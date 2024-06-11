@@ -9,8 +9,10 @@ public class Bomb : MonoBehaviour
     public GameObject module1;
     public GameObject expEffect;
 
+
     public List<GameObject> modules;
     public List<Transform> modulesTr;
+
 
     void Start()
     {
@@ -49,9 +51,9 @@ public class Bomb : MonoBehaviour
 
     public void Fail()
     {
-        //°ÔÀÓ¿À¹ö
+        //ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½
         GameManager.Instance.GameOver();
-        //Æø¹ß ÀÌÆåÆ® »ý¼º
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         //Instantiate(bomb.expEffect, bomb.transform.position, bomb.transform.rotation);
     }
 }
