@@ -44,11 +44,11 @@ public class MazeModule : BombModule
         // 모듈 해제 시 필요한 추가 동작
     }
 
-    //public override void Fail()
-    //{
-    //   // incorrectCnt++;
-    //    // 실패 시 필요한 추가 동작
-    //}
+    public override void Fail()
+    {
+       // incorrectCnt++;
+        // 실패 시 필요한 추가 동작
+    }
 
     // 버튼 입력에 따른 이동 함수
     void MoveUp()
@@ -78,7 +78,7 @@ public class MazeModule : BombModule
             // 플레이어의 위치를 초기 위치로 리셋
             Debug.Log("실패");
             player.transform.position = initialPosition;
-         //   Fail();
+            Fail();
 
 
         }
