@@ -11,7 +11,9 @@ public class ServerManager : MonoBehaviour
 {
     public static ServerManager Instance;
 
-    public string uniqueId;
+    public string player1ID;
+    public string player2ID;
+    public string resultID;
 
     [Header("===URLS===")]
     public string loginURL;
@@ -55,7 +57,7 @@ public class ServerManager : MonoBehaviour
 
     private void Start()
     {
-        //ObjectID ¡ﬂ∫π »Æ¿Œ
+        //ObjectID Ï§ëÎ≥µ ÌôïÏù∏
         StartCoroutine(CheckUserId());
     }
 
@@ -63,7 +65,7 @@ public class ServerManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        form.AddField("userId", uniqueId.ToString());
+        form.AddField("_id", player1ID.ToString());
 
         UnityWebRequest www = UnityWebRequest.Post(loginURL, form);
         yield return www.SendWebRequest();
@@ -77,13 +79,13 @@ public class ServerManager : MonoBehaviour
             if (www.downloadHandler.text == "Success")
             {
                 Debug.Log(www.downloadHandler.text);
-                Debug.Log("∑Œ±◊¿Œ º∫∞¯!!!");
-                PlayerPrefs.SetString("PlayerID", uniqueId.ToString());
+                Debug.Log("Î°úÍ∑∏Ïù∏ ÏÑ±Í≥µ!!!");
+                PlayerPrefs.SetString("PlayerID", player1ID.ToString());
                 StartCoroutine(GetUserInfo());
             }
             else
             {
-                Debug.Log("∑Œ±◊¿Œ Ω«∆–!!!");
+                Debug.Log("Î°úÍ∑∏Ïù∏ Ïã§Ìå®!!!");
             }
         }
     }
@@ -102,7 +104,7 @@ public class ServerManager : MonoBehaviour
         Debug.Log(www2.downloadHandler.text);
         if (www2.downloadHandler.text !="")
         {
-            uniqueId = jsonData["_id"];
+            player1ID = jsonData["_id"];
         }
         
 
@@ -114,12 +116,12 @@ public class ServerManager : MonoBehaviour
         {
             if (www.downloadHandler.text == "Exist")
             {
-                Debug.Log("æ∆¿Ãµ ¡ﬂ∫π");
+                Debug.Log("ÏïÑÏù¥Îîî Ï§ëÎ≥µ");
                 StartCoroutine(LogIn());
             }
             else
             {
-                Debug.Log("æ∆¿Ãµ ª˝º∫");
+                Debug.Log("ÏïÑÏù¥Îîî ÏÉùÏÑ±");
                 StartCoroutine(Signin());
             }
         }
@@ -129,7 +131,7 @@ public class ServerManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        form.AddField("userId", uniqueId);
+        form.AddField("userId", player1ID);
 
         UnityWebRequest www = UnityWebRequest.Post(signInURL, form);
         yield return www.SendWebRequest();
@@ -141,14 +143,14 @@ public class ServerManager : MonoBehaviour
         else
         {
             Debug.Log(www.downloadHandler.text);
-            Debug.Log("∞Ì¿Ø æ∆¿Ãµ ª˝º∫ øœ∑·");
+            Debug.Log("Í≥†Ïú† ÏïÑÏù¥Îîî ÏÉùÏÑ± ÏôÑÎ£å");
             UnityWebRequest www2 = UnityWebRequest.Post(userInfoURL, form);
             yield return www2.SendWebRequest();
             var jsonData = SimpleJSON.JSON.Parse(www2.downloadHandler.text);
             Debug.Log(www2.downloadHandler.text);
             if (www2.downloadHandler.text != "")
             {
-                uniqueId = jsonData["_id"];
+                player1ID = jsonData["_id"];
             }
             StartCoroutine(LogIn());
         }
@@ -159,11 +161,9 @@ public class ServerManager : MonoBehaviour
         StartCoroutine(Result());
     }
 
-    IEnumerator Result()
+    public IEnumerator Result()
     {
         WWWForm form = new WWWForm();
-
-        form.AddField("userId", uniqueId);
 
         UnityWebRequest www = UnityWebRequest.Post(newResultURL, form);
         yield return www.SendWebRequest();
@@ -175,17 +175,22 @@ public class ServerManager : MonoBehaviour
         else
         {
             Debug.Log(www.downloadHandler.text);
-            Debug.Log("∞‘¿” ∞·∞˙ ¿˙¿Â øœ∑·");
-            UnityWebRequest www2 = UnityWebRequest.Post(userInfoURL, form);
-            yield return www2.SendWebRequest();
-            var jsonData = SimpleJSON.JSON.Parse(www2.downloadHandler.text);
-            Debug.Log(www2.downloadHandler.text);
-            if (www2.downloadHandler.text != "")
+            Debug.Log("Í≤åÏûÑ Í≤∞Í≥º Ï†ÄÏû• ÏôÑÎ£å");
+            var jsonData = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+            if (www.downloadHandler.text != "")
             {
-                //player1IDText.text = jsonData["id1"];
-                //player2IDText.text = jsonData["id2"];
-
+                resultID = jsonData["_id"];                
             }
+            //UnityWebRequest www2 = UnityWebRequest.Post(userInfoURL, form);
+            //yield return www2.SendWebRequest();
+            //var jsonData = SimpleJSON.JSON.Parse(www2.downloadHandler.text);
+            //Debug.Log(www2.downloadHandler.text);
+            //if (www2.downloadHandler.text != "")
+            //{
+            //    //player1IDText.text = jsonData["player1"];
+            //    //player2IDText.text = jsonData["player2"];
+
+            //}
         }
     }
 
@@ -205,12 +210,12 @@ public class ServerManager : MonoBehaviour
         else
         {
             Debug.Log(www.downloadHandler.text);
-            playerUniqueIDText.text = "ID : " + PlayerPrefs.GetString("PlayerID");
-            var jsonData = SimpleJSON.JSON.Parse(www.downloadHandler.text);
-            timer = jsonData["timer"];
-            isClear = jsonData["isclear"];
+            //playerUniqueIDText.text = "ID : " + PlayerPrefs.GetString("PlayerID");
+            //var jsonData = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+            //timer = jsonData["timer"];
+            //isClear = jsonData["isclear"];
 
-            timerText.text = timer.ToString();
+            //timerText.text = timer.ToString();
         }
     }
 
@@ -218,12 +223,14 @@ public class ServerManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
+        form.AddField("_id", resultID);
         form.AddField("timer", GameManager.Instance.timer.ToString());
         form.AddField("isclear",GameManager.Instance.isClear.ToString());
         form.AddField("difficulty", Convert.ToInt32(GameManager.Instance.difficulty).ToString());
 
         UnityWebRequest www = UnityWebRequest.Post(updateURL, form);
         yield return www.SendWebRequest();
+        Debug.Log(www.downloadHandler.text);
 
         if (www.result != UnityWebRequest.Result.Success)
         {
@@ -233,11 +240,11 @@ public class ServerManager : MonoBehaviour
         {
             if (www.downloadHandler.text == "Success")
             {
-                Debug.Log("æ˜µ•¿Ã∆Æ º∫∞¯!!!");
+                Debug.Log("ÏóÖÎç∞Ïù¥Ìä∏ ÏÑ±Í≥µ!!!");
             }
             else
             {
-                Debug.Log("æ˜µ•¿Ã∆Æ Ω«∆–!!!");
+                Debug.Log("ÏóÖÎç∞Ïù¥Ìä∏ Ïã§Ìå®!!!");
             }
         }
     }
@@ -263,7 +270,7 @@ public class ServerManager : MonoBehaviour
             for (int i = 0; i < rankingCnt; i++)
             {
                 Debug.Log(rankingJson[i]["player1"]);
-                Debug.Log(rankingJson[i]["player2"]);
+                //Debug.Log(rankingJson[i]["player2"]);
                 Debug.Log(rankingJson[i]["timer"]);
                 Debug.Log(rankingJson[i]["difficulty"]);
             }

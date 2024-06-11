@@ -1344,11 +1344,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c2b104c79e21d647bd9db4a6fc9eefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 
+  player1ID: 
+  player2ID: 
+  resultID: 
   loginURL: http://localhost:3000/login
   signInURL: http://localhost:3000/new
   checkIdURL: http://localhost:3000/checkid
-  newResultURL: 
+  newResultURL: http://localhost:3000/newresult
   updateURL: http://localhost:3000/update
   userInfoURL: http://localhost:3000/select
   rankingURL: 
@@ -1666,6 +1668,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884441156}
   m_CullTransparentMesh: 1
+--- !u!1 &973902259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 973902261}
+  - component: {fileID: 973902260}
+  m_Layer: 0
+  m_Name: ServerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &973902260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973902259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c2b104c79e21d647bd9db4a6fc9eefe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1ID: 
+  player2ID: 
+  resultID: 
+  loginURL: https://teamvr-qaroi.run.goorm.site/login
+  signInURL: https://teamvr-qaroi.run.goorm.site/new
+  checkIdURL: https://teamvr-qaroi.run.goorm.site/checkid
+  newResultURL: https://teamvr-qaroi.run.goorm.site/newresult
+  updateURL: https://teamvr-qaroi.run.goorm.site/update
+  userInfoURL: https://teamvr-qaroi.run.goorm.site/select
+  rankingURL: 
+  playerPanel: {fileID: 0}
+  rankingPanel: {fileID: 0}
+  timer: 0
+  isClear: 0
+  playerUniqueIDText: {fileID: 0}
+  timerText: {fileID: 0}
+  player1IDText: {fileID: 0}
+  player2IDText: {fileID: 0}
+--- !u!4 &973902261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973902259}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1153721996
 GameObject:
   m_ObjectHideFlags: 0
@@ -3548,3 +3612,4 @@ SceneRoots:
   - {fileID: 426542237}
   - {fileID: 1237296863}
   - {fileID: 625424807}
+  - {fileID: 973902261}

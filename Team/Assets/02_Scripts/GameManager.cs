@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        //Å¸ÀÌ¸Ó
+        //íƒ€ì´ë¨¸
         if (isGameStart && (!isGameOver || !isClear))
         {
             float dwTime = 0;
@@ -63,13 +63,13 @@ public class GameManager : MonoBehaviour
             if (timer <= 0)
             {
                 isGameOver = true;
-                Debug.Log("ÆøÅºÀÌ Æø¹ßÇÏ¿´½À´Ï´Ù!!!");
+                Debug.Log("í­íƒ„ì´ í­ë°œí•˜ì˜€ìŠµë‹ˆë‹¤!!!");
                 return;
             }
         }
     }
 
-    //³­ÀÌµµ ¼³Á¤ ±âº»Àº ½¬¿ò
+    //ë‚œì´ë„ ì„¤ì • ê¸°ë³¸ì€ ì‰¬ì›€
     public void SelectDifficulty()
     {
         switch (difficulty)
@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = false;
         isGameStart = true;
+        StartCoroutine(ServerManager.Instance.Result());
     }
 
     public void GameOver()
@@ -104,12 +105,13 @@ public class GameManager : MonoBehaviour
     {
         isGameStart = false;
         isClear = true;
+        
         StartCoroutine(ServerManager.Instance.UpdateDate());
     }
 
     public void ShowResultUI()
     {
-        //°ÔÀÓ °á°úÃ¢ On
+        //ê²Œì„ ê²°ê³¼ì°½ On
     }
 
 }
