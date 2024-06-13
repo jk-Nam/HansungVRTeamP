@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01_Scenes/Photon01.unity
     guid: b51533a1d0c15eb48aaaff675c42561e
+  - enabled: 1
+    path: Assets/01_Scenes/MainSceneRay.unity
+    guid: 37d4ca8ec98343045af846c68e93d71b
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: b00336af04ad8554c88d744d7ba635b3,
       type: 2}

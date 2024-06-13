@@ -164,29 +164,43 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-    #region 채팅
+    #region RPC
     //public void Send()
     //{
     //    PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text);
     //    ChatInput.text = "";
     //}
 
-    //[PunRPC] // RPC는 플레이어가 속해있는 방 모든 인원에게 전달한다
-    //void ChatRPC(string msg)
+    //[punrpc] // rpc는 플레이어가 속해있는 방 모든 인원에게 전달한다
+    //void chatrpc(string msg)
     //{
-    //    bool isInput = false;
-    //    for (int i = 0; i < ChatText.Length; i++)
-    //        if (ChatText[i].text == "")
+    //    bool isinput = false;
+    //    for (int i = 0; i < chattext.length; i++)
+    //        if (chattext[i].text == "")
     //        {
-    //            isInput = true;
-    //            ChatText[i].text = msg;
+    //            isinput = true;
+    //            chattext[i].text = msg;
     //            break;
     //        }
-    //    if (!isInput) // 꽉차면 한칸씩 위로 올림
+    //    if (!isinput) // 꽉차면 한칸씩 위로 올림
     //    {
-    //        for (int i = 1; i < ChatText.Length; i++) ChatText[i - 1].text = ChatText[i].text;
-    //        ChatText[ChatText.Length - 1].text = msg;
+    //        for (int i = 1; i < chattext.length; i++) chattext[i - 1].text = chattext[i].text;
+    //        chattext[chattext.length - 1].text = msg;
     //    }
     //}
+
+    [PunRPC] 
+    void GameOverRPC()
+    {
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager != null)
+        {
+            gameManager.GameOver();
+        }
+        else
+        {
+            Debug.LogError("GameManager 스크립트를 찾을 수 없습니다.");
+        }
+    }
     #endregion
 }

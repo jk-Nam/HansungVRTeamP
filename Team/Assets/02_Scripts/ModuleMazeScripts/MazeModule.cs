@@ -21,7 +21,7 @@ public class MazeModule : BombModule
     void Start()
     {
         // 플레이어의 초기 위치 저장
-        initialPosition = player.transform.position;
+        initialPosition = player.transform.localPosition;
 
         // UI 버튼 클릭 이벤트 리스너 추가
         upButton.onClick.AddListener(MoveUp);
@@ -77,8 +77,12 @@ public class MazeModule : BombModule
         {
             // 플레이어의 위치를 초기 위치로 리셋
             Debug.Log("실패");
-            player.transform.position = initialPosition;
+            player.transform.localPosition = initialPosition;
             //Fail();
+
+
+
+
 
 
         }
