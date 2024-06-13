@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class MazeModule : BombModule
 {
-    public GameObject player; // ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®
+    public GameObject player; // í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸
     public GameObject Goal;
 
-    public float moveAmount = 0.1f; // ÀÌµ¿·®
+    public float moveAmount = 0.1f; // ì´ë™ëŸ‰
 
-    // UI ¹öÆ°À» ¿¬°áÇÒ º¯¼ö
+    // UI ë²„íŠ¼ì„ ì—°ê²°í•  ë³€ìˆ˜
     public UnityEngine.UI.Button upButton;
     public UnityEngine.UI.Button downButton;
     public UnityEngine.UI.Button leftButton;
@@ -20,10 +20,10 @@ public class MazeModule : BombModule
 
     void Start()
     {
-        // ÇÃ·¹ÀÌ¾îÀÇ ÃÊ±â À§Ä¡ ÀúÀå
+        // í”Œë ˆì´ì–´ì˜ ì´ˆê¸° ìœ„ì¹˜ ì €ì¥
         initialPosition = player.transform.position;
 
-        // UI ¹öÆ° Å¬¸¯ ÀÌº¥Æ® ¸®½º³Ê Ãß°¡
+        // UI ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ ì¶”ê°€
         upButton.onClick.AddListener(MoveUp);
         downButton.onClick.AddListener(MoveDown);
         leftButton.onClick.AddListener(MoveLeft);
@@ -34,23 +34,23 @@ public class MazeModule : BombModule
 
     public override void InitiallizeModule()
     {
-        // ¸ğµâ ÃÊ±âÈ­ ÄÚµå (ÇÊ¿ä¿¡ µû¶ó Ãß°¡)
+        // ëª¨ë“ˆ ì´ˆê¸°í™” ì½”ë“œ (í•„ìš”ì— ë”°ë¼ ì¶”ê°€)
         moduleType = BombMoudleType.Maze;
     }
 
     public override void DefuseModule()
     {
         isDefused = true;
-        // ¸ğµâ ÇØÁ¦ ½Ã ÇÊ¿äÇÑ Ãß°¡ µ¿ÀÛ
+        // ëª¨ë“ˆ í•´ì œ ì‹œ í•„ìš”í•œ ì¶”ê°€ ë™ì‘
     }
 
-    public override void Fail()
-    {
-       // incorrectCnt++;
-        // ½ÇÆĞ ½Ã ÇÊ¿äÇÑ Ãß°¡ µ¿ÀÛ
-    }
+    //public override void Fail()
+    //{
+    //   // incorrectCnt++;
+    //    // ì‹¤íŒ¨ ì‹œ í•„ìš”í•œ ì¶”ê°€ ë™ì‘
+    //}
 
-    // ¹öÆ° ÀÔ·Â¿¡ µû¸¥ ÀÌµ¿ ÇÔ¼ö
+    //// ë²„íŠ¼ ì…ë ¥ì— ë”°ë¥¸ ì´ë™ í•¨ìˆ˜
     void MoveUp()
     {
         player.transform.Translate(Vector3.up * moveAmount);
@@ -75,16 +75,16 @@ public class MazeModule : BombModule
     {
         if (other.gameObject.CompareTag("MazeWall"))
         {
-            // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ ÃÊ±â À§Ä¡·Î ¸®¼Â
-            Debug.Log("½ÇÆĞ");
+            // í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ë¥¼ ì´ˆê¸° ìœ„ì¹˜ë¡œ ë¦¬ì…‹
+            Debug.Log("ì‹¤íŒ¨");
             player.transform.position = initialPosition;
-            Fail();
+            //Fail();
 
 
         }
         else if (other.gameObject.CompareTag("MazeGoal"))
         {
-            Debug.Log("Å¬¸®¾î!");
+            Debug.Log("í´ë¦¬ì–´!");
             DefuseModule();
         }
 
