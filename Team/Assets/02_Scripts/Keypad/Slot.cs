@@ -12,7 +12,6 @@ public class Slot : MonoBehaviour
 
     public Image image; // 변하는 이미지 선언
 
-
     //아이템 장착 함수 정의 (아이템 정보)
     public void SetItem(ItemProperty item)
     {

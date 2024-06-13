@@ -1,4 +1,5 @@
 using Oculus.Interaction;
+using Photon.Pun.Demo.PunBasics;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,6 +8,8 @@ using UnityEngine.UI;
 
 public class KeypadSlot : MonoBehaviour
 {
+    public GameManager gameManager; //게임매니저 연동
+
     public ItemBuffer itemBuffer; //아이템 리스트
     public GameObject keyRoot; //심볼이 들어갈 장소
     private List<Slot> keySlot; //메뉴얼 심볼 리스트
@@ -15,16 +18,46 @@ public class KeypadSlot : MonoBehaviour
     private List<int> truekey2; //작성용 리스트
     private List<int> falsekey; //문제용 리스트
 
-    public Image mainLight; //메인 신호등
+    public GameObject mainLight; //메인 신호등
+    private bool isRed = false; //키패드 정답확인
+
+    private int clickKey = 0; //누른 버튼들의 수
+    private int itemName; //버튼 아이템 이름
+
+    public float delayTime = 1.0f; //오답 후 지연시간
+    public int incorrectMax = 3; //오답 최대치
+    public bool isKeypadFail = false;//폭파 원인 제공
 
     void Start()
     {
         itemBuffer = GameObject.Find("KeypadScript").GetComponent<ItemBuffer>();
 
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        //게임매니저 누적값 초기화 확인
+        if (gameManager.incorrectCnt == 0 && gameManager.defuesedCnt == 0)
+        {
+            //게임 준비
+            ReStart();
+            OffLight();
+        }
+    }
+
+    void Update()
+    {
+
+        //오답 3번 누적되거나 정답 누적수가 모듈수와 같으면 멈춤
+        if (gameManager.isGameOver || gameManager.incorrectCnt >= incorrectMax)
+        {
+            GameStop();
+        }
+    }
+
+    //새 게임시 호출하면 문제를 생성한다
+    void ReStart()
+    {
         //6줄 중에서 랜덤으로 1줄 선택 한다
         selectLine = Random.Range(0, 6);
-
-        //keyRoot = new List<Slot>(); //슬롯 리스트 정의
 
         //넣어야 할 문양번호 리스트
         List<int> numbers = new List<int>()
@@ -59,7 +92,7 @@ public class KeypadSlot : MonoBehaviour
             falsekey.Add(truekey2[j]); //키패드버튼
             truekey2.RemoveAt(j); //사용한 심볼은 제거
         }
-        
+
         keySlot = new List<Slot>(); //슬롯 리스트 정의
         for (int i = 0; i < keyRoot.transform.childCount; i++)
         {
@@ -69,8 +102,7 @@ public class KeypadSlot : MonoBehaviour
             keySlot.Add(slot); //버튼 리스트 작성
         }
 
-        //모듈시작 또는 타이머 시작 
-        OffLight();
+        isKeypadFail = false; //원인제공 초기화
     }
 
     //신호등 초기화
@@ -78,17 +110,18 @@ public class KeypadSlot : MonoBehaviour
     {
         //메인 신호등에 꺼짐 신호를 보낸다
         //메인 신호등이 검은색으로 된다
+        mainLight.GetComponent<Image>().color = Color.black;
         //동시에 4개 버튼 신호등도 검은색이 된다
-        mainLight.color = Color.black;
         for (int i = 0; i < keyRoot.transform.childCount; i++)
         {
             Transform child = keyRoot.transform.GetChild(i).GetChild(1);
-            Image image = child.GetComponent<Image>();
-            image.color = Color.black;
+            Image mark = child.GetComponent<Image>();
+            mark.color = Color.black;
         }
+        isRed = false; //메인 신호등을 초기화 한다.
 
         //비교전용 리스트도 초기화 한다
-        truekey2.Clear(); //제출용 리스트로 재활용
+        //truekey2.Clear(); //제출용 리스트로 재활용
 
         //버튼의 기능이 활성화 된다
         for (int i = 0; i < keyRoot.transform.childCount; i++)
@@ -97,21 +130,105 @@ public class KeypadSlot : MonoBehaviour
             Button button = child.GetComponent<Button>();
             button.interactable = true;
         }
+
+        clickKey = 0; //누른 버튼이 없을 때
     }
 
     //신호등 작동
     //4개 각각 버튼에서 빨간불 or 초록불이 들어온다
-    //누른 버튼에서 정답 리스트와 비교한다
-    //리스트와 일치하면 누른 버튼 신호등이 초록불
-    //리스트와 불일치하면 누른 버튼 신호등이 빨간불
-    //누른 버튼의 신도등이 들어오면 해당 버튼 기능 정지
-    //버튼 신호등이 4개가 되면 비교용 리스트 내용이 4개 채워진다
-    //비교용 리스트내용 4개가 되면 메인신호등의 불이 들어온다
-    //4개 모두 초록불이면 메인신호등이 초록불과 정답처리
-    //초록불 4개가 아니면 메인신호등이 빨간불과 오답처리
+    public void OnClickKey(Slot slot)
+    {
+        itemName = int.Parse(slot.item.name); //입력 확인용
+        Transform child = slot.transform.GetChild(1); //신호등
+        Image mark = child.GetComponent<Image>(); //이미지설정
+        //누른 버튼에서 정답 리스트와 비교한다
+        if (truekey[clickKey] == itemName)
+        {
+            //리스트와 일치하면 누른 버튼 신호등이 초록불
+            mark.color = Color.green;
+        }
+        else
+        {
+            //리스트와 불일치하면 누른 버튼 신호등이 빨간불
+            mark.color = Color.red;
+            isRed = true;
+        }
 
-    //정답처리는 키패드정지, 게임매니저에 정답누적 한다
-    //오답처리는 키패드지연시간(?초), 게임매니저에 오답누적 한다
-    //게임매니저 누적이 2개 이하면, 지연시간 후 신호등 초기화
+        //누른 버튼의 신도등이 들어오면 해당 버튼 기능 정지
+        Button button = slot.GetComponent<Button>();
+        button.interactable = false; //버튼 비활성화
+        clickKey++; //버튼을 누르면 증가
+
+        //버튼 신호등이 4개가 되면 비교용 리스트 내용이 4개 채워진다
+        //truekey2.Add(itemName);
+        if (clickKey == 4)
+        {
+            MainLightOn();
+        }
+    }
+    //비교용 리스트내용 4개가 되면 메인신호등의 불이 들어온다
+    void MainLightOn()
+    {
+        if (!isRed)
+        {
+            mainLight.GetComponent<Image>().color = Color.green;
+            //4개 모두 초록불이면 메인신호등이 초록불과
+            gameManager.defuesedCnt++; //정답처리
+            //정답처리는 키패드정지, 게임매니저에 정답누적 한다
+        }
+        else
+        {
+            mainLight.GetComponent<Image>().color = Color.red;
+            //초록불 4개가 아니면 메인신호등이 빨간불과
+            gameManager.incorrectCnt++; //오답처리
+            //게임매니저에 오답누적 한다
+            isKeypadFail = true; //폭파원인
+
+            StartCoroutine(ErrorEvent()); //오답 이벤트
+        }
+    }
+
+    IEnumerator ErrorEvent()
+    {
+        //게임매니저 누적 여유가 있으면, 지연시간 후 신호등 초기화
+        yield return new WaitForSecondsRealtime(delayTime);
+        if (gameManager.incorrectCnt < incorrectMax )
+        {
+            OffLight(); //재도전
+        }
+        else
+        {
+            GameStop(); //게임중단
+        }
+    }
+
+    //게임오버 이벤트
+    void GameStop()
+    {
+        //버튼의 기능이 비활성화 된다
+        for (int i = 0; i < keyRoot.transform.childCount; i++)
+        {
+            Transform child = keyRoot.transform.GetChild(i);
+            Button button = child.GetComponent<Button>();
+            button.interactable = false;
+        }
+
+        // 빨간불이 들어온다
+        mainLight.GetComponent<Image>().color = Color.red;
+        for (int i = 0; i < keyRoot.transform.childCount; i++)
+        {
+            Transform child = keyRoot.transform.GetChild(i).GetChild(1);
+            Image mark = child.GetComponent<Image>();
+            mark.color = Color.red;
+        }
+
+        gameManager.isGameOver = true; //게임 매니저 게임오버
+
+        if (isKeypadFail)
+        {
+            Debug.Log("폭파 원인 : 키패드"); 
+            //관련문구 추가반영
+        }
+    }
 
 }
