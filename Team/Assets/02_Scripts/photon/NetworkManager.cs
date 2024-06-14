@@ -192,6 +192,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [PunRPC] 
     void GameOverRPC()
     {
+        // GameManager 스크립트의 GameOver 호출
         GameManager gameManager = FindObjectOfType<GameManager>();
         if (gameManager != null)
         {

@@ -15,12 +15,12 @@ public class MazeModule : BombModule
     public UnityEngine.UI.Button downButton;
     public UnityEngine.UI.Button leftButton;
     public UnityEngine.UI.Button rightButton;
-
+    
     private Vector3 initialPosition;
 
     void Start()
     {
-        // 플레이어의 초기 위치 저장
+        // 플레이어의 초기 위치 저장 (로컬로 저장해야 함.)
         initialPosition = player.transform.localPosition;
 
         // UI 버튼 클릭 이벤트 리스너 추가
