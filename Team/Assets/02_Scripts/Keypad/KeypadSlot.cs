@@ -35,12 +35,12 @@ public class KeypadSlot : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         //게임매니저 누적값 초기화 확인
-        if (gameManager.incorrectCnt == 0 && gameManager.defuesedCnt == 0)
-        {
-            //게임 준비
-            ReStart();
-            //OffLight();
-        }
+        //if (gameManager.incorrectCnt == 0 && gameManager.defuesedCnt == 0)
+        //{
+        //    //게임 준비
+        //    ReStart();
+        //    //OffLight();
+        //}
     }
 
     void Update()
@@ -51,6 +51,11 @@ public class KeypadSlot : MonoBehaviour
             isKeyReady = false; //새 게임에 1번씩만 허용
             //defuesedMax = gameManager.totalModuleCnt; //정답 최대치
             OffLight(); //스타트와 동시에 버튼 활성화
+        }
+        else if (gameManager.incorrectCnt == 0 && gameManager.defuesedCnt == 0 && !gameManager.isGameStart)
+        {
+            //누적카운터 = 0 , 게임스타트 = false 상태
+            ReStart(); //새 게임 한 번 준비
         }
 
         //게임오버가 감지되거나 오답 최대치가 되면 멈춤
@@ -63,11 +68,13 @@ public class KeypadSlot : MonoBehaviour
     //새 게임시 호출하면 문제를 생성한다
     void ReStart()
     {
-        //6줄 중에서 랜덤으로 1줄 선택 한다
-        selectLine = Random.Range(0, 6);
+        if (!isKeyReady)
+        {
+            //6줄 중에서 랜덤으로 1줄 선택 한다
+            selectLine = Random.Range(0, 6);
 
-        //넣어야 할 문양번호 리스트
-        List<int> numbers = new List<int>()
+            //넣어야 할 문양번호 리스트
+            List<int> numbers = new List<int>()
         {   28, 13, 30, 12, 7, 9, 23,
             16, 28, 23, 26, 3, 9, 20,
             1, 8, 26, 5, 15, 30, 3,
@@ -76,41 +83,43 @@ public class KeypadSlot : MonoBehaviour
             11, 16, 27, 14, 24, 18, 6
         };
 
-        //선택한 줄을 리스트로 만든다.
-        truekey = new List<int>();
-        truekey2 = new List<int>();
-        for (int i = 0; i < 7; i++)
-        {
-            truekey.Add(numbers[i + (7 * selectLine)]);
-            truekey2.Add(numbers[i + (7 * selectLine)]);
-        }
-        //선택한 줄에서 4개로 정답을 만든다.
-        for (int i = 0; i < 3; i++)
-        {
-            int j = Random.Range(0, 7 - i);
-            truekey.RemoveAt(j);
-            truekey2.RemoveAt(j); //정답리스트 2개 작성
-        }
-        //문제용 4개를 임의로 섞는다. 
-        falsekey = new List<int>();
-        for (int i = 0; i < 4; i++)
-        {
-            int j = Random.Range(0, 4 - i);
-            falsekey.Add(truekey2[j]); //키패드버튼
-            truekey2.RemoveAt(j); //사용한 심볼은 제거
+            //선택한 줄을 리스트로 만든다.
+            truekey = new List<int>();
+            truekey2 = new List<int>();
+            for (int i = 0; i < 7; i++)
+            {
+                truekey.Add(numbers[i + (7 * selectLine)]);
+                truekey2.Add(numbers[i + (7 * selectLine)]);
+            }
+            //선택한 줄에서 4개로 정답을 만든다.
+            for (int i = 0; i < 3; i++)
+            {
+                int j = Random.Range(0, 7 - i);
+                truekey.RemoveAt(j);
+                truekey2.RemoveAt(j); //정답리스트 2개 작성
+            }
+            //문제용 4개를 임의로 섞는다. 
+            falsekey = new List<int>();
+            for (int i = 0; i < 4; i++)
+            {
+                int j = Random.Range(0, 4 - i);
+                falsekey.Add(truekey2[j]); //키패드버튼
+                truekey2.RemoveAt(j); //사용한 심볼은 제거
+            }
+
+            keySlot = new List<Slot>(); //슬롯 리스트 정의
+            for (int i = 0; i < keyRoot.transform.childCount; i++)
+            {
+                var slot = keyRoot.transform.GetChild(i).GetComponent<Slot>();
+                int j = falsekey[i];
+                slot.SetItem(itemBuffer.items[j]); //버튼 이미지삽입
+                keySlot.Add(slot); //버튼 리스트 작성
+            }
+
+            isKeypadFail = false; //원인제공 초기화
+            isKeyReady = true; //키패드 준비완료
         }
 
-        keySlot = new List<Slot>(); //슬롯 리스트 정의
-        for (int i = 0; i < keyRoot.transform.childCount; i++)
-        {
-            var slot = keyRoot.transform.GetChild(i).GetComponent<Slot>();
-            int j = falsekey[i];
-            slot.SetItem(itemBuffer.items[j]); //버튼 이미지삽입
-            keySlot.Add(slot); //버튼 리스트 작성
-        }
-
-        isKeypadFail = false; //원인제공 초기화
-        isKeyReady = true; //키패드 준비완료
     }
 
     //신호등 초기화
@@ -209,7 +218,7 @@ public class KeypadSlot : MonoBehaviour
     {
         //게임매니저 누적 여유가 있으면, 지연시간 후 신호등 초기화
         yield return new WaitForSecondsRealtime(delayTime);
-        if (gameManager.incorrectCnt < incorrectMax )
+        if (gameManager.incorrectCnt < incorrectMax)
         {
             OffLight(); //재도전
         }
@@ -247,7 +256,7 @@ public class KeypadSlot : MonoBehaviour
 
         if (isKeypadFail)
         {
-            Debug.Log("폭파 원인 : 키패드"); 
+            Debug.Log("폭파 원인 : 키패드");
             //관련문구 추가반영
         }
     }
