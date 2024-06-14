@@ -43,7 +43,7 @@ public class Slot : MonoBehaviour
 
     }
 
-    //판매버튼 함수를 정의한다
+    //아이템 제거 함수를 정의한다
     public void OnClickSellBtn()
     {
         //아이템 넣는 함수에 널값을 넣는다

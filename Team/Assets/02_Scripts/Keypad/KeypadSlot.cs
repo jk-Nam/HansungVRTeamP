@@ -1,8 +1,5 @@
-using Oculus.Interaction;
-using Photon.Pun.Demo.PunBasics;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,7 +23,10 @@ public class KeypadSlot : MonoBehaviour
 
     public float delayTime = 1.0f; //오답 후 지연시간
     public int incorrectMax = 3; //오답 최대치
+    //public int defuesedMax = 2; //정답 최대치
     public bool isKeypadFail = false;//폭파 원인 제공
+
+    public bool isKeyReady = false; //게임준비상태
 
     void Start()
     {
@@ -39,14 +39,21 @@ public class KeypadSlot : MonoBehaviour
         {
             //게임 준비
             ReStart();
-            OffLight();
+            //OffLight();
         }
     }
 
     void Update()
     {
+        //게임매니저의 스타트를 확인한다.
+        if (gameManager.isGameStart && isKeyReady)
+        {
+            isKeyReady = false; //새 게임에 1번씩만 허용
+            //defuesedMax = gameManager.totalModuleCnt; //정답 최대치
+            OffLight(); //스타트와 동시에 버튼 활성화
+        }
 
-        //오답 3번 누적되거나 정답 누적수가 모듈수와 같으면 멈춤
+        //게임오버가 감지되거나 오답 최대치가 되면 멈춤
         if (gameManager.isGameOver || gameManager.incorrectCnt >= incorrectMax)
         {
             GameStop();
@@ -103,6 +110,7 @@ public class KeypadSlot : MonoBehaviour
         }
 
         isKeypadFail = false; //원인제공 초기화
+        isKeyReady = true; //키패드 준비완료
     }
 
     //신호등 초기화
@@ -175,6 +183,15 @@ public class KeypadSlot : MonoBehaviour
             //4개 모두 초록불이면 메인신호등이 초록불과
             gameManager.defuesedCnt++; //정답처리
             //정답처리는 키패드정지, 게임매니저에 정답누적 한다
+            //누적된 정답이 최대치가 되면 알려준다.
+            if (gameManager.defuesedCnt == gameManager.totalModuleCnt)
+            {
+                Debug.Log("모든 모듈을 풀었습니다.");
+            }
+            else
+            {
+                Debug.Log("키패드 모듈을 풀었습니다.");
+            }
         }
         else
         {
@@ -222,7 +239,11 @@ public class KeypadSlot : MonoBehaviour
             mark.color = Color.red;
         }
 
-        gameManager.isGameOver = true; //게임 매니저 게임오버
+        //게임매니저의 타이머를 중지해야 한다
+        if (gameManager.isGameStart)
+        {
+            gameManager.GameOver(); //게임 매니저 게임오버
+        }
 
         if (isKeypadFail)
         {
