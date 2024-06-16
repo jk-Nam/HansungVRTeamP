@@ -11,7 +11,12 @@ public class WiresModule : BombModule
 
     Bomb bomb;
 
+    public GameObject wirePrefab;
+    public List<Transform> wirePos;
+
     public List<string> wireColor = new List<string> { "Red", "Blue", "Black", "White", "Yellow" };
+
+    public List<Material> mats;
 
     int wireCnt;
     public int correctWireNum;
@@ -27,12 +32,12 @@ public class WiresModule : BombModule
         DefuseModule();
     }
 
+    //모듈 초기화
     public override void InitiallizeModule()
     {
         GameManager.Instance.defuesedCnt = 0;
         GameManager.Instance.incorrectCnt = 0;
         wireCnt = Random.Range(3, 6);
-        //wireCnt = 5;
         Debug.Log("Wire의 수는 " + wireCnt + "개 입니다.");
     }
 
@@ -40,7 +45,7 @@ public class WiresModule : BombModule
     {
         switch (wireCnt)
         {
-            case 3:
+            case 3: //와이어의 갯수가 3개일 경우
                 List<string> ThreeColor = GetRandomColors(wireColor, 3);
                 foreach (string color in ThreeColor)
                 {
@@ -83,7 +88,8 @@ public class WiresModule : BombModule
                     Debug.Log("1-5 잘라야 하는 와이어 : " + correctWireNum + "번");
                 }
                 break;
-            case 4:
+
+            case 4: //와이어의 갯수가 4개일 경우
                 List<string> fourColor = GetRandomColors(wireColor, 4);
                 foreach (string color in fourColor)
                 {
@@ -125,7 +131,8 @@ public class WiresModule : BombModule
                     }
                 }
                 break;
-            case 5:
+
+            case 5: //와이어의 갯수가 5개일 경우
                 List<string> fiveColor = GetRandomColors(wireColor, 5);
                 foreach (string color in fiveColor)
                 {
@@ -163,6 +170,7 @@ public class WiresModule : BombModule
 
     }
 
+    //와이어 색깔 랜덤 배정
     List<string> GetRandomColors(List<string> colors, int count)
     {
         List<string> rColors = new List<string>();
@@ -174,6 +182,15 @@ public class WiresModule : BombModule
         }
 
         return rColors;
+    }
+
+    void CreateWires()
+    {
+        for (int i = 0; i < wireCnt; i++)
+        {
+            GameObject go_Wire = Instantiate(wirePrefab, transform.position, Quaternion.identity);
+            
+        }
     }
 
     public void CutWire(int idx)

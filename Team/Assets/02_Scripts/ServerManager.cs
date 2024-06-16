@@ -77,7 +77,7 @@ public class ServerManager : MonoBehaviour
         }
         else
         {
-            if (www.downloadHandler.text == "Success")
+            if (www.downloadHandler.text == "Success") 
             {
                 Debug.Log(www.downloadHandler.text);
                 Debug.Log("로그인 성공!!!");
@@ -94,8 +94,6 @@ public class ServerManager : MonoBehaviour
     IEnumerator CheckUserId()
     {
         WWWForm form = new WWWForm();
-
-        //form.AddField("userId", uniqueId);
 
         UnityWebRequest www = UnityWebRequest.Post(checkIdURL, form);
         yield return www.SendWebRequest();
@@ -115,7 +113,7 @@ public class ServerManager : MonoBehaviour
         }
         else
         {
-            if (www.downloadHandler.text == "Exist")
+            if (www.downloadHandler.text == "Exist") //계정 중복 체크
             {
                 Debug.Log("아이디 중복");
                 StartCoroutine(LogIn());
@@ -144,7 +142,7 @@ public class ServerManager : MonoBehaviour
         else
         {
             Debug.Log(www.downloadHandler.text);
-            Debug.Log("고유 아이디 생성 완료");
+            Debug.Log("고유 아이디 생성 완료"); //오브젝트 ID를 고유 아이디로 설정
             UnityWebRequest www2 = UnityWebRequest.Post(userInfoURL, form);
             yield return www2.SendWebRequest();
             var jsonData = SimpleJSON.JSON.Parse(www2.downloadHandler.text);
@@ -267,7 +265,7 @@ public class ServerManager : MonoBehaviour
         WWWForm form = new WWWForm();
 
         //form.AddField("userId", PlayerPrefs.GetString("PlayerID"));
-        form.AddField("difficulty", difficultyNum);
+        form.AddField("difficulty", difficultyNum); //난이도 별로 랭킹 보여주기
 
         UnityWebRequest www = UnityWebRequest.Post(rankingURL, form);
 

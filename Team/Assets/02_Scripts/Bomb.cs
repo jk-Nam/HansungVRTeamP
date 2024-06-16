@@ -16,14 +16,7 @@ public class Bomb : MonoBehaviour
 
     void Start()
     {
-        //for (int i = 0; i < 5; i++)
-        //{
-        //    GameObject module = Instantiate(module1, modulesTr[i].transform.position, modulesTr[i].transform.rotation);
-        //    module.name = modulesTr[i].name;
-        //    module.transform.SetParent(modulesTr[i].transform);
-        //}
-        
-
+        //모듈 랜덤 생성
         for (int i = 0; i < modules.Count + 1 ; i++)
         {
             int rModuleNum = Random.Range(0, modules.Count);
@@ -51,9 +44,9 @@ public class Bomb : MonoBehaviour
 
     public void Fail()
     {
-        //���ӿ���
+        
         GameManager.Instance.GameOver();
-        //���� ����Ʈ ����
+        //실패 시 이팩트 생성
         //Instantiate(bomb.expEffect, bomb.transform.position, bomb.transform.rotation);
     }
 }

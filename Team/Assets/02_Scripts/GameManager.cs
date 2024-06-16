@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
             
             if (timer <= 0)
             {
-                isGameOver = true;
+                GameOver();
                 Debug.Log("폭탄이 폭발하였습니다!!!");
                 return;
             }
@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
     public void ShowResultUI()
     {
         //게임 결과창 On
+
     }
 
 }
