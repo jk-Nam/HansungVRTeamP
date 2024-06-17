@@ -5,32 +5,25 @@ using UnityEngine;
 
 public class MazeModule : BombModule
 {
-    public GameObject player; // í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸
+    public GameObject player; // ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®
     public GameObject Goal;
 
-    public float moveAmount = 0.1f; // ì´ë™ëŸ‰
+    public float moveAmount = 0.1f; // ÀÌµ¿·®
 
-    // UI ë²„íŠ¼ì„ ì—°ê²°í•  ë³€ìˆ˜
+    // UI ¹öÆ°À» ¿¬°áÇÒ º¯¼ö
     public UnityEngine.UI.Button upButton;
     public UnityEngine.UI.Button downButton;
     public UnityEngine.UI.Button leftButton;
     public UnityEngine.UI.Button rightButton;
-    
+
     private Vector3 initialPosition;
-
-    Bomb bomb;
-
-    private void Awake()
-    {
-       // bomb = GameObject.FindGameObjectWithTag("BOMB").GetComponent<Bomb>();
-    }
 
     void Start()
     {
-        // í”Œë ˆì´ì–´ì˜ ì´ˆê¸° ìœ„ì¹˜ ì €ì¥ (ë¡œì»¬ë¡œ ì €ì¥í•´ì•¼ í•¨.)
-        initialPosition = player.transform.localPosition;
+        // ÇÃ·¹ÀÌ¾îÀÇ ÃÊ±â À§Ä¡ ÀúÀå
+        initialPosition = player.transform.position;
 
-        // UI ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ ì¶”ê°€
+        // UI ¹öÆ° Å¬¸¯ ÀÌº¥Æ® ¸®½º³Ê Ãß°¡
         upButton.onClick.AddListener(MoveUp);
         downButton.onClick.AddListener(MoveDown);
         leftButton.onClick.AddListener(MoveLeft);
@@ -41,28 +34,23 @@ public class MazeModule : BombModule
 
     public override void InitiallizeModule()
     {
-        // ëª¨ë“ˆ ì´ˆê¸°í™” ì½”ë“œ (í•„ìš”ì— ë”°ë¼ ì¶”ê°€)
+        // ¸ğµâ ÃÊ±âÈ­ ÄÚµå (ÇÊ¿ä¿¡ µû¶ó Ãß°¡)
         moduleType = BombMoudleType.Maze;
     }
 
     public override void DefuseModule()
     {
         isDefused = true;
-        GameManager.Instance.defuesedCnt++;
-        if (GameManager.Instance.defuesedCnt == GameManager.Instance.totalModuleCnt)
-        {
-            GameManager.Instance.GameClear();
-        }
-        // ëª¨ë“ˆ í•´ì œ ì‹œ í•„ìš”í•œ ì¶”ê°€ ë™ì‘
+        // ¸ğµâ ÇØÁ¦ ½Ã ÇÊ¿äÇÑ Ãß°¡ µ¿ÀÛ
     }
 
     //public override void Fail()
     //{
     //   // incorrectCnt++;
-    //    // ì‹¤íŒ¨ ì‹œ í•„ìš”í•œ ì¶”ê°€ ë™ì‘
+    //    // ½ÇÆĞ ½Ã ÇÊ¿äÇÑ Ãß°¡ µ¿ÀÛ
     //}
 
-    //// ë²„íŠ¼ ì…ë ¥ì— ë”°ë¥¸ ì´ë™ í•¨ìˆ˜
+    // ¹öÆ° ÀÔ·Â¿¡ µû¸¥ ÀÌµ¿ ÇÔ¼ö
     void MoveUp()
     {
         player.transform.Translate(Vector3.up * moveAmount);
@@ -80,33 +68,23 @@ public class MazeModule : BombModule
 
     void MoveRight()
     {
-
         player.transform.Translate(Vector3.right * moveAmount);
-
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("MazeWall"))
         {
-            // í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ë¥¼ ì´ˆê¸° ìœ„ì¹˜ë¡œ ë¦¬ì…‹
-            Debug.Log("ì‹¤íŒ¨");
-            player.transform.localPosition = initialPosition;
-            //Fail();
-            GameManager.Instance.incorrectCnt++;
-            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ : " + GameManager.Instance.incorrectCnt);
-            if (GameManager.Instance.incorrectCnt >= 3)
-            {
-                bomb.Fail();
-                Debug.Log("Game Over!!!");
-            }
-
+            // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ ÃÊ±â À§Ä¡·Î ¸®¼Â
+            Debug.Log("½ÇÆĞ");
+            player.transform.position = initialPosition;
+         //   Fail();
 
 
         }
         else if (other.gameObject.CompareTag("MazeGoal"))
         {
-            Debug.Log("í´ë¦¬ì–´!");
+            Debug.Log("Å¬¸®¾î!");
             DefuseModule();
         }
 
