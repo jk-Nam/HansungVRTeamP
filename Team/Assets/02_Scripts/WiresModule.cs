@@ -173,7 +173,8 @@ public class WiresModule : BombModule
     List<string> GetRandomColors(List<string> colors, int count)
     {
         List<string> rColors = new List<string>();
-
+        
+        //색깔과 매테리얼 매칭
         Dictionary<string, Material> colorToMaterial = new Dictionary<string, Material>
         {
             { "Red", mats[0] },
@@ -188,11 +189,13 @@ public class WiresModule : BombModule
             int rIdx = Random.Range(0, colors.Count);
             rColors.Add(colors[rIdx]);
         
+            //와이어 생성
             GameObject go_Wire = Instantiate(wirePrefab, wirePos[i].position, Quaternion.identity);
             go_Wire.transform.SetParent(wirePos[i]);
             go_Wire.transform.localRotation = Quaternion.Euler(0, 90, 0);
             go_Wire.transform.localScale = new Vector3(40.0f, 2.0f, 2.0f);
 
+            //와이어 매테리얼 변경
             Renderer wireRenderer = go_Wire.GetComponentInChildren<Renderer>();
             if (wireRenderer != null && colorToMaterial.ContainsKey(colors[rIdx]))
             {

@@ -2730,54 +2730,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 24161593083302658, guid: 7592795d3facbef4aa1072449bb1c300,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 3500298370649363137, guid: 7592795d3facbef4aa1072449bb1c300,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 3827225239084002411, guid: 7592795d3facbef4aa1072449bb1c300,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838381400257971914, guid: 7592795d3facbef4aa1072449bb1c300,
-        type: 3}
-      propertyPath: module1
-      value: 
-      objectReference: {fileID: 5365832914944265769, guid: 05a185ea226972d4784139350ab2f267,
-        type: 3}
-    - target: {fileID: 4838381400257971914, guid: 7592795d3facbef4aa1072449bb1c300,
-        type: 3}
-      propertyPath: modules.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838381400257971914, guid: 7592795d3facbef4aa1072449bb1c300,
-        type: 3}
-      propertyPath: modules.Array.data[0]
-      value: 
-      objectReference: {fileID: 7235034780039352264, guid: 8053ddbebcbd0294eac08dad3f161269,
-        type: 3}
-    - target: {fileID: 4838381400257971914, guid: 7592795d3facbef4aa1072449bb1c300,
-        type: 3}
-      propertyPath: modules.Array.data[1]
-      value: 
-      objectReference: {fileID: 7235034780039352264, guid: 8053ddbebcbd0294eac08dad3f161269,
-        type: 3}
-    - target: {fileID: 5925370699877688384, guid: 7592795d3facbef4aa1072449bb1c300,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 7460420919711797337, guid: 7592795d3facbef4aa1072449bb1c300,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 8314425121067101438, guid: 7592795d3facbef4aa1072449bb1c300,
         type: 3}
       propertyPath: m_Name

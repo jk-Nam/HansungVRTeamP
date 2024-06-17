@@ -280,10 +280,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3398ce33c28c1e4b9bce0dd0b7cf999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  module1: {fileID: 5365832914944265769, guid: 32292f34e00729347875e715356f40f0, type: 3}
+  module1: {fileID: 5365832914944265769, guid: 05a185ea226972d4784139350ab2f267, type: 3}
   expEffect: {fileID: 0}
   modules:
-  - {fileID: 5365832914944265769, guid: 05a185ea226972d4784139350ab2f267, type: 3}
+  - {fileID: 7235034780039352264, guid: 8053ddbebcbd0294eac08dad3f161269, type: 3}
   modulesTr:
   - {fileID: 1759523115141074082}
   - {fileID: 7700246530851287817}
