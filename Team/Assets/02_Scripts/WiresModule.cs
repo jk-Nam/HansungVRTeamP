@@ -11,16 +11,19 @@ public class WiresModule : BombModule
 
     Bomb bomb;
 
-    public List<string> wireColor = new List<string> { "Red", "Blue", "Black", "White", "Yellow"};
+    public GameObject wirePrefab;
+    public Transform[] wirePos;
 
-    int wireCnt;
+    public List<string> wireColor = new List<string> { "Red", "Blue", "Black", "White", "Yellow" };
+    public List<Material> mats;
+
     public int correctWireNum;
+    int wireCnt;
 
     private void Awake()
     {
         bomb = GameObject.FindGameObjectWithTag("BOMB").GetComponent<Bomb>();
     }
-
 
     private void Start()
     {
@@ -28,20 +31,20 @@ public class WiresModule : BombModule
         DefuseModule();
     }
 
+    //모듈 초기화
     public override void InitiallizeModule()
     {
         GameManager.Instance.defuesedCnt = 0;
         GameManager.Instance.incorrectCnt = 0;
         wireCnt = Random.Range(3, 6);
-        //wireCnt = 5;
-        Debug.Log("Wire�� ���� " + wireCnt + "�� �Դϴ�.");
+        Debug.Log("Wire의 수는 " + wireCnt + "개 입니다.");
     }
 
     public override void DefuseModule()
     {
         switch (wireCnt)
         {
-            case 3:
+            case 3: //와이어의 갯수가 3개일 경우
                 List<string> ThreeColor = GetRandomColors(wireColor, 3);
                 foreach (string color in ThreeColor)
                 {
@@ -53,38 +56,39 @@ public class WiresModule : BombModule
                     if (wireColor[2] == "White")
                     {
                         correctWireNum = 3;
-                        Debug.Log("1-1 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                        Debug.Log("1-1 잘라야 하는 와이어 : " + correctWireNum + "번");
                     }
                     else
                     {
                         if (wireColor.FindAll(w => w == "Blue").Count >= 2)
                         {
-                            //�� �� ��, �� �� ��, �� �� ��
+                            //빨 파 파, 파 빨 파, 파 파 빨
                             if (wireColor[2] == "Blue")
                             {
                                 correctWireNum = 3;
-                                Debug.Log("1-2 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                                Debug.Log("1-2 잘라야 하는 와이어 : " + correctWireNum + "번");
                             }
                             else
                             {
                                 correctWireNum = 2;
-                                Debug.Log("1-3 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                                Debug.Log("1-3 잘라야 하는 와이어 : " + correctWireNum + "번");
                             }
                         }
                         else
                         {
                             correctWireNum = 3;
-                            Debug.Log("1-4 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                            Debug.Log("1-4 잘라야 하는 와이어 : " + correctWireNum + "번");
                         }
                     }
                 }
                 else
                 {
                     correctWireNum = 2;
-                    Debug.Log("1-5 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                    Debug.Log("1-5 잘라야 하는 와이어 : " + correctWireNum + "번");
                 }
-                    break;
-            case 4:
+                break;
+
+            case 4: //와이어의 갯수가 4개일 경우
                 List<string> fourColor = GetRandomColors(wireColor, 4);
                 foreach (string color in fourColor)
                 {
@@ -94,36 +98,40 @@ public class WiresModule : BombModule
                 if (wireColor.FindAll(w => w == "Red").Count >= 2)
                 {
                     correctWireNum = wireColor.FindLastIndex(str => str == "Red") + 1;
-                    Debug.Log("4-1 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                    Debug.Log("4-1 잘라야 하는 와이어 : " + correctWireNum + "번");
                 }
                 else
                 {
                     if (wireColor[3] == "Yellow" && !wireColor.Contains("Red"))
                     {
                         correctWireNum = 1;
-                        Debug.Log("4-2 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                        Debug.Log("4-2 잘라야 하는 와이어 : " + correctWireNum + "번");
                     }
                     else
                     {
-                        if(wireColor.FindAll(w => w == "Blue").Count == 1)
+                        if (wireColor.FindAll(w => w == "Blue").Count == 1)
                         {
                             correctWireNum = 1;
-                            Debug.Log("4-3 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                            Debug.Log("4-3 잘라야 하는 와이어 : " + correctWireNum + "번");
                         }
                         else
                         {
                             if (wireColor.FindAll(w => w == "Yellow").Count >= 2)
                             {
                                 correctWireNum = 4;
-                                Debug.Log("4-4 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                                Debug.Log("4-4 잘라야 하는 와이어 : " + correctWireNum + "번");
                             }
-                            correctWireNum = 2;
-                            Debug.Log("4-5 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                            else
+                            {
+                                correctWireNum = 2;
+                                Debug.Log("4-5 잘라야 하는 와이어 : " + correctWireNum + "번");
+                            }
                         }
                     }
                 }
                 break;
-            case 5:
+
+            case 5: //와이어의 갯수가 5개일 경우
                 List<string> fiveColor = GetRandomColors(wireColor, 5);
                 foreach (string color in fiveColor)
                 {
@@ -133,56 +141,78 @@ public class WiresModule : BombModule
                 if (wireColor[4] == "Black")
                 {
                     correctWireNum = 4;
-                    Debug.Log("5-1 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                    Debug.Log("5-1 잘라야 하는 와이어 : " + correctWireNum + "번");
                 }
                 else
                 {
                     if (wireColor.FindAll(w => w == "Red").Count == 1 && wireColor.FindAll(w => w == "Yellow").Count >= 2)
                     {
                         correctWireNum = 1;
-                        Debug.Log("5-2 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                        Debug.Log("5-2 잘라야 하는 와이어 : " + correctWireNum + "번");
                     }
                     else
                     {
                         if (!wireColor.Contains("Black"))
                         {
                             correctWireNum = 2;
-                            Debug.Log("5-3 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                            Debug.Log("5-3 잘라야 하는 와이어 : " + correctWireNum + "번");
                         }
                         else
                         {
                             correctWireNum = 1;
-                            Debug.Log("5-4 �߶�� �ϴ� ���̾� : " + correctWireNum + "��");
+                            Debug.Log("5-4 잘라야 하는 와이어 : " + correctWireNum + "번");
                         }
                     }
                 }
                 break;
         }
-        
+
     }
 
+    //와이어 색깔 랜덤 배정 및 생성
     List<string> GetRandomColors(List<string> colors, int count)
     {
         List<string> rColors = new List<string>();
+
+        Dictionary<string, Material> colorToMaterial = new Dictionary<string, Material>
+        {
+            { "Red", mats[0] },
+            { "Blue", mats[1] },
+            { "Black", mats[2] },
+            { "White", mats[3] },
+            { "Yellow", mats[4] }
+        };
 
         for (int i = 0; i < count; i++)
         {
             int rIdx = Random.Range(0, colors.Count);
             rColors.Add(colors[rIdx]);
+        
+            GameObject go_Wire = Instantiate(wirePrefab, wirePos[i].position, Quaternion.identity);
+            go_Wire.transform.SetParent(wirePos[i]);
+            go_Wire.transform.localRotation = Quaternion.Euler(0, 90, 0);
+            go_Wire.transform.localScale = new Vector3(40.0f, 2.0f, 2.0f);
+
+            Renderer wireRenderer = go_Wire.GetComponentInChildren<Renderer>();
+            if (wireRenderer != null && colorToMaterial.ContainsKey(colors[rIdx]))
+            {
+                wireRenderer.material = colorToMaterial[colors[rIdx]];
+            }
+
         }
 
         return rColors;
     }
-    
+
     public void CutWire(int idx)
     {
         if (!isDefused && GameManager.Instance.isGameStart && !GameManager.Instance.isGameOver)
         {
-            if (idx == GameManager.Instance.incorrectCnt)
+            if (idx == correctWireNum)
             {
                 isDefused = true;
                 GameManager.Instance.defuesedCnt++;
-                Debug.Log("���̾� ��� ���� ����");
+                Debug.Log("와이어 모듈 해제 성공");
                 if (GameManager.Instance.defuesedCnt == GameManager.Instance.totalModuleCnt)
                 {
                     GameManager.Instance.GameClear();
@@ -191,13 +221,13 @@ public class WiresModule : BombModule
             else
             {
                 GameManager.Instance.incorrectCnt++;
-                Debug.Log("���� �� : " + GameManager.Instance.incorrectCnt);
+                Debug.Log("오답 수 : " + GameManager.Instance.incorrectCnt);
                 if (GameManager.Instance.incorrectCnt >= 3)
                 {
                     bomb.Fail();
                     Debug.Log("Game Over!!!");
                 }
             }
-        }        
+        }
     }
 }
