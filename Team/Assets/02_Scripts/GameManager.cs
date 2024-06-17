@@ -1,15 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public enum Difficulty
     {
-        Easy = 1,
-        Hard = 2
+        Easy,
+        Hard
     }
 
     public Difficulty difficulty;
@@ -43,45 +41,40 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    void Start()
-    {
-        SelectDifficulty();
-        isGameOver = false;
-        isGameStart = false;
-    }
-
-
     private void Update()
     {
-        //ÌÉÄÏù¥Î®∏
-        if (isGameStart && (!isGameOver || !isClear))
+        //≈∏¿Ã∏”
+        if (isGameStart && (!isGameOver || isClear))
         {
             float dwTime = 0;
             dwTime += Time.deltaTime;
 
             timer -= dwTime;
-            
             if (timer <= 0)
             {
-                GameOver();
-                Debug.Log("Ìè≠ÌÉÑÏù¥ Ìè≠Î∞úÌïòÏòÄÏäµÎãàÎã§!!!");
+                isGameOver = true;
+                Debug.Log("∆¯≈∫¿Ã ∆¯πﬂ«œø¥Ω¿¥œ¥Ÿ!!!");
                 return;
             }
         }
     }
 
-    //ÎÇúÏù¥ÎèÑ ÏÑ§Ï†ï Í∏∞Î≥∏ÏùÄ Ïâ¨ÏõÄ
+    void Start()
+    {
+        isGameOver = false;
+        isGameStart = false;
+    }
+
+    //≥≠¿Ãµµ º≥¡§ ±‚∫ª¿∫ Ω¨øÚ
     public void SelectDifficulty()
     {
         switch (difficulty)
         {
             case Difficulty.Easy:
-                //totalModuleCnt = 2;
-                totalModuleCnt = 1;
+                totalModuleCnt = 2;
                 break;
             case Difficulty.Hard:
-                //totalModuleCnt = 3;
-                totalModuleCnt = 1;
+                totalModuleCnt = 3;
                 break;
             default:
                 totalModuleCnt = 2;
@@ -93,7 +86,6 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = false;
         isGameStart = true;
-        StartCoroutine(ServerManager.Instance.Result());
     }
 
     public void GameOver()
@@ -107,14 +99,11 @@ public class GameManager : MonoBehaviour
     {
         isGameStart = false;
         isClear = true;
-        
-        StartCoroutine(ServerManager.Instance.UpdateDate());
     }
 
     public void ShowResultUI()
     {
-        //Í≤åÏûÑ Í≤∞Í≥ºÏ∞Ω On
-
+        //∞‘¿” ∞·∞˙√¢ On
     }
 
 }

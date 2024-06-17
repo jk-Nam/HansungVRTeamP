@@ -1,4 +1,4 @@
-﻿// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // <copyright file="PhotonVoiceView.cs" company="Exit Games GmbH">
 // Photon Voice - Copyright (C) 2018 Exit Games GmbH
 // </copyright>
