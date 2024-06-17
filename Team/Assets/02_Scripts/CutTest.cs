@@ -12,6 +12,12 @@ public class CutTest : MonoBehaviour
     public Button cut5;
 
     WiresModule wire;
+
+    private void Start()
+    {
+        
+    }
+
     public void OnClickSetUp()
     {
         wire = GameObject.Find("WireModule").GetComponent<WiresModule>();

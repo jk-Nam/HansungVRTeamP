@@ -1,15 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public enum Difficulty
     {
-        Easy = 1,
-        Hard = 2
+        Easy,
+        Hard
     }
 
     public Difficulty difficulty;
@@ -43,18 +41,10 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    void Start()
-    {
-        SelectDifficulty();
-        isGameOver = false;
-        isGameStart = false;
-    }
-
-
     private void Update()
     {
         //타이머
-        if (isGameStart && (!isGameOver || !isClear))
+        if (isGameStart && (!isGameOver || isClear))
         {
             float dwTime = 0;
             dwTime += Time.deltaTime;
@@ -69,6 +59,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        isGameOver = false;
+        isGameStart = false;
+    }
+
     //난이도 설정 기본은 쉬움
     public void SelectDifficulty()
     {
@@ -78,8 +74,7 @@ public class GameManager : MonoBehaviour
                 totalModuleCnt = 2;
                 break;
             case Difficulty.Hard:
-                //totalModuleCnt = 3;
-                totalModuleCnt = 1;
+                totalModuleCnt = 3;
                 break;
             default:
                 totalModuleCnt = 2;
@@ -104,7 +99,6 @@ public class GameManager : MonoBehaviour
     {
         isGameStart = false;
         isClear = true;
-        StartCoroutine(ServerManager.Instance.UpdateDate());
     }
 
     public void ShowResultUI()
