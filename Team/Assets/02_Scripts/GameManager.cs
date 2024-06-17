@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -60,9 +60,10 @@ public class GameManager : MonoBehaviour
             dwTime += Time.deltaTime;
 
             timer -= dwTime;
+            
             if (timer <= 0)
             {
-                isGameOver = true;
+                GameOver();
                 Debug.Log("폭탄이 폭발하였습니다!!!");
                 return;
             }
@@ -75,7 +76,8 @@ public class GameManager : MonoBehaviour
         switch (difficulty)
         {
             case Difficulty.Easy:
-                totalModuleCnt = 2;
+                //totalModuleCnt = 2;
+                totalModuleCnt = 1;
                 break;
             case Difficulty.Hard:
                 //totalModuleCnt = 3;
@@ -91,6 +93,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = false;
         isGameStart = true;
+        StartCoroutine(ServerManager.Instance.Result());
     }
 
     public void GameOver()
@@ -104,12 +107,14 @@ public class GameManager : MonoBehaviour
     {
         isGameStart = false;
         isClear = true;
+        
         StartCoroutine(ServerManager.Instance.UpdateDate());
     }
 
     public void ShowResultUI()
     {
         //게임 결과창 On
+
     }
 
 }

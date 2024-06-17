@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Team/Assets/Photon/PhotonUnityNetworking/Demos/DemoSlotRacer/Kenney Assets/Stylized city/Materials.meta
+guid: 2c9fb77eb7fafa140830c99fe3361049
+=======
 guid: 2128240826bc6b24f9c4a64e7326efdb
+>>>>>>> parent of a25e866 (Merge branch 'Dev' into DEVN):Team/Assets/07_MyAssets/VP.studio3d/Wire_pack/Materials.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
