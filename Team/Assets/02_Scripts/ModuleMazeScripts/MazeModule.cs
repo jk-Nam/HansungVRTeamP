@@ -18,6 +18,13 @@ public class MazeModule : BombModule
     
     private Vector3 initialPosition;
 
+    Bomb bomb;
+
+    private void Awake()
+    {
+       // bomb = GameObject.FindGameObjectWithTag("BOMB").GetComponent<Bomb>();
+    }
+
     void Start()
     {
         // 플레이어의 초기 위치 저장 (로컬로 저장해야 함.)
@@ -41,6 +48,11 @@ public class MazeModule : BombModule
     public override void DefuseModule()
     {
         isDefused = true;
+        GameManager.Instance.defuesedCnt++;
+        if (GameManager.Instance.defuesedCnt == GameManager.Instance.totalModuleCnt)
+        {
+            GameManager.Instance.GameClear();
+        }
         // 모듈 해제 시 필요한 추가 동작
     }
 
@@ -68,7 +80,9 @@ public class MazeModule : BombModule
 
     void MoveRight()
     {
+
         player.transform.Translate(Vector3.right * moveAmount);
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -79,9 +93,13 @@ public class MazeModule : BombModule
             Debug.Log("실패");
             player.transform.localPosition = initialPosition;
             //Fail();
-
-
-
+            GameManager.Instance.incorrectCnt++;
+            Debug.Log("���� �� : " + GameManager.Instance.incorrectCnt);
+            if (GameManager.Instance.incorrectCnt >= 3)
+            {
+                bomb.Fail();
+                Debug.Log("Game Over!!!");
+            }
 
 
 
