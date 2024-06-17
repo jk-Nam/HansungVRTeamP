@@ -12,14 +12,13 @@ public class WiresModule : BombModule
     Bomb bomb;
 
     public GameObject wirePrefab;
-    public List<Transform> wirePos;
+    public Transform[] wirePos;
 
     public List<string> wireColor = new List<string> { "Red", "Blue", "Black", "White", "Yellow" };
-
     public List<Material> mats;
 
-    int wireCnt;
     public int correctWireNum;
+    int wireCnt;
 
     private void Awake()
     {
@@ -170,27 +169,39 @@ public class WiresModule : BombModule
 
     }
 
-    //와이어 색깔 랜덤 배정
+    //와이어 색깔 랜덤 배정 및 생성
     List<string> GetRandomColors(List<string> colors, int count)
     {
         List<string> rColors = new List<string>();
+
+        Dictionary<string, Material> colorToMaterial = new Dictionary<string, Material>
+        {
+            { "Red", mats[0] },
+            { "Blue", mats[1] },
+            { "Black", mats[2] },
+            { "White", mats[3] },
+            { "Yellow", mats[4] }
+        };
 
         for (int i = 0; i < count; i++)
         {
             int rIdx = Random.Range(0, colors.Count);
             rColors.Add(colors[rIdx]);
+        
+            GameObject go_Wire = Instantiate(wirePrefab, wirePos[i].position, Quaternion.identity);
+            go_Wire.transform.SetParent(wirePos[i]);
+            go_Wire.transform.localRotation = Quaternion.Euler(0, 90, 0);
+            go_Wire.transform.localScale = new Vector3(40.0f, 2.0f, 2.0f);
+
+            Renderer wireRenderer = go_Wire.GetComponentInChildren<Renderer>();
+            if (wireRenderer != null && colorToMaterial.ContainsKey(colors[rIdx]))
+            {
+                wireRenderer.material = colorToMaterial[colors[rIdx]];
+            }
+
         }
 
         return rColors;
-    }
-
-    void CreateWires()
-    {
-        for (int i = 0; i < wireCnt; i++)
-        {
-            GameObject go_Wire = Instantiate(wirePrefab, transform.position, Quaternion.identity);
-            
-        }
     }
 
     public void CutWire(int idx)
