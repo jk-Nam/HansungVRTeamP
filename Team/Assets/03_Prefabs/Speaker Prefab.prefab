@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 9038910553436070540}
   - component: {fileID: 2906290787602881153}
   - component: {fileID: 4741672876793956012}
-  - component: {fileID: 7640545148078217885}
-  - component: {fileID: -498112400895416539}
+  - component: {fileID: 271077959689038342}
+  - component: {fileID: -5934752624220104088}
   m_Layer: 0
   m_Name: Speaker Prefab
   m_TagString: Untagged
@@ -149,7 +149,7 @@ MonoBehaviour:
     Max: 1000
     SpeedUpPerc: 5
   restartOnDeviceChange: 1
---- !u!114 &7640545148078217885
+--- !u!114 &271077959689038342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,7 +171,7 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-498112400895416539
+--- !u!114 &-5934752624220104088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

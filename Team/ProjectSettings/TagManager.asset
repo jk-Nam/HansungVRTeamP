@@ -4,9 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - BOMB
+
+  - MazeWay
   - MazeGoal
   - MazeWall
+
+  - BOMB
+
   layers:
   - Default
   - TransparentFX
