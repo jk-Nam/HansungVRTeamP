@@ -508,6 +508,7 @@ GameObject:
   - component: {fileID: 1339232104}
   - component: {fileID: 1339232103}
   m_Layer: 0
+
   m_Name: TestBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
