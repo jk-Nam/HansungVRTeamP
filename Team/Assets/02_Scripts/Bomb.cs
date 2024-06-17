@@ -25,15 +25,17 @@ public class Bomb : MonoBehaviour
             module.transform.SetParent(modulesTr[rPos]);
             module.transform.localScale = new Vector3(0.2f, 0.8f, 0.8f);
             module.name = module.name.Replace("(Clone)", "");
+            //module.name = module.GetComponent<>().moduleType.ToString() + "Module";
             //switch(rModuleNum)
             //{
             //    case 0:
-            //        module.name = "WireModule";
+            //        module.name = "WireModule";            
             //        break;
             //    case 1:
-            //        module.name = "KepadModule";
+            //        module.name = "KeypadModule";
             //        break;
             //}
+
             modulesTr.RemoveAt(rPos);
             modules.RemoveAt(rModuleNum);
         }
