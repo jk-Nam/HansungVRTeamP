@@ -19,6 +19,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public Button[] CellBtn;
     public Button PreviousBtn;
     public Button NextBtn;
+    public Button startBtn;
 
     [Header("RoomPanel")]
     public GameObject RoomPanel;
@@ -36,14 +37,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     
   
 
-    //Æ÷Åæ Æİ2 È°¿ëÇÏ±â~ ¢¼
-    //RPC¸¦ È°¿ë ÇØ¼­ ÆøÅºÀÌ ÇØÃ¼ µÆ´ÂÁö, ÆøÆÄ µÆ´ÂÁö¸¦ ¾Ë·ÁÁÖ±â¢¾
-    //¼­¹ö Á¢¼Ó ÈÄ ¹æ »ı¼ºÀº ºü¸¥ ÀÔÀå(·£´ıÇÑ ¼ıÀÚ·Î ¹æ»ı¼º) ¹öÆ°¸¸ ³²°ÜµÎ°í ¼­¹ö ¸¸µé±â´Â ¹ö¸®´Â °Ô ÁÁ°ÚÀ½ 
+    //í¬í†¤ í€2 í™œìš©í•˜ê¸°~ â™ 
+    //RPCë¥¼ í™œìš© í•´ì„œ í­íƒ„ì´ í•´ì²´ ëëŠ”ì§€, í­íŒŒ ëëŠ”ì§€ë¥¼ ì•Œë ¤ì£¼ê¸°â™¥
+    //ì„œë²„ ì ‘ì† í›„ ë°© ìƒì„±ì€ ë¹ ë¥¸ ì…ì¥(ëœë¤í•œ ìˆ«ìë¡œ ë°©ìƒì„±) ë²„íŠ¼ë§Œ ë‚¨ê²¨ë‘ê³  ì„œë²„ ë§Œë“¤ê¸°ëŠ” ë²„ë¦¬ëŠ” ê²Œ ì¢‹ê² ìŒ 
 
   
 
-    #region ¹æ¸®½ºÆ® °»½Å
-    // ¢¸¹öÆ° -2 , ¢º¹öÆ° -1 , ¼¿ ¼ıÀÚ
+    #region ë°©ë¦¬ìŠ¤íŠ¸ ê°±ì‹ 
+    // â—€ë²„íŠ¼ -2 , â–¶ë²„íŠ¼ -1 , ì…€ ìˆ«ì
     public void MyListClick(int num)
     {
         if (num == -2) --currentPage;
@@ -54,14 +55,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void MyListRenewal()
     {
-        // ÃÖ´ëÆäÀÌÁö
+        // ìµœëŒ€í˜ì´ì§€
         maxPage = (myList.Count % CellBtn.Length == 0) ? myList.Count / CellBtn.Length : myList.Count / CellBtn.Length + 1;
 
-        // ÀÌÀü, ´ÙÀ½¹öÆ°
+        // ì´ì „, ë‹¤ìŒë²„íŠ¼
         PreviousBtn.interactable = (currentPage <= 1) ? false : true;
         NextBtn.interactable = (currentPage >= maxPage) ? false : true;
 
-        // ÆäÀÌÁö¿¡ ¸Â´Â ¸®½ºÆ® ´ëÀÔ
+        // í˜ì´ì§€ì— ë§ëŠ” ë¦¬ìŠ¤íŠ¸ ëŒ€ì…
         multiple = (currentPage - 1) * CellBtn.Length;
         for (int i = 0; i < CellBtn.Length; i++)
         {
@@ -91,13 +92,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-    #region ¼­¹ö¿¬°á
-    void Awake() => Screen.SetResolution(960, 540, false);
+    #region ì„œë²„ì—°ê²°
+    //void Awake() => Screen.SetResolution(960, 540, false);
 
     void Update()
     {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
-        LobbyInfoText.text = (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms) + "·Îºñ / " + PhotonNetwork.CountOfPlayers + "Á¢¼Ó";
+        LobbyInfoText.text = (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms) + "ë¡œë¹„ / " + PhotonNetwork.CountOfPlayers + "ì ‘ì†";
     }
 
     public void Connect() => PhotonNetwork.ConnectUsingSettings();
@@ -109,7 +110,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         LobbyPanel.SetActive(true);
         RoomPanel.SetActive(false);
         PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
-        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "´Ô È¯¿µÇÕ´Ï´Ù";
+        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤";
         myList.Clear();
     }
 
@@ -123,7 +124,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-    #region ¹æ
+    #region ë°©
     public void CreateRoom() => PhotonNetwork.CreateRoom(RoomInput.text == "" ? "Room" + Random.Range(0, 100) : RoomInput.text, new RoomOptions { MaxPlayers = 2 });
 
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
@@ -145,13 +146,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         RoomRenewal();
-        ChatRPC("<color=yellow>" + newPlayer.NickName + "´ÔÀÌ Âü°¡ÇÏ¼Ì½À´Ï´Ù</color>");
+        //  ChatRPC("<color=yellow>" + newPlayer.NickName + "ë‹˜ì´ ì°¸ê°€í•˜ì…¨ìŠµë‹ˆë‹¤</color>");
+        UpdateStartButton();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         RoomRenewal();
-        ChatRPC("<color=yellow>" + otherPlayer.NickName + "´ÔÀÌ ÅğÀåÇÏ¼Ì½À´Ï´Ù</color>");
+        // ChatRPC("<color=yellow>" + otherPlayer.NickName + "ë‹˜ì´ í‡´ì¥í•˜ì…¨ìŠµë‹ˆë‹¤</color>");
+        UpdateStartButton();
     }
 
     void RoomRenewal()
@@ -159,33 +162,65 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         ListText.text = "";
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
-        RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "¸í / " + PhotonNetwork.CurrentRoom.MaxPlayers + "ÃÖ´ë";
+        RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "ëª… / " + PhotonNetwork.CurrentRoom.MaxPlayers + "ìµœëŒ€";
+    }
+
+    //í”Œë ˆì´ì–´ê°€ 2ëª… ì´ìƒ ì¼ë•Œ ìŠ¤íƒ€íŠ¸ ë²„íŠ¼ì´ í™œì„±í™”
+    private void UpdateStartButton()
+    {
+        // í˜„ì¬ ë£¸ì— ìˆëŠ” í”Œë ˆì´ì–´ ìˆ˜ë¥¼ í™•ì¸
+        int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        // í”Œë ˆì´ì–´ ìˆ˜ê°€ 2ëª… ì´ìƒì´ë©´ startBtn í™œì„±í™”, ê·¸ë ‡ì§€ ì•Šìœ¼ë©´ ë¹„í™œì„±í™”
+        if (playerCount >= 2)
+        {
+            startBtn.interactable = true;
+        }
+        else
+        {
+            startBtn.interactable = false;
+        }
     }
     #endregion
 
 
-    #region Ã¤ÆÃ
-    public void Send()
-    {
-        PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text);
-        ChatInput.text = "";
-    }
+    #region RPC
+    //public void Send()
+    //{
+    //    PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text);
+    //    ChatInput.text = "";
+    //}
 
-    [PunRPC] // RPC´Â ÇÃ·¹ÀÌ¾î°¡ ¼ÓÇØÀÖ´Â ¹æ ¸ğµç ÀÎ¿ø¿¡°Ô Àü´ŞÇÑ´Ù
-    void ChatRPC(string msg)
+    //[punrpc] // rpcëŠ” í”Œë ˆì´ì–´ê°€ ì†í•´ìˆëŠ” ë°© ëª¨ë“  ì¸ì›ì—ê²Œ ì „ë‹¬í•œë‹¤
+    //void chatrpc(string msg)
+    //{
+    //    bool isinput = false;
+    //    for (int i = 0; i < chattext.length; i++)
+    //        if (chattext[i].text == "")
+    //        {
+    //            isinput = true;
+    //            chattext[i].text = msg;
+    //            break;
+    //        }
+    //    if (!isinput) // ê½‰ì°¨ë©´ í•œì¹¸ì”© ìœ„ë¡œ ì˜¬ë¦¼
+    //    {
+    //        for (int i = 1; i < chattext.length; i++) chattext[i - 1].text = chattext[i].text;
+    //        chattext[chattext.length - 1].text = msg;
+    //    }
+    //}
+
+    [PunRPC] 
+    void GameOverRPC()
     {
-        bool isInput = false;
-        for (int i = 0; i < ChatText.Length; i++)
-            if (ChatText[i].text == "")
-            {
-                isInput = true;
-                ChatText[i].text = msg;
-                break;
-            }
-        if (!isInput) // ²ËÂ÷¸é ÇÑÄ­¾¿ À§·Î ¿Ã¸²
+        // GameManager ìŠ¤í¬ë¦½íŠ¸ì˜ GameOver í˜¸ì¶œ
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager != null)
         {
-            for (int i = 1; i < ChatText.Length; i++) ChatText[i - 1].text = ChatText[i].text;
-            ChatText[ChatText.Length - 1].text = msg;
+            gameManager.GameOver();
+        }
+        else
+        {
+            Debug.LogError("GameManager ìŠ¤í¬ë¦½íŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
     #endregion
