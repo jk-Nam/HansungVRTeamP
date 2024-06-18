@@ -19,6 +19,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public Button[] CellBtn;
     public Button PreviousBtn;
     public Button NextBtn;
+    public Button startBtn;
 
     [Header("RoomPanel")]
     public GameObject RoomPanel;
@@ -36,14 +37,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     
   
 
-    //Æ÷Åæ Æİ2 È°¿ëÇÏ±â~ ¢¼
-    //RPC¸¦ È°¿ë ÇØ¼­ ÆøÅºÀÌ ÇØÃ¼ µÆ´ÂÁö, ÆøÆÄ µÆ´ÂÁö¸¦ ¾Ë·ÁÁÖ±â¢¾
-    //¼­¹ö Á¢¼Ó ÈÄ ¹æ »ı¼ºÀº ºü¸¥ ÀÔÀå(·£´ıÇÑ ¼ıÀÚ·Î ¹æ»ı¼º) ¹öÆ°¸¸ ³²°ÜµÎ°í ¼­¹ö ¸¸µé±â´Â ¹ö¸®´Â °Ô ÁÁ°ÚÀ½ 
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½2 È°ï¿½ï¿½ï¿½Ï±ï¿½~ ï¿½ï¿½
+    //RPCï¿½ï¿½ È°ï¿½ï¿½ ï¿½Ø¼ï¿½ ï¿½ï¿½Åºï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½Æ´ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë·ï¿½ï¿½Ö±â¢¾
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ÜµÎ°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 
   
 
-    #region ¹æ¸®½ºÆ® °»½Å
-    // ¢¸¹öÆ° -2 , ¢º¹öÆ° -1 , ¼¿ ¼ıÀÚ
+    #region ï¿½æ¸®ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ï¿½ï¿½ï¿½Æ° -2 , ï¿½ï¿½ï¿½ï¿½Æ° -1 , ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void MyListClick(int num)
     {
         if (num == -2) --currentPage;
@@ -54,14 +55,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void MyListRenewal()
     {
-        // ÃÖ´ëÆäÀÌÁö
+        // ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         maxPage = (myList.Count % CellBtn.Length == 0) ? myList.Count / CellBtn.Length : myList.Count / CellBtn.Length + 1;
 
-        // ÀÌÀü, ´ÙÀ½¹öÆ°
+        // ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ°
         PreviousBtn.interactable = (currentPage <= 1) ? false : true;
         NextBtn.interactable = (currentPage >= maxPage) ? false : true;
 
-        // ÆäÀÌÁö¿¡ ¸Â´Â ¸®½ºÆ® ´ëÀÔ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         multiple = (currentPage - 1) * CellBtn.Length;
         for (int i = 0; i < CellBtn.Length; i++)
         {
@@ -91,13 +92,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-    #region ¼­¹ö¿¬°á
+    #region ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     void Awake() => Screen.SetResolution(960, 540, false);
 
     void Update()
     {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
-        LobbyInfoText.text = (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms) + "·Îºñ / " + PhotonNetwork.CountOfPlayers + "Á¢¼Ó";
+        LobbyInfoText.text = (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms) + "ï¿½Îºï¿½ / " + PhotonNetwork.CountOfPlayers + "ï¿½ï¿½ï¿½ï¿½";
     }
 
     public void Connect() => PhotonNetwork.ConnectUsingSettings();
@@ -109,7 +110,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         LobbyPanel.SetActive(true);
         RoomPanel.SetActive(false);
         PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
-        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "´Ô È¯¿µÇÕ´Ï´Ù";
+        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "ï¿½ï¿½ È¯ï¿½ï¿½ï¿½Õ´Ï´ï¿½";
         myList.Clear();
     }
 
@@ -123,7 +124,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-    #region ¹æ
+    #region ï¿½ï¿½
     public void CreateRoom() => PhotonNetwork.CreateRoom(RoomInput.text == "" ? "Room" + Random.Range(0, 100) : RoomInput.text, new RoomOptions { MaxPlayers = 2 });
 
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
@@ -145,13 +146,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         RoomRenewal();
-        ChatRPC("<color=yellow>" + newPlayer.NickName + "´ÔÀÌ Âü°¡ÇÏ¼Ì½À´Ï´Ù</color>");
+
+        //  ChatRPC("<color=yellow>" + newPlayer.NickName + "ë‹˜ì´ ì°¸ê°€í•˜ì…¨ìŠµë‹ˆë‹¤</color>");
+        UpdateStartButton();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         RoomRenewal();
-        ChatRPC("<color=yellow>" + otherPlayer.NickName + "´ÔÀÌ ÅğÀåÇÏ¼Ì½À´Ï´Ù</color>");
+
+        // ChatRPC("<color=yellow>" + otherPlayer.NickName + "ë‹˜ì´ í‡´ì¥í•˜ì…¨ìŠµë‹ˆë‹¤</color>");
+        UpdateStartButton();
+
     }
 
     void RoomRenewal()
@@ -159,19 +165,36 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         ListText.text = "";
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
-        RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "¸í / " + PhotonNetwork.CurrentRoom.MaxPlayers + "ÃÖ´ë";
+        RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "ï¿½ï¿½ / " + PhotonNetwork.CurrentRoom.MaxPlayers + "ï¿½Ö´ï¿½";
+    }
+
+    //í”Œë ˆì´ì–´ê°€ 2ëª… ì´ìƒ ì¼ë•Œ ìŠ¤íƒ€íŠ¸ ë²„íŠ¼ì´ í™œì„±í™”
+    private void UpdateStartButton()
+    {
+        // í˜„ì¬ ë£¸ì— ìˆëŠ” í”Œë ˆì´ì–´ ìˆ˜ë¥¼ í™•ì¸
+        int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        // í”Œë ˆì´ì–´ ìˆ˜ê°€ 2ëª… ì´ìƒì´ë©´ startBtn í™œì„±í™”, ê·¸ë ‡ì§€ ì•Šìœ¼ë©´ ë¹„í™œì„±í™”
+        if (playerCount >= 2)
+        {
+            startBtn.interactable = true;
+        }
+        else
+        {
+            startBtn.interactable = false;
+        }
     }
     #endregion
 
 
-    #region Ã¤ÆÃ
+    #region Ã¤ï¿½ï¿½
     public void Send()
     {
         PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text);
         ChatInput.text = "";
     }
 
-    [PunRPC] // RPC´Â ÇÃ·¹ÀÌ¾î°¡ ¼ÓÇØÀÖ´Â ¹æ ¸ğµç ÀÎ¿ø¿¡°Ô Àü´ŞÇÑ´Ù
+    [PunRPC] // RPCï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
     void ChatRPC(string msg)
     {
         bool isInput = false;
@@ -182,7 +205,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 ChatText[i].text = msg;
                 break;
             }
-        if (!isInput) // ²ËÂ÷¸é ÇÑÄ­¾¿ À§·Î ¿Ã¸²
+        if (!isInput) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½
         {
             for (int i = 1; i < ChatText.Length; i++) ChatText[i - 1].text = ChatText[i].text;
             ChatText[ChatText.Length - 1].text = msg;

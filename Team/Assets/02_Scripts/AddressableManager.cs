@@ -68,6 +68,7 @@ public class AddressableManager : MonoBehaviour
         {
             Debug.Log("다운로드 완료");
             Addressables.Release(handle);
+
         };
     }
 
@@ -87,6 +88,7 @@ public class AddressableManager : MonoBehaviour
         catch(Exception e) { Debug.LogError(e.Message); }
     }
 
+
     public void CreateBomb()
     {
         List<AsyncOperationHandle<GameObject>> handles = new List<AsyncOperationHandle<GameObject>>();
@@ -104,7 +106,4 @@ public class AddressableManager : MonoBehaviour
             }
         };
     }
-
-
-
 }
