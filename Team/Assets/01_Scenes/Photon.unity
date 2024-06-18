@@ -530,6 +530,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Speaker Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 7640545148078217885, guid: 35f24666ef1af3f4eac9ab48a6718997,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9038910553436070540, guid: 35f24666ef1af3f4eac9ab48a6718997,
         type: 3}
       propertyPath: m_LocalPosition.x
