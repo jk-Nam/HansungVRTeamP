@@ -19,6 +19,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public Button[] CellBtn;
     public Button PreviousBtn;
     public Button NextBtn;
+    public Button startBtn;
 
     [Header("RoomPanel")]
     public GameObject RoomPanel;
@@ -145,13 +146,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         RoomRenewal();
-      //  ChatRPC("<color=yellow>" + newPlayer.NickName + "님이 참가하셨습니다</color>");
+        //  ChatRPC("<color=yellow>" + newPlayer.NickName + "님이 참가하셨습니다</color>");
+        UpdateStartButton();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         RoomRenewal();
-       // ChatRPC("<color=yellow>" + otherPlayer.NickName + "님이 퇴장하셨습니다</color>");
+        // ChatRPC("<color=yellow>" + otherPlayer.NickName + "님이 퇴장하셨습니다</color>");
+        UpdateStartButton();
     }
 
     void RoomRenewal()
@@ -160,6 +163,23 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
         RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "명 / " + PhotonNetwork.CurrentRoom.MaxPlayers + "최대";
+    }
+
+    //플레이어가 2명 이상 일때 스타트 버튼이 활성화
+    private void UpdateStartButton()
+    {
+        // 현재 룸에 있는 플레이어 수를 확인
+        int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        // 플레이어 수가 2명 이상이면 startBtn 활성화, 그렇지 않으면 비활성화
+        if (playerCount >= 2)
+        {
+            startBtn.interactable = true;
+        }
+        else
+        {
+            startBtn.interactable = false;
+        }
     }
     #endregion
 
