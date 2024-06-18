@@ -25,6 +25,8 @@ public class AddressableManager : MonoBehaviour
 
     AsyncOperationHandle handle;
 
+    public Transform bombPos;
+
     public AssetReference bombPrefab;
     public AssetReference wirePrefab;
 
@@ -51,6 +53,7 @@ public class AddressableManager : MonoBehaviour
         if (getdownloadSize.Result == 0)
         {
             Debug.Log("There is no Patch File...");
+
         }
         else
         {
@@ -91,6 +94,15 @@ public class AddressableManager : MonoBehaviour
         AsyncOperationHandle<GameObject> handle = bombPrefab.InstantiateAsync();
         
         handles.Add(handle);
+
+        handle.Completed += (AsyncOperationHandle<GameObject> completeHandle) =>
+        {
+            GameObject bomb = completeHandle.Result;
+            if (bomb != null)
+            {
+                bomb.transform.position = bombPos.transform.position;
+            }
+        };
     }
 
 
