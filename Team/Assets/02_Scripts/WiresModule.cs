@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class WiresModule : BombModule
 {
@@ -11,7 +13,7 @@ public class WiresModule : BombModule
 
     Bomb bomb;
 
-    public GameObject wirePrefab;
+    public AssetReference wirePrefab;
     public Transform[] wirePos;
 
     public List<string> wireColor = new List<string> { "Red", "Blue", "Black", "White", "Yellow" };
@@ -188,9 +190,13 @@ public class WiresModule : BombModule
         {
             int rIdx = Random.Range(0, colors.Count);
             rColors.Add(colors[rIdx]);
-        
+
             //와이어 생성
-            GameObject go_Wire = Instantiate(wirePrefab, wirePos[i].position, Quaternion.identity);
+            List<AsyncOperationHandle<GameObject>> handles = new List<AsyncOperationHandle<GameObject>>();
+            AsyncOperationHandle<GameObject> handle = wirePrefab.InstantiateAsync();
+
+
+            //GameObject go_Wire = Instantiate(wirePrefab, wirePos[i].position, Quaternion.identity);
             go_Wire.transform.SetParent(wirePos[i]);
             go_Wire.transform.localRotation = Quaternion.Euler(0, 90, 0);
             go_Wire.transform.localScale = new Vector3(40.0f, 2.0f, 2.0f);
