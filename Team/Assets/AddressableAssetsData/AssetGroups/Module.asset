@@ -29,6 +29,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Module
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a29b90d1abd1a364e8b602243469dd2c
+    m_Address: Assets/07_MyAssets/VP.studio3d/Wire_pack/Models/Wire_4.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Module
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aec909783082a7e4082830cefa7bd02f, type: 2}
   m_SchemaSet:

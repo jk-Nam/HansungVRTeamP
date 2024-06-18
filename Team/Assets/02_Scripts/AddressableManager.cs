@@ -23,27 +23,48 @@ public class AddressableManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    AsyncOperationHandle handle;
+
+    public AssetReference bombPrefab;
     public AssetReference wirePrefab;
 
-    public void DownloadAsset(object key)
+    public string LableForBundleDown;
+
+    IEnumerator Start()
     {
-        Addressables.GetDownloadSizeAsync(key).Completed += (opSize) =>
+        Addressables.ClearDependencyCacheAsync("Bomb");
+        StartCoroutine(CheckDownLoadFileSize());
+        yield return CheckDownLoadFileSize();
+
+
+    }
+
+    IEnumerator CheckDownLoadFileSize()
+    {
+        Debug.Log("CheckDownLoadFileSize!!!");
+
+        AsyncOperationHandle<long> getdownloadSize = Addressables.GetDownloadSizeAsync("Bomb");
+        yield return getdownloadSize;
+
+        Debug.Log(getdownloadSize.Result + "bytes");
+
+        if (getdownloadSize.Result == 0)
         {
-            if (opSize.Status == AsyncOperationStatus.Succeeded && opSize.Result > 0)
-            {
-                Addressables.DownloadDependenciesAsync(key, true).Completed += (opDownload) =>
-                {
-                    if (((AsyncOperationHandle)opDownload).Status != AsyncOperationStatus.Succeeded)
-                    {
-                        return;
-                    }
-                };
-            }
-            else
-            {
-                //다운로드 받을 자료 없음
-                Debug.Log("다운로드할 파일이 없습니다.");
-            }
+            Debug.Log("There is no Patch File...");
+        }
+        else
+        {
+            Debug.Log("Patch File Found : " + getdownloadSize.Result + "bytes");
+            DownloadAsset();
+        }
+    }
+
+    public void DownloadAsset()
+    {
+        Addressables.DownloadDependenciesAsync(LableForBundleDown).Completed += (AsyncOperationHandle handle) =>
+        {
+            Debug.Log("다운로드 완료");
+            Addressables.Release(handle);
         };
     }
 
@@ -63,12 +84,15 @@ public class AddressableManager : MonoBehaviour
         catch(Exception e) { Debug.LogError(e.Message); }
     }
 
-    public void CreatePrefab()
+    public void CreateBomb()
     {
         List<AsyncOperationHandle<GameObject>> handles = new List<AsyncOperationHandle<GameObject>>();
 
-        AsyncOperationHandle<GameObject> handle = wirePrefab.InstantiateAsync();
+        AsyncOperationHandle<GameObject> handle = bombPrefab.InstantiateAsync();
+        
         handles.Add(handle);
     }
+
+
 
 }
