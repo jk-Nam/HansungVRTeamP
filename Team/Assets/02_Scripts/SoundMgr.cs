@@ -1,163 +1,215 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
+using UnityEngine.UI; // UI 네임스페이스 추가
 
 public class SoundMgr : MonoBehaviour
 {
-    // 싱글톤 인스턴스를 관리
-    public static SoundMgr Instance { get; private set; } 
+    // 싱글톤 인스턴스
+    public static SoundMgr instance;
 
-    // 효과음 폴더 경로
-    [SerializeField] private string sfxFolder = "SFX"; 
-    // 배경음 폴더 경로
-    [SerializeField] private string bgmFolder = "BGM"; 
+    // 배경음 오디오 소스
+    public AudioSource bgmSource;
 
-    // 효과음을 담을 리스트
-    private List<AudioSource> sfx = new List<AudioSource>(); 
-    // 배경 음악을 담을 리스트
-    private List<AudioSource> bgms = new List<AudioSource>(); 
-    // 현재 재생 중인 배경 음악
-    private AudioSource curbgm; 
+    // 효과음 오디오 소스 목록
+    public List<AudioSource> sfxSources = new List<AudioSource>();
 
-    private void Awake()
+    // 배경음 클립 목록
+    public List<AudioClip> bgmClips;
+
+    // 효과음 클립 목록
+    public List<AudioClip> sfxClips;
+
+    // UI 슬라이더
+    public Slider bgmSlider; // 배경음 볼륨 슬라이더
+    public Slider sfxSlider; // 효과음 볼륨 슬라이더
+
+    private int playLoop = 1; // 효과음 반복 인수
+    private int lastBGMIndex = -1; // 마지막으로 재생된 배경음의 인덱스
+
+    void Awake()
     {
-        // 싱글톤 패턴을 사용하여 SoundManager 인스턴스를 관리
-        if (Instance == null)
+        // 인스턴스 할당 및 중복 방지
+        if (instance == null)
         {
-            Instance = this;
-            // 씬이 바뀌어도 SoundManager가 파괴되지 않도록 설정
-            DontDestroyOnLoad(gameObject); 
-            // 효과음 초기화
-            Initializesfx(); 
-            // 배경음 초기화
-            Initializebgms(); 
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            // 이미 인스턴스가 존재하면 새로 생성된 객체를 파괴
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
     }
 
-    // 효과음을 초기화하는 함수
-    private void Initializesfx()
+    void Start()
     {
-        // 주어진 폴더 경로에서 오디오 클립을 로드
-        var sfxFiles = Resources.LoadAll<AudioClip>(sfxFolder);
-        foreach (var clip in sfxFiles)
+        // 사운드 로드 및 초기 설정
+        LoadSounds();
+        if (bgmClips.Count > 0)
         {
-            var audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.clip = clip;
-            // 리스트에 추가
-            sfx.Add(audioSource); 
+            PlayBGM(0); // 첫 번째 배경음 재생
+            Debug.Log("첫 번째 배경음이 자동 재생되었습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("배경음 클립이 존재하지 않습니다.");
+        }
+        SetBGMVolume(0.2f);
+        SetSFXVolume(1.0f);
+
+        // 슬라이더 초기화 및 이벤트 연결
+        if (bgmSlider != null)
+        {
+            bgmSlider.value = bgmSource.volume;
+            bgmSlider.onValueChanged.AddListener(SetBGMVolume);
+        }
+        if (sfxSlider != null)
+        {
+            // 모든 sfxSources의 볼륨이 동일하다고 가정하고 첫 번째 소스의 볼륨을 사용
+            sfxSlider.value = sfxSources.Count > 0 ? sfxSources[0].volume : 1.0f;
+            sfxSlider.onValueChanged.AddListener(SetSFXVolume);
         }
     }
 
-    // 배경음을 초기화하는 함수
-    private void Initializebgms()
+    // 배경음 볼륨 설정
+    public void SetBGMVolume(float volume)
     {
-        // 주어진 폴더 경로에서 오디오 클립을 로드
-        var bgmFiles = Resources.LoadAll<AudioClip>(bgmFolder);
-        foreach (var clip in bgmFiles)
+        if (bgmSource != null)
         {
-            var audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.clip = clip;
-            // 배경음은 반복 재생
-            audioSource.loop = true; 
-            // 리스트에 추가
-            bgms.Add(audioSource); 
+            bgmSource.volume = volume;
+        }
+        else
+        {
+            Debug.LogWarning("bgmSource가 할당되지 않았습니다.");
         }
     }
 
-    // 효과음을 재생하는 함수 (지속시간 포함)
-    public void PlaySound(int index, float duration = 0.5f)
+    // 효과음 볼륨 설정
+    public void SetSFXVolume(float volume)
     {
-        if (index >= 0 && index < sfx.Count)
+        foreach (var source in sfxSources)
         {
-            // 지속 시간이 0.5초 이하이면 0.5초로 설정
-            if (duration <= 0.5f) duration = 0.5f; 
+            source.volume = volume;
+        }
+    }
 
-            if (duration > 0.5f)
+    // 배경음 재생
+    public void PlayBGM(int bgmIndex)
+    {
+        if (bgmSource == null)
+        {
+            Debug.LogWarning("bgmSource가 할당되지 않았습니다.");
+            return;
+        }
+
+        if (bgmIndex >= 0 && bgmIndex < bgmClips.Count)
+        {
+            AudioClip clip = bgmClips[bgmIndex];
+            if (clip != null)
             {
-                StartCoroutine(PlaySoundRepeatedlyCoroutine(sfx[index], duration));
-            }
-            else
-            {
-                // 단일 재생
-                sfx[index].Play(); 
+                bgmSource.clip = clip;
+                bgmSource.loop = true; // 반복 재생 설정
+                bgmSource.Play();
+                lastBGMIndex = bgmIndex; // 마지막 재생된 배경음 인덱스 저장
             }
         }
         else
         {
-            // 유효하지 않은 인덱스 경고
-            Debug.LogWarning("효과음 인덱스가 범위를 벗어났습니다!"); 
+            Debug.LogWarning("BGM 인덱스가 범위를 벗어났습니다: " + bgmIndex);
         }
     }
 
-    // 반복 재생을 관리하는 코루틴
-    private IEnumerator PlaySoundRepeatedlyCoroutine(AudioSource audioSource, float duration)
+    // 효과음 반복 횟수 설정
+    public void PlayLoop(int repeatCount)
     {
-        // 반복 재생을 종료할 시간 계산
-        float endTime = Time.time + duration; 
-        while (Time.time < endTime)
-        {
-            // 효과음 재생
-            audioSource.Play(); 
-            // 효과음의 길이만큼 대기
-            yield return new WaitForSeconds(audioSource.clip.length); 
-        }
+        playLoop = repeatCount;
     }
 
-    // 모든 효과음의 볼륨을 설정하는 함수
-    public void SetVolume(float volume)
+    // 효과음 1번 재생
+    public void PlaySFXone(int sfxIndex)
     {
-        foreach (AudioSource audioSource in sfx)
-        {
-            // 모든 효과음의 볼륨을 설정
-            audioSource.volume = volume; 
-        }
+        PlaySFX(sfxIndex, playLoop);
     }
 
-    // 배경 음악을 선택하여 재생하는 함수
-    public void Playbgm(int index)
+    // 효과음 반복 재생
+    public void PlaySFX(int sfxIndex, int repeatCount = 1, float delayTime = 0)
     {
-        if (index >= 0 && index < bgms.Count)
+        if (sfxIndex >= 0 && sfxIndex < sfxClips.Count)
         {
-            if (curbgm != null && curbgm.isPlaying)
+            AudioClip clip = sfxClips[sfxIndex];
+            if (clip != null)
             {
-                // 현재 재생 중인 배경 음악을 멈춤
-                curbgm.Stop(); 
+                StartCoroutine(PlaySFXCoroutine(clip, repeatCount, delayTime));
             }
-
-            curbgm = bgms[index];
-            // 선택된 배경 음악을 재생
-            curbgm.Play(); 
         }
         else
         {
-            // 유효하지 않은 인덱스 경고
-            Debug.LogWarning("배경 음악 인덱스가 범위를 벗어났습니다!"); 
+            Debug.LogWarning("SFX 인덱스가 범위를 벗어났습니다: " + sfxIndex);
         }
     }
 
-    // 배경 음악을 멈추는 함수
-    public void Stopbgm()
+    // 효과음 재생을 위한 코루틴
+    private IEnumerator PlaySFXCoroutine(AudioClip clip, int repeatCount, float delayTime)
     {
-        if (curbgm != null)
+        for (int i = 0; i < repeatCount; i++)
         {
-            // 현재 재생 중인 배경 음악 멈춤
-            curbgm.Stop(); 
+            AudioSource source = GetAvailableAudioSource();
+            source.PlayOneShot(clip);
+            yield return new WaitForSeconds(clip.length + delayTime); // 재생이 끝난 뒤 delayTime 후 재생
         }
+        playLoop = 1;
     }
 
-    // 배경 음악의 볼륨을 설정하는 함수
-    public void SetbgmVolume(float volume)
+    // 사용 가능한 오디오 소스 가져오기
+    private AudioSource GetAvailableAudioSource()
     {
-        if (curbgm != null)
+        foreach (var source in sfxSources)
         {
-            // 현재 재생 중인 배경 음악의 볼륨을 설정
-            curbgm.volume = volume; 
+            if (!source.isPlaying)
+            {
+                return source;
+            }
+        }
+
+        // 사용 가능한 소스가 없을 경우 새로운 오디오 소스 생성
+        AudioSource newSource = gameObject.AddComponent<AudioSource>();
+        sfxSources.Add(newSource);
+        return newSource;
+    }
+
+    // 사운드 로드
+    public void LoadSounds()
+    {
+        bgmClips.Clear();
+        sfxClips.Clear();
+
+        // Resources 폴더에서 모든 오디오 클립 로드
+        AudioClip[] bgms = Resources.LoadAll<AudioClip>("BGM");
+        bgmClips.AddRange(bgms);
+
+        AudioClip[] sfxs = Resources.LoadAll<AudioClip>("SFX");
+        sfxClips.AddRange(sfxs);
+    }
+
+    // 배경음 정지
+    public void StopBGM()
+    {
+        if (bgmSource != null)
+        {
+            if (bgmSource.isPlaying)
+            {
+                bgmSource.Stop();
+                Debug.Log("배경음이 정지되었습니다.");
+            }
+            else if (lastBGMIndex >= 0)
+            {
+                PlayBGM(lastBGMIndex); // 마지막 재생된 배경음을 다시 재생
+                Debug.Log("정지된 배경음이 다시 재생되었습니다.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("bgmSource가 할당되지 않았습니다.");
         }
     }
 }
