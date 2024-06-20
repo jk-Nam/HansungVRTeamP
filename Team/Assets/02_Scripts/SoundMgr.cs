@@ -69,6 +69,7 @@ public class SoundMgr : MonoBehaviour
             sfxSlider.value = sfxSources.Count > 0 ? sfxSources[0].volume : 1.0f;
             sfxSlider.onValueChanged.AddListener(SetSFXVolume);
         }
+
     }
 
     // 배경음 볼륨 설정
@@ -151,13 +152,18 @@ public class SoundMgr : MonoBehaviour
     // 효과음 재생을 위한 코루틴
     private IEnumerator PlaySFXCoroutine(AudioClip clip, int repeatCount, float delayTime)
     {
+        playLoop = 1;
         for (int i = 0; i < repeatCount; i++)
         {
             AudioSource source = GetAvailableAudioSource();
             source.PlayOneShot(clip);
-            yield return new WaitForSeconds(clip.length + delayTime); // 재생이 끝난 뒤 delayTime 후 재생
+
+            StartCoroutine(VibrateMgr.instance.VibrateWithSFX(source));// 추가부분
+
+            // 재생이 끝난 뒤 delayTime 후 재생
+            yield return new WaitForSeconds(clip.length + delayTime);
+
         }
-        playLoop = 1;
     }
 
     // 사용 가능한 오디오 소스 가져오기
