@@ -25,7 +25,7 @@ public class SoundMgr : MonoBehaviour
     public Slider sfxSlider; // 효과음 볼륨 슬라이더
 
     private int playLoop = 1; // 효과음 반복 인수
-    private int lastBGMIndex = -1; // 마지막으로 재생된 배경음의 인덱스
+    public int lastBGMIndex = -1; // 마지막으로 재생된 배경음의 인덱스
 
     void Awake()
     {
@@ -47,8 +47,9 @@ public class SoundMgr : MonoBehaviour
         LoadSounds();
         if (bgmClips.Count > 0)
         {
-            PlayBGM(0); // 첫 번째 배경음 재생
-            Debug.Log("첫 번째 배경음이 자동 재생되었습니다.");
+            lastBGMIndex = 0;
+            PlayBGM(lastBGMIndex); // 준비된 배경음 재생
+            Debug.Log("준비된 배경음이 자동 재생되었습니다.");
         }
         else
         {
