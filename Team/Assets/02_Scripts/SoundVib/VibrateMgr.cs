@@ -110,5 +110,6 @@ public class VibrateMgr : MonoBehaviour
     public void VibOnOff()
     {
         isVibrationEnabled = !isVibrationEnabled;
+        SoundMgr.instance.PlaySFX(2);
     }
 }

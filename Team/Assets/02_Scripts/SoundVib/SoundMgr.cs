@@ -68,7 +68,7 @@ public class SoundMgr : MonoBehaviour
         {
             // 모든 sfxSources의 볼륨이 동일하다고 가정하고 첫 번째 소스의 볼륨을 사용
             sfxSlider.value = sfxSources.Count > 0 ? sfxSources[0].volume : 1.0f;
-            sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+            sfxSlider.onValueChanged.AddListener(OnSFXSliderValueChanged);
         }
 
     }
@@ -93,6 +93,13 @@ public class SoundMgr : MonoBehaviour
         {
             source.volume = volume;
         }
+    }
+
+    // 효과음 슬라이더 값 변경 시 호출되는 함수
+    private void OnSFXSliderValueChanged(float volume)
+    {
+        SetSFXVolume(volume);
+        PlaySFX(2); // 슬라이더 값이 변경될 때 효과음 재생
     }
 
     // 배경음 재생

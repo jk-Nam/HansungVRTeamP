@@ -29,6 +29,8 @@ public class ManualPng : MonoBehaviour
         // 폴더 내 모든 PNG 파일 경로를 가져옴
         string[] filePaths = Directory.GetFiles(folderPath, "*.png");
 
+        List<GameObject> loadedImages = new List<GameObject>();
+
         foreach (string filePath in filePaths)
         {
             // 파일 이름에서 확장자를 제거한 리소스 이름을 가져옴
@@ -50,6 +52,8 @@ public class ManualPng : MonoBehaviour
                 {
                     imgComponent.sprite = sprite;
                 }
+
+                loadedImages.Add(newImage);
             }
             else
             {
@@ -57,14 +61,16 @@ public class ManualPng : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < scrollViewContent.transform.childCount; i++)
+        // 페이지 번호 설정
+        for (int i = 0; i < loadedImages.Count; i++)
         {
-            Transform child = scrollViewContent.transform.GetChild(i).GetChild(0);
+            Transform child = loadedImages[i].transform.GetChild(0);
             Text page = child.GetComponent<Text>();
-            if (i != 0) 
-            { 
-                page.text = "Page " + i + " of " + scrollViewContent.transform.childCount;
-            } 
+
+            if ( i != 0)
+            {
+                page.text = "Page " + i + " of " + (loadedImages.Count - 1);
+            }
         }
     }
 
