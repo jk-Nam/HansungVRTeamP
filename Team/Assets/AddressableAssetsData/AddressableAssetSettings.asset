@@ -49,6 +49,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ef035a13d9d104849abb41f00df88a09, type: 2}
   - {fileID: 11400000, guid: 7324d4736d7c0aa4289c77eacf6e1865, type: 2}
   - {fileID: 11400000, guid: f7e01218a8f48c641ba64ec566865b08, type: 2}
+  - {fileID: 11400000, guid: 740aef2e3d66c884488089257cf34c97, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -119,8 +120,8 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - Module
-    - Mat
     - Bomb
+    - Mat
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 12c7090cd98fe744194e46344e0486a7, type: 2}

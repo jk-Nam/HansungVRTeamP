@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
+        AddressableManager.Instance.CreateBomb();
         isGameOver = false;
         isGameStart = true;
         StartCoroutine(ServerManager.Instance.Result());

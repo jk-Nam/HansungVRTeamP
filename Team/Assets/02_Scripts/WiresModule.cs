@@ -168,46 +168,76 @@ public class WiresModule : BombModule
                 }
                 break;
         }
-
     }
 
-    //와이어 색깔 랜덤 배정 및 생성
     List<string> GetRandomColors(List<string> colors, int count)
     {
         List<string> rColors = new List<string>();
-        
-        //색깔과 매테리얼 매칭
-        Dictionary<string, Material> colorToMaterial = new Dictionary<string, Material>
+
+        // 색깔과 Addressable 매테리얼 키 매칭
+        Dictionary<string, string> colorToMaterialAddress = new Dictionary<string, string>
+    {
+        { "Red",    "Assets/08_Materials/Red.mat" },
+        { "Blue",   "Assets/08_Materials/Blue.mat" },
+        { "Black",  "Assets/08_Materials/Black.mat" },
+        { "White",  "Assets/08_Materials/White.mat" },
+        { "Yellow", "Assets/08_Materials/Yellow.mat" }
+    };
+
+        // wirePos의 길이가 count보다 작은 경우 예외 처리
+        if (wirePos.Length < count)
         {
-            { "Red", mats[0] },
-            { "Blue", mats[1] },
-            { "Black", mats[2] },
-            { "White", mats[3] },
-            { "Yellow", mats[4] }
-        };
+            Debug.LogError("wirePos 배열의 길이가 count보다 작습니다.");
+            return rColors;
+        }
 
         for (int i = 0; i < count; i++)
         {
             int rIdx = Random.Range(0, colors.Count);
             rColors.Add(colors[rIdx]);
 
-            //와이어 생성
-            List<AsyncOperationHandle<GameObject>> handles = new List<AsyncOperationHandle<GameObject>>();
+            // 비동기 처리를 위한 로컬 변수로 저장
+            int localIndex = i;
+            string selectedColor = colors[rIdx];
+
+            // 와이어 생성
             AsyncOperationHandle<GameObject> handle = wirePrefab.InstantiateAsync();
 
-
-            //GameObject go_Wire = Instantiate(wirePrefab, wirePos[i].position, Quaternion.identity);
-            go_Wire.transform.SetParent(wirePos[i]);
-            go_Wire.transform.localRotation = Quaternion.Euler(0, 90, 0);
-            go_Wire.transform.localScale = new Vector3(40.0f, 2.0f, 2.0f);
-
-            //와이어 매테리얼 변경
-            Renderer wireRenderer = go_Wire.GetComponentInChildren<Renderer>();
-            if (wireRenderer != null && colorToMaterial.ContainsKey(colors[rIdx]))
+            handle.Completed += (AsyncOperationHandle<GameObject> completeHandle) =>
             {
-                wireRenderer.material = colorToMaterial[colors[rIdx]];
-            }
+                GameObject go_Wire = completeHandle.Result;
+                go_Wire.transform.SetParent(wirePos[localIndex]); // 로컬 변수 사용
+                go_Wire.transform.position = wirePos[localIndex].position;
+                //go_Wire.transform.localRotation = Quaternion.Euler(0, 90, 0);
+                go_Wire.transform.localScale = new Vector3(0.25f, 0.2f, 0.2f);
 
+                // 와이어 매테리얼 변경
+                if (colorToMaterialAddress.ContainsKey(selectedColor))
+                {
+                    string materialAddress = colorToMaterialAddress[selectedColor];
+                    Debug.Log("Loading material: " + materialAddress);
+                    Addressables.LoadAssetAsync<Material>(materialAddress).Completed += (AsyncOperationHandle<Material> matHandle) =>
+                    {
+                        if (matHandle.Status == AsyncOperationStatus.Succeeded)
+                        {
+                            Material loadedMaterial = matHandle.Result;
+                            Renderer wireRenderer = go_Wire.GetComponentInChildren<Renderer>();
+                            if (wireRenderer != null)
+                            {
+                                wireRenderer.material = loadedMaterial;
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError("Failed to load material: " + materialAddress);
+                        }
+                    };
+                }
+                else
+                {
+                    Debug.LogError("Color not found in dictionary: " + selectedColor);
+                }
+            };
         }
 
         return rColors;

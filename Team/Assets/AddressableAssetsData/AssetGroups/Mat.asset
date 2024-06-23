@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Materials
+  m_Name: Mat
   m_EditorClassIdentifier: 
-  m_GroupName: Materials
+  m_GroupName: Mat
   m_Data:
     m_SerializedData: []
   m_GUID: bad99759108ce884a8a0ec98c147b997
@@ -49,6 +49,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb7ced9c075e87747bb337ad1f22cda0
     m_Address: Assets/08_Materials/Black.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mat
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 313fcf3aebc04cf4ab4f8c5f2850be7f
+    m_Address: Assets/SimpleToon/Shader/ToonLightBase.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - Mat
