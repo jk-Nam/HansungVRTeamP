@@ -525,6 +525,16 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2906290787602881153, guid: 35f24666ef1af3f4eac9ab48a6718997,
+        type: 3}
+      propertyPath: Mute
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2906290787602881153, guid: 35f24666ef1af3f4eac9ab48a6718997,
+        type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4580211095270986917, guid: 35f24666ef1af3f4eac9ab48a6718997,
         type: 3}
       propertyPath: m_Name
@@ -1729,7 +1739,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 495c9e2a934bcc640a8d7427b13cb680, type: 3}
     m_FontSize: 156
     m_FontStyle: 0
     m_BestFit: 1

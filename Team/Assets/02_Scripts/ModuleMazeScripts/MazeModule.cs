@@ -94,7 +94,6 @@ public class MazeModule : BombModule
             player.transform.localPosition = initialPosition;
             //Fail();
             GameManager.Instance.incorrectCnt++;
-            Debug.Log("���� �� : " + GameManager.Instance.incorrectCnt);
             if (GameManager.Instance.incorrectCnt >= 3)
             {
                 bomb.Fail();
@@ -107,6 +106,10 @@ public class MazeModule : BombModule
         else if (other.gameObject.CompareTag("MazeGoal"))
         {
             Debug.Log("클리어!");
+            upButton.gameObject.SetActive(false);
+            downButton.gameObject.SetActive(false);
+            leftButton.gameObject.SetActive(false);
+            rightButton.gameObject.SetActive(false);
             DefuseModule();
         }
 
