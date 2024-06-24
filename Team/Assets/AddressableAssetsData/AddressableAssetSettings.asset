@@ -84,7 +84,7 @@ MonoBehaviour:
       - m_Id: 27bfd5020c8680a469d63b3fd5c9fc81
         m_Value: ServerData/[BuildTarget]
       - m_Id: 9a1a84b3cbc51554d98aba49fb274b92
-        m_Value: C:\Users\user\Documents\NodeProjects\VRTeam\CDN\[BuildTarget]
+        m_Value: https://teamvr-qaroi.run.goorm.site/workspace/teamvr/Addresssable/[BuildTarget]
     - m_InheritedParent: 
       m_Id: 62d0866b1b39c8f44b3113a9bac62998
       m_ProfileName: LocalTest

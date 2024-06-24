@@ -206,9 +206,11 @@ public class WiresModule : BombModule
             handle.Completed += (AsyncOperationHandle<GameObject> completeHandle) =>
             {
                 GameObject go_Wire = completeHandle.Result;
-                go_Wire.transform.SetParent(wirePos[localIndex]); // 로컬 변수 사용
-                go_Wire.transform.position = wirePos[localIndex].position;
-                //go_Wire.transform.localRotation = Quaternion.Euler(0, 90, 0);
+                Transform wireTransform = wirePos[localIndex];
+                go_Wire.transform.SetParent(wireTransform); // 로컬 변수 사용
+                go_Wire.transform.position = wireTransform.position;
+                go_Wire.transform.rotation = wireTransform.rotation;
+                go_Wire.transform.Rotate(0, 180.0f, 0, Space.Self);
                 go_Wire.transform.localScale = new Vector3(0.25f, 0.2f, 0.2f);
 
                 // 와이어 매테리얼 변경
