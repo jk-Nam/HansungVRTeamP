@@ -106,6 +106,10 @@ public class MazeModule : BombModule
         else if (other.gameObject.CompareTag("MazeGoal"))
         {
             Debug.Log("클리어!");
+            upButton.gameObject.SetActive(false);
+            downButton.gameObject.SetActive(false);
+            leftButton.gameObject.SetActive(false);
+            rightButton.gameObject.SetActive(false);
             DefuseModule();
         }
 
