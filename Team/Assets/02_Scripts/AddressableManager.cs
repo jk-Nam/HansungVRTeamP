@@ -26,6 +26,7 @@ public class AddressableManager : MonoBehaviour
     AsyncOperationHandle<long> bombHandle;
     AsyncOperationHandle<long> MatHandle;
     AsyncOperationHandle<long> moduleHandle;
+    AsyncOperationHandle<long> shaderHandle;
 
     public Transform bombPos;
 
@@ -46,21 +47,14 @@ public class AddressableManager : MonoBehaviour
 
     void Start()
     {
-        //Addressables.ClearDependencyCacheAsync("Bomb");
-        //Debug.Log("Bomb Clear Cache");
-        //Addressables.ClearDependencyCacheAsync("Mat");
-        //Addressables.ClearDependencyCacheAsync("Module");
-        ClearCacheByLabel("Bomb");
-        ClearCacheByLabel("Mat");
-        ClearCacheByLabel("Module");
+        Addressables.ClearDependencyCacheAsync("Bomb");
+        Addressables.ClearDependencyCacheAsync("Mat");
+        Addressables.ClearDependencyCacheAsync("Module");
+        Addressables.ClearDependencyCacheAsync("Shader");
 
         StartCoroutine(CheckDownLoadFileSize());
-    }
 
-    public void ClearCacheByLabel(string label)
-    {
-        // Addressables.ClearDependencyCacheAsync를 사용하여 비동기적으로 캐시를 초기화
-        Addressables.ClearDependencyCacheAsync(label);
+        //CreateBomb();
     }
 
     private void OnClearCacheCompleted(AsyncOperationHandle<IList<object>> handle)
@@ -88,10 +82,12 @@ public class AddressableManager : MonoBehaviour
         yield return MatHandle;
         moduleHandle = Addressables.GetDownloadSizeAsync("Module");
         yield return moduleHandle;
+        shaderHandle = Addressables.GetDownloadSizeAsync("Shader");
+        yield return shaderHandle;
 
         Debug.Log(MatHandle.Result + " bytes");
 
-        if (bombHandle.Result == 0 && MatHandle.Result == 0 && moduleHandle.Result == 0)
+        if (bombHandle.Result == 0 && MatHandle.Result == 0 && moduleHandle.Result == 0 & shaderHandle.Result == 0)
         {
             Debug.Log("There is no Patch File...");
             //패치가 없다면 에셋 로드
@@ -101,6 +97,7 @@ public class AddressableManager : MonoBehaviour
                 LoadAsset(key);
             }
             LoadAsset("Module");
+            LoadAsset("Shader");
         }
         else
         {
@@ -122,6 +119,7 @@ public class AddressableManager : MonoBehaviour
                 LoadAsset(key);
             }
             LoadAsset("Module");
+            LoadAsset("Shader");
         };
     }
 
@@ -129,8 +127,35 @@ public class AddressableManager : MonoBehaviour
     {
         try
         {
-            if (key.ToString().EndsWith(".mat")) //메테리얼 에셋 처리
-            {                
+            if (key.ToString().EndsWith(".shader"))
+            {
+                Addressables.LoadAssetAsync<Shader>(key).Completed += (op) =>
+                {
+                    if (op.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        Shader shader = op.Result;
+                        if (shader != null)
+                        {
+                            Debug.Log(key + ": 에셋 로드 완료, Shader: " + shader.name);
+                            //Renderer renderer = GetComponent<Renderer>();
+                            //if (renderer != null)
+                            //{
+                            //    renderer.material.shader = shader;
+                            //}
+                        }
+                        else
+                        {
+                            Debug.LogError(key + ": 로드된 Shader null입니다.");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError(key + ": 에셋 로드 실패");
+                    }
+                };
+            }
+            else if (key.ToString().EndsWith(".mat")) //메테리얼 에셋 처리
+            {
                 Addressables.LoadAssetAsync<Material>(key).Completed += (op) =>
                 {
                     if (op.Status == AsyncOperationStatus.Succeeded)

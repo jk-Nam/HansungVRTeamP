@@ -10,16 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Packed Assets
+  m_Name: Shader
   m_EditorClassIdentifier: 
-  m_GroupName: Packed Assets
+  m_GroupName: Shader
   m_Data:
     m_SerializedData: []
-  m_GUID: 7b7c2f7abeb5e5549b3f1a3f0bf12d2e
-  m_SerializeEntries: []
+  m_GUID: 5992bf86778909d4e98034237349753f
+  m_SerializeEntries:
+  - m_GUID: 313fcf3aebc04cf4ab4f8c5f2850be7f
+    m_Address: Assets/SimpleToon/Shader/ToonLightBase.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Shader
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aec909783082a7e4082830cefa7bd02f, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 488256b5d4403a940b7ba94b65403be2, type: 2}
-    - {fileID: 11400000, guid: b967f12636828a7498ef013de6bd5749, type: 2}
+    - {fileID: 11400000, guid: 057eec1d008055840a0e21ae021d157c, type: 2}
+    - {fileID: 11400000, guid: eac4114ad5ddf7843942dce95315d810, type: 2}

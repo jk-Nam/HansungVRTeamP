@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 3bf2ca20ca16cb241b9fa1f21a01fc58
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: c8c32827f566c12bce3c6305f4139ad5
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ef035a13d9d104849abb41f00df88a09, type: 2}
   - {fileID: 11400000, guid: 7324d4736d7c0aa4289c77eacf6e1865, type: 2}
   - {fileID: 11400000, guid: f7e01218a8f48c641ba64ec566865b08, type: 2}
-  - {fileID: 11400000, guid: 740aef2e3d66c884488089257cf34c97, type: 2}
+  - {fileID: 11400000, guid: 4cf5771e882f3a248a0f763d4e49a7e9, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -122,6 +122,7 @@ MonoBehaviour:
     - Module
     - Bomb
     - Mat
+    - Shader
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 12c7090cd98fe744194e46344e0486a7, type: 2}
