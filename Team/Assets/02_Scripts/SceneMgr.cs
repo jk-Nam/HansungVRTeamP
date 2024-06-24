@@ -31,13 +31,9 @@ public class SceneMgr : MonoBehaviour
     public GameObject gameInPan; //역할 선택
     public GameObject onlyVoice; //온리보이스 문구
 
-    public SoundMgr soundMgr; //사운드 매니저 호출
-
     void Awake()
     {
         OBJSetting();//오브젝트 자동지정
-
-        soundMgr = GameObject.Find("SoundMgr").GetComponent<SoundMgr>();
 
         HandGrabSetting();//ISDK_HandGrabInteraction 찾아주기
         //사운드 매니저 연결
@@ -106,30 +102,29 @@ public class SceneMgr : MonoBehaviour
             case 1:
                 MainScene(); // 메인씬 배치
                 Debug.Log(Rooms + "번 메인씬으로 변경 되었다.");
-                soundMgr.lastBGMIndex = 0; //BGM인덱스번호 변경
+                SoundMgr.instance.PlayBGM(0); //BGM인덱스번호 변경
                 break;
             case 2:
                 DefuserScene(); // 인게임 해체반
                 Debug.Log(Rooms + "번 해체씬으로 변경 되었다.");
-                soundMgr.lastBGMIndex = 0;
+                SoundMgr.instance.PlayBGM(0);
                 break;
             case 3:
                 ExpertsScene(); // 인게임 분석반
                 Debug.Log(Rooms + "번 분석씬으로 변경 되었다.");
-                soundMgr.lastBGMIndex = 0;
+                SoundMgr.instance.PlayBGM(0);
                 break;
             case 4:
                 GameOver(); // 게임오버씬 배치
                 Debug.Log(Rooms + "번 게임오버 되었다.");
-                soundMgr.lastBGMIndex = 0;
+                SoundMgr.instance.PlayBGM(0);
                 break;
             case 5:
                 GameRetry(); //게임 패널 소환
                 Debug.Log(Rooms + "번 게임 재도전 연출");
-                soundMgr.lastBGMIndex = 0;
+                SoundMgr.instance.PlayBGM(0);
                 break;
         }
-        soundMgr.PlayBGM(soundMgr.lastBGMIndex);
         sceneNum = Rooms; //씬에 직접 들어온 경우 씬번호 반영
     }
 
