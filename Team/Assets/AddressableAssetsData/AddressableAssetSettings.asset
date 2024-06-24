@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 3bf2ca20ca16cb241b9fa1f21a01fc58
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: 421973195be1dc610f1770672db1d56e
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
           m_Key: ContentRoot
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.Boolean
-          m_Data: True
+          m_Data: False
           m_Key: IsEnabled
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.String

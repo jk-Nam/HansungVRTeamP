@@ -47,9 +47,31 @@ public class AddressableManager : MonoBehaviour
     void Start()
     {
         Addressables.ClearDependencyCacheAsync("Bomb");
+        Debug.Log("Bomb Clear Cache");
         Addressables.ClearDependencyCacheAsync("Mat");
         Addressables.ClearDependencyCacheAsync("Module");
         StartCoroutine(CheckDownLoadFileSize());
+    }
+
+    public void ClearCacheByLabel(string label)
+    {
+        // Addressables.ClearDependencyCacheAsync를 사용하여 비동기적으로 캐시를 초기화
+        Addressables.ClearDependencyCacheAsync(label);
+    }
+
+    private void OnClearCacheCompleted(AsyncOperationHandle<IList<object>> handle)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            Debug.Log("Cache cleared successfully for label: " + handle.Result);
+        }
+        else
+        {
+            Debug.LogError("Failed to clear cache for label: " + handle.Result);
+        }
+
+        // 핸들 해제
+        Addressables.Release(handle);
     }
 
     IEnumerator CheckDownLoadFileSize()
