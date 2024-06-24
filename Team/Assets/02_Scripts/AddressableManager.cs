@@ -46,10 +46,14 @@ public class AddressableManager : MonoBehaviour
 
     void Start()
     {
-        Addressables.ClearDependencyCacheAsync("Bomb");
-        Debug.Log("Bomb Clear Cache");
-        Addressables.ClearDependencyCacheAsync("Mat");
-        Addressables.ClearDependencyCacheAsync("Module");
+        //Addressables.ClearDependencyCacheAsync("Bomb");
+        //Debug.Log("Bomb Clear Cache");
+        //Addressables.ClearDependencyCacheAsync("Mat");
+        //Addressables.ClearDependencyCacheAsync("Module");
+        ClearCacheByLabel("Bomb");
+        ClearCacheByLabel("Mat");
+        ClearCacheByLabel("Module");
+
         StartCoroutine(CheckDownLoadFileSize());
     }
 
