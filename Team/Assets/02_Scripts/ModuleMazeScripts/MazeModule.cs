@@ -94,7 +94,6 @@ public class MazeModule : BombModule
             player.transform.localPosition = initialPosition;
             //Fail();
             GameManager.Instance.incorrectCnt++;
-            Debug.Log("���� �� : " + GameManager.Instance.incorrectCnt);
             if (GameManager.Instance.incorrectCnt >= 3)
             {
                 bomb.Fail();
