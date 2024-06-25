@@ -41,7 +41,7 @@ public class SceneMgr : MonoBehaviour
 
     void Start()
     {
-        sceneNum = 1; // 처음 씬번호 넣기
+        //sceneNum = 1; // 처음 씬번호 넣기
         SceneSwitch(sceneNum); // 해당 번호 씬 호출
     }
 
