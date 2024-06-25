@@ -16,13 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: c72796e65cf9ed949a3cdf5f254f1b3f
-  m_SerializeEntries:
-  - m_GUID: 7592795d3facbef4aa1072449bb1c300
-    m_Address: Assets/03_Prefabs/Bomb.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Bomb
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aec909783082a7e4082830cefa7bd02f, type: 2}
   m_SchemaSet:

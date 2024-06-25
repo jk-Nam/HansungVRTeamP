@@ -16,13 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 5992bf86778909d4e98034237349753f
-  m_SerializeEntries:
-  - m_GUID: 313fcf3aebc04cf4ab4f8c5f2850be7f
-    m_Address: Assets/SimpleToon/Shader/ToonLightBase.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Shader
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aec909783082a7e4082830cefa7bd02f, type: 2}
   m_SchemaSet:

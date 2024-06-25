@@ -16,13 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 906e4a4b7d40a9d4ab61ae05ca118d77
-  m_SerializeEntries:
-  - m_GUID: 0a9dbe4382b600848b695b3a9ebe4692
-    m_Address: Assets/03_Prefabs/BrokenWire.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - BrokenWire
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aec909783082a7e4082830cefa7bd02f, type: 2}
   m_SchemaSet:
