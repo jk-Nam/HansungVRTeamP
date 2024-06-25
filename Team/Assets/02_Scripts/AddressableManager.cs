@@ -25,7 +25,8 @@ public class AddressableManager : MonoBehaviour
 
     AsyncOperationHandle<long> bombHandle;
     AsyncOperationHandle<long> MatHandle;
-    AsyncOperationHandle<long> moduleHandle;
+    AsyncOperationHandle<long> wireHandle;
+    AsyncOperationHandle<long> brokenWireHandle;
     AsyncOperationHandle<long> shaderHandle;
 
     public Transform bombPos;
@@ -49,7 +50,7 @@ public class AddressableManager : MonoBehaviour
     {
         Addressables.ClearDependencyCacheAsync("Bomb");
         Addressables.ClearDependencyCacheAsync("Mat");
-        Addressables.ClearDependencyCacheAsync("Module");
+        Addressables.ClearDependencyCacheAsync("Wire");
         Addressables.ClearDependencyCacheAsync("Shader");
 
         StartCoroutine(CheckDownLoadFileSize());
@@ -80,14 +81,16 @@ public class AddressableManager : MonoBehaviour
         yield return bombHandle;
         MatHandle = Addressables.GetDownloadSizeAsync("Mat");
         yield return MatHandle;
-        moduleHandle = Addressables.GetDownloadSizeAsync("Module");
-        yield return moduleHandle;
+        wireHandle = Addressables.GetDownloadSizeAsync("Wire");
+        yield return wireHandle;
+        brokenWireHandle = Addressables.GetDownloadSizeAsync("BrokenWire");
+        yield return brokenWireHandle;
         shaderHandle = Addressables.GetDownloadSizeAsync("Shader");
         yield return shaderHandle;
 
         Debug.Log(MatHandle.Result + " bytes");
 
-        if (bombHandle.Result == 0 && MatHandle.Result == 0 && moduleHandle.Result == 0 & shaderHandle.Result == 0)
+        if (bombHandle.Result == 0 && MatHandle.Result == 0 && wireHandle.Result == 0 & shaderHandle.Result == 0)
         {
             Debug.Log("There is no Patch File...");
             //패치가 없다면 에셋 로드
@@ -96,7 +99,8 @@ public class AddressableManager : MonoBehaviour
             {
                 LoadAsset(key);
             }
-            LoadAsset("Module");
+            LoadAsset("Wire");
+            LoadAsset("BrokenWire");
             LoadAsset("Assets/SimpleToon/Shader/ToonLightBase.shader");
         }
         else
@@ -113,13 +117,14 @@ public class AddressableManager : MonoBehaviour
             Debug.Log("다운로드 완료");
             Addressables.Release(handle);
             // 다운로드 완료 후 에셋 로드
+            LoadAsset("Shader");
             LoadAsset("Bomb");
             foreach (var key in matKeys)
             {
                 LoadAsset(key);
             }
-            LoadAsset("Module");
-            LoadAsset("Shader");
+            LoadAsset("Wire");
+            LoadAsset("BrokenWire");
         };
     }
 

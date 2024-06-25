@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 3bf2ca20ca16cb241b9fa1f21a01fc58
   m_currentHash:
     serializedVersion: 2
-    Hash: c8c32827f566c12bce3c6305f4139ad5
+    Hash: afa92b625e553eccc0e738795f4b6151
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
@@ -50,6 +50,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7324d4736d7c0aa4289c77eacf6e1865, type: 2}
   - {fileID: 11400000, guid: f7e01218a8f48c641ba64ec566865b08, type: 2}
   - {fileID: 11400000, guid: 4cf5771e882f3a248a0f763d4e49a7e9, type: 2}
+  - {fileID: 11400000, guid: 7244e94af5846ec44903ff1b0f48288a, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -119,10 +120,11 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
-    - Module
     - Bomb
     - Mat
     - Shader
+    - BrokenWire
+    - Wire
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 12c7090cd98fe744194e46344e0486a7, type: 2}

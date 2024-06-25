@@ -742,8 +742,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moduleType: 0
-  wirePrefab: {fileID: 8141555525565268274, guid: 3d85a92092eab4544adb7708e9f21b43,
-    type: 3}
+  wirePrefab:
+    m_AssetGUID: 3d85a92092eab4544adb7708e9f21b43
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  brokenWirePrefab:
+    m_AssetGUID: 0a9dbe4382b600848b695b3a9ebe4692
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   wirePos:
   - {fileID: 5193824688821512851}
   - {fileID: 2614137428561913485}

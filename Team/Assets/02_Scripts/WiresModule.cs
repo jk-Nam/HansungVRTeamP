@@ -12,8 +12,10 @@ public class WiresModule : BombModule
     }
 
     Bomb bomb;
+    CutTest cut;
 
     public AssetReference wirePrefab;
+    public AssetReference brokenWirePrefab;
     public Transform[] wirePos;
 
     public List<string> wireColor = new List<string> { "Red", "Blue", "Black", "White", "Yellow" };
@@ -22,9 +24,13 @@ public class WiresModule : BombModule
     public int correctWireNum;
     int wireCnt;
 
+    public List<GameObject> wires = new List<GameObject>();
+    public List<GameObject> brokenWires = new List<GameObject>();
+
     private void Awake()
     {
         bomb = GameObject.FindGameObjectWithTag("BOMB").GetComponent<Bomb>();
+        cut = GetComponentInParent<CutTest>();
     }
 
     private void Start()
@@ -202,10 +208,12 @@ public class WiresModule : BombModule
 
             // 와이어 생성
             AsyncOperationHandle<GameObject> handle = wirePrefab.InstantiateAsync();
+            
 
             handle.Completed += (AsyncOperationHandle<GameObject> completeHandle) =>
             {
                 GameObject go_Wire = completeHandle.Result;
+                wires.Add(go_Wire);
                 Transform wireTransform = wirePos[localIndex];
                 wireTransform.gameObject.SetActive(true);
                 go_Wire.transform.SetParent(wireTransform); // 로컬 변수 사용
@@ -240,9 +248,53 @@ public class WiresModule : BombModule
                 {
                     Debug.LogError("Color not found in dictionary: " + selectedColor);
                 }
-            };
-        }
 
+                // 절단된 와이어 생성
+                AsyncOperationHandle<GameObject> handle2 = brokenWirePrefab.InstantiateAsync();
+
+                handle2.Completed += (AsyncOperationHandle<GameObject> completeHandle) =>
+                {
+                    GameObject go_BrokenWire = completeHandle.Result;
+                    brokenWires.Add(go_BrokenWire);
+                    Transform wireTransform = wirePos[localIndex];
+                    go_BrokenWire.gameObject.SetActive(false);
+                    go_BrokenWire.transform.SetParent(wireTransform); // 로컬 변수 사용
+                    go_BrokenWire.transform.position = wireTransform.position;
+                    go_BrokenWire.transform.rotation = wireTransform.rotation;
+                    go_BrokenWire.transform.Rotate(0, 180.0f, 0, Space.Self);
+                    go_BrokenWire.transform.localScale = new Vector3(0.25f, 0.2f, 0.2f);
+
+                    // 와이어 매테리얼 변경
+                    if (colorToMaterialAddress.ContainsKey(selectedColor))
+                    {
+                        string materialAddress = colorToMaterialAddress[selectedColor];
+                        Debug.Log("Loading material: " + materialAddress);
+                        Addressables.LoadAssetAsync<Material>(materialAddress).Completed += (AsyncOperationHandle<Material> matHandle) =>
+                        {
+                            if (matHandle.Status == AsyncOperationStatus.Succeeded)
+                            {
+                                Material loadedMaterial = matHandle.Result;
+                                Renderer wireRenderer = go_BrokenWire.GetComponentInChildren<Renderer>();
+                                if (wireRenderer != null)
+                                {
+                                    wireRenderer.material = loadedMaterial;
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogError("Failed to load material: " + materialAddress);
+                            }
+                        };
+                    }
+                    else
+                    {
+                        Debug.LogError("Color not found in dictionary: " + selectedColor);
+                    }
+                };
+            };
+            
+        }
+        cut.OnClickSetUp();
         return rColors;
     }
 
@@ -250,6 +302,10 @@ public class WiresModule : BombModule
     {
         if (!isDefused && GameManager.Instance.isGameStart && !GameManager.Instance.isGameOver)
         {
+            //프리팹 변경
+            wires[idx].SetActive(false);
+            brokenWires[idx].SetActive(true);
+
             if (idx == correctWireNum)
             {
                 isDefused = true;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using OVR;
 
 public class CutTest : MonoBehaviour
 {
@@ -13,23 +14,34 @@ public class CutTest : MonoBehaviour
 
     WiresModule wire;
 
+
     private void Start()
     {
-        
+        wire = GameObject.Find("WireTest").GetComponentInChildren<WiresModule>();
     }
 
     public void OnClickSetUp()
     {
-        wire = GameObject.Find("WireModule").GetComponent<WiresModule>();
-        
-
-        cut1.onClick.AddListener(() => wire.CutWire(1));
-        cut2.onClick.AddListener(() => wire.CutWire(2));
-        cut3.onClick.AddListener(() => wire.CutWire(3));
-        cut4.onClick.AddListener(() => wire.CutWire(4));
-        cut5.onClick.AddListener(() => wire.CutWire(5));
-
+        cut1.onClick.AddListener(() => {
+            wire.CutWire(1);
+            cut1.interactable = false;
+        });
+        cut2.onClick.AddListener(() => {
+            wire.CutWire(2);
+            cut2.interactable = false;
+        });
+        cut3.onClick.AddListener(() => {
+            wire.CutWire(3);
+            cut3.interactable = false;
+        });
+        cut4.onClick.AddListener(() => {
+            wire.CutWire(4);
+            cut4.interactable = false;
+        });
+        cut5.onClick.AddListener(() => {
+            wire.CutWire(5);
+            cut5.interactable = false;
+        });
     }
-
 
 }
