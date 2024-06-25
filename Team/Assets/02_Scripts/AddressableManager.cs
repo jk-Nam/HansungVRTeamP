@@ -97,7 +97,7 @@ public class AddressableManager : MonoBehaviour
                 LoadAsset(key);
             }
             LoadAsset("Module");
-            LoadAsset("Shader");
+            LoadAsset("Assets/SimpleToon/Shader/ToonLightBase.shader");
         }
         else
         {

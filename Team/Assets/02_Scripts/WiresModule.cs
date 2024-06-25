@@ -207,6 +207,7 @@ public class WiresModule : BombModule
             {
                 GameObject go_Wire = completeHandle.Result;
                 Transform wireTransform = wirePos[localIndex];
+                wireTransform.gameObject.SetActive(true);
                 go_Wire.transform.SetParent(wireTransform); // 로컬 변수 사용
                 go_Wire.transform.position = wireTransform.position;
                 go_Wire.transform.rotation = wireTransform.rotation;
