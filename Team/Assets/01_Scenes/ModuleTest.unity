@@ -557,13 +557,24 @@ MonoBehaviour:
     m_AssetGUID: 7592795d3facbef4aa1072449bb1c300
     m_SubObjectName: 
     m_SubObjectType: 
+    m_CachedAsset: {fileID: 0}
+    m_CachedGUID: 
     m_EditorAssetChanged: 0
   wirePrefab:
     m_AssetGUID: 3d85a92092eab4544adb7708e9f21b43
     m_SubObjectName: 
     m_SubObjectType: 
+    m_CachedAsset: {fileID: 0}
+    m_CachedGUID: 
     m_EditorAssetChanged: 0
   LableForBundleDown: Mat
+  matKeys:
+  - Assets/08_Materials/Red.mat
+  - Assets/08_Materials/Blue.mat
+  - Assets/08_Materials/Gray.mat
+  - Assets/08_Materials/White.mat
+  - Assets/08_Materials/Yellow.mat
+  - Assets/08_Materials/Black.mat
 --- !u!4 &521251741
 Transform:
   m_ObjectHideFlags: 0
@@ -1967,8 +1978,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 521251740}
-        m_TargetAssemblyTypeName: AddressableManager, Assembly-CSharp
+      - m_Target: {fileID: 1834216079}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: CreateBomb
         m_Mode: 1
         m_Arguments:
@@ -2916,6 +2927,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficulty: 1
   bomb: {fileID: 8314425121067101438, guid: 7592795d3facbef4aa1072449bb1c300, type: 3}
+  bombPos: {fileID: 1605526383}
   timer: 300
   defuesedCnt: 0
   incorrectCnt: 0

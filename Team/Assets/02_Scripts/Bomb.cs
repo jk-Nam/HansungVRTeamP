@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    
-
-    public GameObject module1;
     public GameObject expEffect;
 
 
