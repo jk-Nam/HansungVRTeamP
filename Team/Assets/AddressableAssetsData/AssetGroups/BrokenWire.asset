@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: BrokenWire
+  m_EditorClassIdentifier: 
+  m_GroupName: BrokenWire
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 906e4a4b7d40a9d4ab61ae05ca118d77
+  m_SerializeEntries:
+  - m_GUID: 0a9dbe4382b600848b695b3a9ebe4692
+    m_Address: Assets/03_Prefabs/BrokenWire.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BrokenWire
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: aec909783082a7e4082830cefa7bd02f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 15364b63064d4914092d56ef93e2186d, type: 2}
+    - {fileID: 11400000, guid: cf4534645a0f59e45bb03d5a63968fe2, type: 2}

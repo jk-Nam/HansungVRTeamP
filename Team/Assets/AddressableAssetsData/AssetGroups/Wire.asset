@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Wire
+  m_EditorClassIdentifier: 
+  m_GroupName: Wire
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 2c150da9c0898224fb6b173005cb935f
+  m_SerializeEntries:
+  - m_GUID: 8053ddbebcbd0294eac08dad3f161269
+    m_Address: Assets/03_Prefabs/WireTest.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Wire
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d85a92092eab4544adb7708e9f21b43
+    m_Address: Assets/03_Prefabs/WirePrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Wire
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a29b90d1abd1a364e8b602243469dd2c
+    m_Address: Assets/07_MyAssets/VP.studio3d/Wire_pack/Models/Wire_4.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Wire
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 886e2f73a91ce064dbfd6d9ba28eee5e
+    m_Address: Assets/03_Prefabs/WirePro.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Wire
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: aec909783082a7e4082830cefa7bd02f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e6d36aaf6f87e554ca52823abbdaef9b, type: 2}
+    - {fileID: 11400000, guid: 32b152ad283f6eb49b4e75f7d501aea3, type: 2}
