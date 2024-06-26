@@ -586,8 +586,6 @@ MonoBehaviour:
   expEffect: {fileID: 0}
   modules:
   - {fileID: 7235034780039352264, guid: 8053ddbebcbd0294eac08dad3f161269, type: 3}
-  - {fileID: 4162612023751617979, guid: ce155d50b0a4d824086b987a9ef05979, type: 3}
-  - {fileID: 6309805230914602365, guid: 035cb5576ae966149a7dfa0ee00baf3b, type: 3}
   modulesTr:
   - {fileID: 1759523115141074082}
   - {fileID: 7700246530851287817}
