@@ -23,7 +23,6 @@ public class KeypadSlot : MonoBehaviour
 
     public float delayTime = 1.0f; //오답 후 지연시간
     public int incorrectMax = 3; //오답 최대치
-    //public int defuesedMax = 2; //정답 최대치
     public bool isKeypadFail = false;//폭파 원인 제공
 
     public bool isKeyReady = false; //게임준비상태
@@ -33,14 +32,6 @@ public class KeypadSlot : MonoBehaviour
         itemBuffer = GameObject.Find("KeypadScript").GetComponent<ItemBuffer>();
 
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-        //게임매니저 누적값 초기화 확인
-        //if (gameManager.incorrectCnt == 0 && gameManager.defuesedCnt == 0)
-        //{
-        //    //게임 준비
-        //    ReStart();
-        //    //OffLight();
-        //}
     }
 
     void Update()
@@ -49,7 +40,6 @@ public class KeypadSlot : MonoBehaviour
         if (gameManager.isGameStart && isKeyReady)
         {
             isKeyReady = false; //새 게임에 1번씩만 허용
-            //defuesedMax = gameManager.totalModuleCnt; //정답 최대치
             OffLight(); //스타트와 동시에 버튼 활성화
         }
         else if (gameManager.incorrectCnt == 0 && gameManager.defuesedCnt == 0 && !gameManager.isGameStart)
@@ -128,17 +118,26 @@ public class KeypadSlot : MonoBehaviour
         //메인 신호등에 꺼짐 신호를 보낸다
         //메인 신호등이 검은색으로 된다
         mainLight.GetComponent<Image>().color = Color.black;
+
+        //버튼 활성화 효과음
+        SoundMgr.instance.PlaySFX(43);
+
+        StartCoroutine("OffLightBtn");
+    }
+
+    IEnumerator OffLightBtn()
+    {
         //동시에 4개 버튼 신호등도 검은색이 된다
         for (int i = 0; i < keyRoot.transform.childCount; i++)
         {
+            yield return new WaitForSecondsRealtime(0.2f);
+            SoundMgr.instance.PlaySFX(43);
+
             Transform child = keyRoot.transform.GetChild(i).GetChild(1);
             Image mark = child.GetComponent<Image>();
             mark.color = Color.black;
         }
         isRed = false; //메인 신호등을 초기화 한다.
-
-        //비교전용 리스트도 초기화 한다
-        //truekey2.Clear(); //제출용 리스트로 재활용
 
         //버튼의 기능이 활성화 된다
         for (int i = 0; i < keyRoot.transform.childCount; i++)
@@ -149,12 +148,17 @@ public class KeypadSlot : MonoBehaviour
         }
 
         clickKey = 0; //누른 버튼이 없을 때
+
+        StopCoroutine("OffLightBtn");
     }
 
     //신호등 작동
     //4개 각각 버튼에서 빨간불 or 초록불이 들어온다
     public void OnClickKey(Slot slot)
     {
+        //버튼 클릭 효과음
+        SoundMgr.instance.PlaySFX(40);
+
         itemName = int.Parse(slot.item.name); //입력 확인용
         Transform child = slot.transform.GetChild(1); //신호등
         Image mark = child.GetComponent<Image>(); //이미지설정
@@ -177,7 +181,6 @@ public class KeypadSlot : MonoBehaviour
         clickKey++; //버튼을 누르면 증가
 
         //버튼 신호등이 4개가 되면 비교용 리스트 내용이 4개 채워진다
-        //truekey2.Add(itemName);
         if (clickKey == 4)
         {
             MainLightOn();
@@ -188,6 +191,9 @@ public class KeypadSlot : MonoBehaviour
     {
         if (!isRed)
         {
+            //정답누적 효과음
+            SoundMgr.instance.PlaySFX(14);
+
             mainLight.GetComponent<Image>().color = Color.green;
             //4개 모두 초록불이면 메인신호등이 초록불과
             gameManager.defuesedCnt++; //정답처리
@@ -204,6 +210,9 @@ public class KeypadSlot : MonoBehaviour
         }
         else
         {
+            //오답누적 효과음
+            SoundMgr.instance.PlaySFX(26);
+
             mainLight.GetComponent<Image>().color = Color.red;
             //초록불 4개가 아니면 메인신호등이 빨간불과
             gameManager.incorrectCnt++; //오답처리
