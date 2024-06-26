@@ -67,10 +67,12 @@ public class SceneManagerReal : MonoBehaviour
 
     public void LoadMainScene()
     {
-        SceneManager.LoadScene("MainSceneRay");
+        SceneManager.LoadScene("OptionUITest");
     }
 
-    
+   
+
+
 
     public void QuitGame()
     {
