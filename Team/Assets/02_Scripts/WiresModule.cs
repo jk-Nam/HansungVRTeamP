@@ -227,7 +227,7 @@ public class WiresModule : BombModule
             wireModule.transform.position = wirePos[i].position;
             wireModule.transform.rotation = wirePos[i].rotation;
             wireModule.transform.Rotate(0, 180.0f, 0, Space.Self);
-            wireModule.transform.localScale = new Vector3(0.24f, 0.2f, 0.2f);
+            wireModule.transform.localScale = new Vector3(0.24f, 0.2f, 2f);
 
             //메테리얼 변경
             Renderer wireRenderer = wireModule.GetComponentInChildren<Renderer>();
@@ -246,13 +246,16 @@ public class WiresModule : BombModule
             brokenWireModule.transform.position = wirePos[i].position;
             brokenWireModule.transform.rotation = wirePos[i].rotation;
             brokenWireModule.transform.Rotate(0, 180.0f, 0, Space.Self);
-            brokenWireModule.transform.localScale = new Vector3(0.24f, 0.2f, 0.2f);
+            brokenWireModule.transform.localScale = new Vector3(0.24f, 0.2f, 2f);
 
             //메테리얼 변경
-            Renderer brokenWireRenderer = brokenWireModule.GetComponentInChildren<Renderer>();
-            if (wireRenderer != null && colorToMaterial.ContainsKey(colors[rIdx]))
+            Renderer[] brokenWireRenderers = brokenWireModule.GetComponentsInChildren<Renderer>();
+            foreach (Renderer brokenWireRenderer in brokenWireRenderers)
             {
-                wireRenderer.material = colorToMaterial[colors[rIdx]];
+                if (brokenWireRenderer != null && colorToMaterial.ContainsKey(colors[rIdx]))
+                {
+                    brokenWireRenderer.material = colorToMaterial[colors[rIdx]];
+                }
             }
 
 
@@ -348,9 +351,10 @@ public class WiresModule : BombModule
     {
         if (!isDefused && GameManager.Instance.isGameStart && !GameManager.Instance.isGameOver)
         {
+            Debug.Log(idx + "번 클릭");
             //프리팹 변경
-            wires[idx].SetActive(false);
-            brokenWires[idx].SetActive(true);
+            wires[idx-1].SetActive(false);
+            brokenWires[idx-1].SetActive(true);
 
             if (idx == correctWireNum)
             {
@@ -372,6 +376,11 @@ public class WiresModule : BombModule
                     Debug.Log("Game Over!!!");
                 }
             }
+        }
+        else
+        {
+            Debug.Log("클릭 처리 안되는 중");
+           
         }
     }
 }

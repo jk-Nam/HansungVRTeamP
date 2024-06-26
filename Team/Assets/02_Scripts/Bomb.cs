@@ -20,16 +20,19 @@ public class Bomb : MonoBehaviour
             int rPos = Random.Range(0, modulesTr.Count);
             GameObject module = Instantiate(modules[rModuleNum], modulesTr[rPos].transform.position, modulesTr[rPos].transform.rotation);
             module.transform.SetParent(modulesTr[rPos]);
-            module.transform.localScale = new Vector3(0.2f, 0.8f, 0.8f);
+            //module.transform.localScale = new Vector3(0.2f, 0.8f, 0.8f);
             module.name = module.name.Replace("(Clone)", "");
-            //module.name = module.GetComponent<>().moduleType.ToString() + "Module";
-            //switch(rModuleNum)
+            //module.name = module.GetComponent<BombModule>().moduleType.ToString() + "Module";
+            //switch (rModuleNum)
             //{
             //    case 0:
-            //        module.name = "WireModule";            
+            //        module.name = "WireModule";
             //        break;
             //    case 1:
             //        module.name = "KeypadModule";
+            //        break;
+            //    case 2:
+            //        module.name = "MazeModule";
             //        break;
             //}
 

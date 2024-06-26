@@ -109,7 +109,9 @@ public class GameManager : MonoBehaviour
 
     public void CreateBomb()
     {
-        GameObject bombPrefab = Instantiate(bomb);
+        if (!isGameStart && !isGameOver)
+        {
+            GameObject bombPrefab = Instantiate(bomb);
 
             if (bombPrefab != null)
             {
@@ -120,5 +122,6 @@ public class GameManager : MonoBehaviour
             {
                 Debug.LogError("폭탄 생성 실패: 로드된 GameObject가 null입니다.");
             }
+        }
     }
 }

@@ -17,11 +17,13 @@ public class CutTest : MonoBehaviour
 
     private void Start()
     {
-        wire = GameObject.Find("WireTest").GetComponentInChildren<WiresModule>();
+
     }
 
     public void OnClickSetUp()
     {
+        wire = GameObject.Find("WireTest").GetComponentInChildren<WiresModule>();
+
         cut1.onClick.AddListener(() => {
             wire.CutWire(1);
             cut1.interactable = false;
