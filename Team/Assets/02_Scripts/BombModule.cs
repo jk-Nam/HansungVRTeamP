@@ -14,7 +14,6 @@ public abstract class BombModule : MonoBehaviour
         Maze
     }
 
-
     public BombMoudleType moduleType;
 
     protected bool isDefused = false;

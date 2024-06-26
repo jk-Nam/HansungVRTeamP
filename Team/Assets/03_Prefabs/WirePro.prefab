@@ -744,6 +744,8 @@ MonoBehaviour:
   moduleType: 0
   wirePrefab: {fileID: 8141555525565268274, guid: 3d85a92092eab4544adb7708e9f21b43,
     type: 3}
+  brokenWirePrebab: {fileID: 5371957167296697950, guid: 0a9dbe4382b600848b695b3a9ebe4692,
+    type: 3}
   wirePos:
   - {fileID: 5193824688821512851}
   - {fileID: 2614137428561913485}
@@ -763,6 +765,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 7d9bb0bd3faaf8b4aba94e2532664182, type: 2}
   - {fileID: 2100000, guid: f4e7015d8bf77b04b9422214e36eb849, type: 2}
   correctWireNum: 0
+  wires: []
+  brokenWires: []
 --- !u!23 &8153389620548209123
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject bomb;
+    public Transform bombPos;
 
 
     public float timer = 300.0f;
@@ -43,7 +44,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        //Å¸ÀÌ¸Ó
+        //íƒ€ì´ë¨¸
         if (isGameStart && (!isGameOver || isClear))
         {
             float dwTime = 0;
@@ -53,7 +54,7 @@ public class GameManager : MonoBehaviour
             if (timer <= 0)
             {
                 isGameOver = true;
-                Debug.Log("ÆøÅºÀÌ Æø¹ßÇÏ¿´½À´Ï´Ù!!!");
+                Debug.Log("í­íƒ„ì´ í­ë°œí•˜ì˜€ìŠµë‹ˆë‹¤!!!");
                 return;
             }
         }
@@ -61,11 +62,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        SelectDifficulty();
         isGameOver = false;
         isGameStart = false;
     }
 
-    //³­ÀÌµµ ¼³Á¤ ±âº»Àº ½¬¿ò
+    //ë‚œì´ë„ ì„¤ì • ê¸°ë³¸ì€ ì‰¬ì›€
     public void SelectDifficulty()
     {
         switch (difficulty)
@@ -103,7 +105,24 @@ public class GameManager : MonoBehaviour
 
     public void ShowResultUI()
     {
-        //°ÔÀÓ °á°úÃ¢ On
+        //ê²Œì„ ê²°ê³¼ì°½ On
     }
 
+    public void CreateBomb()
+    {
+        if (!isGameStart && !isGameOver)
+        {
+            GameObject bombPrefab = Instantiate(bomb);
+
+            if (bombPrefab != null)
+            {
+                bombPrefab.transform.position = bombPos.transform.position;
+                Debug.Log("í­íƒ„ ìƒì„± ì™„ë£Œ: " + bomb.name);
+            }
+            else
+            {
+                Debug.LogError("í­íƒ„ ìƒì„± ì‹¤íŒ¨: ë¡œë“œëœ GameObjectê°€ nullì…ë‹ˆë‹¤.");
+            }
+        }
+    }
 }
