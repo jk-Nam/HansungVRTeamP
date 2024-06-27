@@ -111,7 +111,9 @@ public class MazeModule : BombModule
         {
             // 플레이어의 위치를 초기 위치로 리셋
             Debug.Log("실패");
+            SoundMgr.instance.PlaySFX(26);
             player.transform.localPosition = initialPosition;
+            
             //Fail();
             GameManager.Instance.incorrectCnt++;
             if (GameManager.Instance.incorrectCnt >= 3)
@@ -126,6 +128,7 @@ public class MazeModule : BombModule
         else if (other.gameObject.CompareTag("MazeGoal"))
         {
             Debug.Log("클리어!");
+            SoundMgr.instance.PlaySFX(14);
             upButton.gameObject.SetActive(false);
             downButton.gameObject.SetActive(false);
             leftButton.gameObject.SetActive(false);
