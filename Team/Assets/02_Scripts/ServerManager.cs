@@ -128,11 +128,7 @@ public class ServerManager : MonoBehaviour
 
     IEnumerator Signin()
     {
-        WWWForm form = new WWWForm();
-
-        form.AddField("userId", player1ID);
-
-        UnityWebRequest www = UnityWebRequest.Post(signInURL, form);
+        UnityWebRequest www = UnityWebRequest.PostWwwForm(signInURL, "");
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
@@ -141,17 +137,33 @@ public class ServerManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(www.downloadHandler.text);
-            Debug.Log("고유 아이디 생성 완료"); //오브젝트 ID를 고유 아이디로 설정
+            var jsonData = JSON.Parse(www.downloadHandler.text);
+            player1ID = jsonData["userId"];
+            Debug.Log("고유 아이디 생성 완료: " + player1ID);
+
+            // 유저 정보를 가져오는 요청
+            WWWForm form = new WWWForm();
+            form.AddField("userId", player1ID);
+
             UnityWebRequest www2 = UnityWebRequest.Post(userInfoURL, form);
             yield return www2.SendWebRequest();
-            var jsonData = SimpleJSON.JSON.Parse(www2.downloadHandler.text);
-            Debug.Log(www2.downloadHandler.text);
-            if (www2.downloadHandler.text != "")
+
+            if (www2.result != UnityWebRequest.Result.Success)
             {
-                player1ID = jsonData["_id"];
+                Debug.Log(www2.error);
             }
-            StartCoroutine(LogIn());
+            else
+            {
+                var userInfo = JSON.Parse(www2.downloadHandler.text);
+                Debug.Log(www2.downloadHandler.text);
+
+                if (!string.IsNullOrEmpty(www2.downloadHandler.text))
+                {
+                    player1ID = userInfo["_id"];
+                    Debug.Log("유저 정보 업데이트 완료: " + player1ID);
+                }
+                StartCoroutine(LogIn());
+            }
         }
     }
 

@@ -49,6 +49,22 @@ public class WiresModule : BombModule
         Debug.Log("Wire의 수는 " + wireCnt + "개 입니다.");
     }
 
+    private void SetButtonsActive()
+    {
+        for (int i = 0; i < wires.Count; i++)
+        {
+            cut.cutButtons[i].gameObject.SetActive(true);
+        }
+    }
+
+    private void DisableAllButtons()
+    {
+        for (int i = 0; i < cut.cutButtons.Count; i++)
+        {
+            cut.cutButtons[i].interactable = false;
+        }
+    }
+
     public override void DefuseModule()
     {
         switch (wireCnt)
@@ -343,7 +359,9 @@ public class WiresModule : BombModule
             //        };
 
         }
-        cut.OnClickSetUp();
+
+        SetButtonsActive();
+        //cut.OnClickSetUp();
         return rColors;
     }
 
@@ -353,8 +371,8 @@ public class WiresModule : BombModule
         {
             Debug.Log(idx + "번 클릭");
             //프리팹 변경
-            wires[idx-1].SetActive(false);
-            brokenWires[idx-1].SetActive(true);
+            wires[idx - 1].SetActive(false);
+            brokenWires[idx - 1].SetActive(true);
 
             if (idx == correctWireNum)
             {
@@ -380,7 +398,7 @@ public class WiresModule : BombModule
         else
         {
             Debug.Log("클릭 처리 안되는 중");
-           
+
         }
     }
 }
