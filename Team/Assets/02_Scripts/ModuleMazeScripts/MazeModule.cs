@@ -20,9 +20,12 @@ public class MazeModule : BombModule
 
     Bomb bomb;
 
+    private GameObject bombObject;
+    private float bombObjectXScale;
+
     private void Awake()
     {
-       // bomb = GameObject.FindGameObjectWithTag("BOMB").GetComponent<Bomb>();
+        // bomb = GameObject.FindGameObjectWithTag("BOMB").GetComponent<Bomb>();
     }
 
     void Start()
@@ -37,6 +40,23 @@ public class MazeModule : BombModule
         rightButton.onClick.AddListener(MoveRight);
 
         InitiallizeModule();
+
+        // "BOMB" 태그를 가진 오브젝트를 찾습니다
+        bombObject = GameObject.FindWithTag("BOMB");
+
+        // 오브젝트가 존재하는지 확인합니다
+        if (bombObject != null)
+        {
+            // 오브젝트의 x축 스케일 값을 변수에 설정합니다
+            bombObjectXScale = bombObject.transform.localScale.x;
+            moveAmount = (float)(bombObjectXScale * 0.1);
+
+            Debug.Log("BOMB 오브젝트의 x축 스케일 값: " + bombObjectXScale);
+        }
+        else
+        {
+            Debug.LogWarning("BOMB 태그를 가진 오브젝트를 찾을 수 없습니다.");
+        }
     }
 
     public override void InitiallizeModule()
