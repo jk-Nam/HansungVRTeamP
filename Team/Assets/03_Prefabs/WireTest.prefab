@@ -1850,6 +1850,7 @@ MonoBehaviour:
   cut3: {fileID: 3336386887616725009}
   cut4: {fileID: 663880298351083413}
   cut5: {fileID: 8866898644897642723}
+  raycasters: []
 --- !u!1 &7814554230747747244
 GameObject:
   m_ObjectHideFlags: 0
