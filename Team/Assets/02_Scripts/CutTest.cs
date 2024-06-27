@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using OVR;
 
 public class CutTest : MonoBehaviour
 {
@@ -20,6 +19,7 @@ public class CutTest : MonoBehaviour
     public List<GraphicRaycaster> raycasters = new List<GraphicRaycaster>();
     private PointerEventData pointerEventData;
     private EventSystem eventSystem;
+
 
     private void Start()
     {

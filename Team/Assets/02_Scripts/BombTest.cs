@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BombTest : MonoBehaviour
 {
@@ -7,81 +8,68 @@ public class BombTest : MonoBehaviour
 
     void Start()
     {
-        CreateRandomObject();
+        CreateAllObjects();
+        
     }
 
-    void CreateRandomObject()
+    void CreateAllObjects()
     {
         if (objectPrefabs.Length == 0 || positions.Length == 0)
         {
-            Debug.LogError("objectPrefabs 배열과 positions 배열이 적절히 초기화되어야 합니다.");
+            Debug.LogError("마따끄 프리팹이랑 포지션이 없잖아!");
             return;
         }
 
-        // 랜덤한 faceIndex를 선택
-        int faceIndex = Random.Range(2, positions.Length);
+        List<int> usedPositions = new List<int>();
 
-        // 랜덤한 프리팹 선택
-        GameObject randomPrefab = objectPrefabs[Random.Range(0, objectPrefabs.Length)];
-
-        // 선택된 위치
-        Transform parentTransform = positions[faceIndex];
-
-        // 오브젝트를 부모 Transform의 자식으로 생성
-        GameObject newObj = Instantiate(randomPrefab, parentTransform);
-
-        // 선택된 faceIndex에 따라 위치 및 회전 설정
-        switch (faceIndex)
+        for (int i = 0; i < objectPrefabs.Length; i++)
         {
-            //case 0: // 위쪽 면
-            //    newObj.transform.localPosition = new Vector3(0, 0.51f, 0);
-            //    newObj.transform.localRotation = Quaternion.Euler(90, 0, 0);
-            //    break;
-            //case 1: // 아래쪽 면
-            //    newObj.transform.localPosition = new Vector3(0, -0.51f, 0);
-            //    newObj.transform.localRotation = Quaternion.Euler(-90, 0, 0);
-            //    break;
-            //case 2: // 앞쪽 면
-            //    newObj.transform.localPosition = new Vector3(0, 0, 0.51f);
-            //    newObj.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            //    break;
-            //case 3: // 뒤쪽 면
-            //    newObj.transform.localPosition = new Vector3(0, 0, -0.51f);
-            //    newObj.transform.localRotation = Quaternion.Euler(0, 180, 0);
-            //    break;
-            //case 4: // 왼쪽 면
-            //    newObj.transform.localPosition = new Vector3(-0.51f, 0, 0);
-            //    newObj.transform.localRotation = Quaternion.Euler(0, -90, 0);
-            //    break;
-            //case 5: // 오른쪽 면
-            //    newObj.transform.localPosition = new Vector3(0.51f, 0, 0);
-            //    newObj.transform.localRotation = Quaternion.Euler(0, 90, 0);
-            //    break;
+            // 랜덤한 faceIndex를 선택
+            int faceIndex;
+            do
+            {
+                faceIndex = Random.Range(0, positions.Length);
+            } while (usedPositions.Contains(faceIndex));
 
-            case 0: // 위쪽 면
-                newObj.transform.localPosition = new Vector3(0, 0.51f, 0);
-                newObj.transform.localRotation = Quaternion.Euler(270, 0, 0);
-                break;
-            case 1: // 아래쪽 면
-                newObj.transform.localPosition = new Vector3(0, -0.51f, 0);
-                newObj.transform.localRotation = Quaternion.Euler(90, 0, 0);
-                break;
-            case 2: // 앞쪽 면
-                newObj.transform.localPosition = new Vector3(0, 0, 0.51f);
-                newObj.transform.localRotation = Quaternion.Euler(180, 0, 0);
-                break;
-            case 3: // 뒤쪽 면
-                newObj.transform.localPosition = new Vector3(0, 0, -0.51f);
-                newObj.transform.localRotation = Quaternion.Euler(180, 180, 0);
-                break;
-            case 4: // 왼쪽 면
-                newObj.transform.localPosition = new Vector3(-0.51f, 0, 0);
-                newObj.transform.localRotation = Quaternion.Euler(180, -90, 0);
-                break;
-            case 5: // 오른쪽 면
-                newObj.transform.localPosition = new Vector3(0.51f, 0, 0);
-                newObj.transform.localRotation = Quaternion.Euler(180, 90, 0);
-                break;
+            // 사용된 위치에 추가
+            usedPositions.Add(faceIndex);
+
+            // 현재 프리팹 선택
+            GameObject currentPrefab = objectPrefabs[i];
+
+            // 선택된 위치
+            Transform parentTransform = positions[faceIndex];
+
+            // 오브젝트를 부모 Transform의 자식으로 생성
+            GameObject newObj = Instantiate(currentPrefab, parentTransform);
+
+            //폭탄 크기에 맞게 올바른 위치로 생성 되게 하는 코드. 수동으로 조정 할 
+            //float halfScale = transform.localScale.y*0.5f + 0.01f;
+
+            // 선택된 faceIndex에 따라 위치 및 회전 설정
+            switch (faceIndex)
+            {
+                case 0: // 위쪽 면
+                    newObj.transform.localPosition = new Vector3(0, 0.51f, 0);
+                    newObj.transform.localRotation = Quaternion.Euler(90, 0, 0);
+                    break;
+                case 1: // 아래쪽 면
+                    newObj.transform.localPosition = new Vector3(0, -0.51f, 0);
+                    newObj.transform.localRotation = Quaternion.Euler(270, 0, 0);
+                    break;
+                case 2: // 뒤쪽 면
+                    newObj.transform.localPosition = new Vector3(0, 0, -0.51f);
+                    newObj.transform.localRotation = Quaternion.Euler(180, 180, 0);
+                    break;
+                case 3: // 왼쪽 면
+                    newObj.transform.localPosition = new Vector3(-0.51f, 0, 0);
+                    newObj.transform.localRotation = Quaternion.Euler(180, -90, 0);
+                    break;
+                case 4: // 오른쪽 면
+                    newObj.transform.localPosition = new Vector3(0.51f, 0, 0);
+                    newObj.transform.localRotation = Quaternion.Euler(180, 90, 0);
+                    break;
+            }
         }
     }
 }

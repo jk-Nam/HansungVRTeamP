@@ -49,9 +49,9 @@ public class KeypadSlot : MonoBehaviour
         }
 
         //게임오버가 감지되거나 오답 최대치가 되면 멈춤
-        if (gameManager.isGameOver || gameManager.incorrectCnt >= incorrectMax)
+        if (gameManager.incorrectCnt >= incorrectMax)
         {
-            GameStop();
+            if(!gameManager.isGameOver)GameStop();
         }
     }
 
@@ -240,6 +240,7 @@ public class KeypadSlot : MonoBehaviour
     //게임오버 이벤트
     void GameStop()
     {
+
         //버튼의 기능이 비활성화 된다
         for (int i = 0; i < keyRoot.transform.childCount; i++)
         {
