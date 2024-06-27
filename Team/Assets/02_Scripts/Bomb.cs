@@ -13,6 +13,12 @@ public class Bomb : MonoBehaviour
 
     void Start()
     {
+        if (modules.Count < GameManager.Instance.totalModuleCnt)
+        {
+            Debug.LogError("모듈이 충분하지 않습니다.");
+            return;
+        }
+
         //모듈 랜덤 생성
         for (int i = 0; i < GameManager.Instance.totalModuleCnt ; i++)
         {

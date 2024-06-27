@@ -1751,7 +1751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1153721997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3019,7 +3019,7 @@ MonoBehaviour:
   timer: 300
   defuesedCnt: 0
   incorrectCnt: 0
-  totalModuleCnt: 0
+  totalModuleCnt: 1
   isGameStart: 0
   isGameOver: 0
   isClear: 0
