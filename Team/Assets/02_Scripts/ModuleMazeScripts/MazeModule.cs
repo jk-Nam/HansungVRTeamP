@@ -110,7 +110,9 @@ public class MazeModule : BombModule
             downButton.gameObject.SetActive(false);
             leftButton.gameObject.SetActive(false);
             rightButton.gameObject.SetActive(false);
+            player.gameObject.SetActive(false);
             DefuseModule();
+            
         }
 
 
