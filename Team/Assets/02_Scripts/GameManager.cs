@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameManager : MonoBehaviour
 {
     public enum Difficulty
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject bomb;
+    public GameObject gameOverPanle;
     public Transform bombPos;
 
 
@@ -23,10 +25,12 @@ public class GameManager : MonoBehaviour
     public int incorrectCnt = 0;
     public int totalModuleCnt;
 
+
     public bool isGameStart = false;
     public bool isGameOver = false;
     public bool isClear = false;
 
+    private NetworkManager networkManager;
 
     private void Awake()
     {
@@ -41,6 +45,9 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
         SelectDifficulty();
+        // NetworkManager 인스턴스 참조
+        networkManager = NetworkManager.Instance;
+
     }
 
     private void Update()
@@ -63,7 +70,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+
         isGameOver = false;
         isGameStart = false;
     }
@@ -95,7 +102,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         isGameStart = false;
-        ShowResultUI();
+        networkManager.GameOverRPC();
     }
 
     public void GameClear()
@@ -106,7 +113,10 @@ public class GameManager : MonoBehaviour
 
     public void ShowResultUI()
     {
-        //게임 결과창 On
+        if (gameOverPanle != null)
+        {
+            gameOverPanle.SetActive(true);
+        }
     }
 
     public void CreateBomb()

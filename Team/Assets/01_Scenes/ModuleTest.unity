@@ -1486,7 +1486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &973902260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1720,12 +1720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5382b417f329014db572630a91cebc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cut1: {fileID: 1478559532}
-  cut2: {fileID: 884441158}
-  cut3: {fileID: 640891707}
-  cut4: {fileID: 1491525272}
-  cut5: {fileID: 600315220}
-  raycasters: []
+  cutButtons: []
 --- !u!4 &1153721998
 Transform:
   m_ObjectHideFlags: 0
@@ -2972,6 +2967,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficulty: 1
   bomb: {fileID: 8314425121067101438, guid: 7592795d3facbef4aa1072449bb1c300, type: 3}
+  gameOverPanle: {fileID: 0}
   bombPos: {fileID: 1605526383}
   timer: 300
   defuesedCnt: 0

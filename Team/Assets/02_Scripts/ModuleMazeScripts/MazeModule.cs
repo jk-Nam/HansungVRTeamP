@@ -121,6 +121,11 @@ public class MazeModule : BombModule
             GameManager.Instance.incorrectCnt++;
             if (GameManager.Instance.incorrectCnt >= 3)
             {
+                upButton.gameObject.SetActive(false);
+                downButton.gameObject.SetActive(false);
+                leftButton.gameObject.SetActive(false);
+                rightButton.gameObject.SetActive(false);
+                player.gameObject.SetActive(false);
                 bomb.Fail();
                 Debug.Log("Game Over!!!");
             }

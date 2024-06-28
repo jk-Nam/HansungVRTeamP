@@ -67,7 +67,7 @@ public class SceneManagerReal : MonoBehaviour
 
     public void LoadMainScene()
     {
-        SceneManager.LoadScene("OptionUITest");
+        SceneManager.LoadScene("ModuleMaze");
     }
 
    
