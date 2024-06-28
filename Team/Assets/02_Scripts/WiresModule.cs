@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using DG.Tweening.CustomPlugins;
+using UnityEngine.EventSystems;
 
 public class WiresModule : BombModule
 {
@@ -39,8 +42,28 @@ public class WiresModule : BombModule
 
     private void Start()
     {
+        DOTween.Init();
         InitiallizeModule();
         DefuseModule();
+
+        //버튼 하이라이트
+        for (int i = 0; i < cut.cutButtons.Count; i++)
+        {
+            int idx = i;
+            EventTrigger trigger = cut.cutButtons[i].gameObject.AddComponent<EventTrigger>();
+            
+            // PointerEnter 이벤트 설정
+            EventTrigger.Entry entryEnter = new EventTrigger.Entry();
+            entryEnter.eventID = EventTriggerType.PointerEnter;
+            entryEnter.callback.AddListener((data) => { OnButtonHighlighted(idx); });
+            trigger.triggers.Add(entryEnter);
+            
+            // PointerExit 이벤트 설정
+            EventTrigger.Entry entryExit = new EventTrigger.Entry();
+            entryExit.eventID = EventTriggerType.PointerExit;
+            entryExit.callback.AddListener((data) => { OnButtonNormal(idx); });
+            trigger.triggers.Add(entryExit);
+        }
     }
 
     //모듈 초기화
@@ -368,6 +391,16 @@ public class WiresModule : BombModule
         SetButtonsActive();
         //cut.OnClickSetUp();
         return rColors;
+    }
+
+    void OnButtonHighlighted(int idx)
+    {
+        wirePos[idx].DOScale(new Vector3(1.0f, 1.5f, 1.5f), 0.5f);
+    }
+
+    void OnButtonNormal(int idx)
+    {
+        wirePos[idx].DOScale(Vector3.one, 0.5f);
     }
 
     public void CutWire(int idx)
