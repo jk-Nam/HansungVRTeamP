@@ -8,6 +8,7 @@ using UnityEditor.XR;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    
 
     private static NetworkManager instance;
     public static NetworkManager Instance { get { return instance; } }
@@ -226,13 +227,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     //    }
     //}
 
-    [PunRPC] 
-   public void GameOverRPC()
+    [PunRPC]
+    public void GameOverRPC()
     {
         // GameManager 스크립트의 GameOver 호출
         GameManager gameManager = FindObjectOfType<GameManager>();
         if (gameManager != null)
-        { 
+        {
             gameManager.ShowResultUI();
         }
         else
@@ -240,6 +241,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             Debug.LogError("GameManager 스크립트를 찾을 수 없습니다.");
         }
 
+    }
+    public void TriggerGameOver()
+    {
+        // PhotonView를 통해 GameOverRPC를 호출
+        photonView.RPC("GameOverRPC", RpcTarget.All);
     }
     #endregion
 }
