@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/01_Scenes/Photon01.unity
     guid: fc383fd8b03f79243938a8834dece399
-  - enabled: 1
+  - enabled: 0
     path: Assets/01_Scenes/OptionUITest.unity
     guid: ce9f289317a502f48a07c8e065a363dd
   m_configObjects:

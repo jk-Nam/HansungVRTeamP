@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using UnityEditor.XR;
+using System.Linq;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -137,6 +138,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         RoomRenewal();
         ChatInput.text = "";
         for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ServerManager.Instance.player1ID = PhotonNetwork.LocalPlayer.UserId;
+            Debug.Log("player1 ID : " +  ServerManager.Instance.player1ID);
+        }
+        else
+        {
+            ServerManager.Instance.player2ID = PhotonNetwork.LocalPlayer.UserId;
+            Debug.Log("Plyer2 ID : " + ServerManager.Instance.player2ID);
+        }
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }
@@ -148,6 +160,22 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         RoomRenewal();
         //  ChatRPC("<color=yellow>" + newPlayer.NickName + "님이 참가하셨습니다</color>");
         UpdateStartButton();
+
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            ServerManager.Instance.player2ID = newPlayer.UserId;
+            Debug.Log("player2ID : " + ServerManager.Instance.player2ID);
+        }
+    }
+
+    void UpdateRoomInfo()
+    {
+        ListText.text = "";
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            ListText.text += player.NickName + ((player == PhotonNetwork.PlayerList.Last()) ? "" : ", ");
+        }
+        RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "명 / " + PhotonNetwork.CurrentRoom.MaxPlayers + "최대";
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

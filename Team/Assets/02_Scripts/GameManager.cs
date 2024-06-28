@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,7 +55,7 @@ public class GameManager : MonoBehaviour
             timer -= dwTime;
             if (timer <= 0)
             {
-                isGameOver = true;
+                GameOver();
                 Debug.Log("폭탄이 폭발하였습니다!!!");
                 return;
             }
@@ -86,6 +88,18 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 1)
+        {
+            // 두 명의 플레이어가 있는지 확인
+            Player[] players = PhotonNetwork.PlayerList;
+            string player1ID = players[0].UserId;
+            //string player2ID = players[1].UserId;
+        }
+        else
+        {
+            Debug.LogError("방에 두 명의 플레이어가 없습니다.");
+        }
+        StartCoroutine(ServerManager.Instance.Result());
         isGameOver = false;
         isGameStart = true;
     }
@@ -94,6 +108,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         isGameStart = false;
+        StartCoroutine(ServerManager.Instance.UpdateData());
         ShowResultUI();
     }
 
@@ -101,6 +116,7 @@ public class GameManager : MonoBehaviour
     {
         isGameStart = false;
         isClear = true;
+        StartCoroutine(ServerManager.Instance.UpdateData());
     }
 
     public void ShowResultUI()
