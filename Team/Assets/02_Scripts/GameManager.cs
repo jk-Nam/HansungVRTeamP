@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(this.gameObject);
+        SelectDifficulty();
     }
 
     private void Update()
@@ -62,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        SelectDifficulty();
+        
         isGameOver = false;
         isGameStart = false;
     }

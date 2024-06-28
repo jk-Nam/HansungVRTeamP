@@ -2,6 +2,10 @@ using ExitGames.Client.Photon.StructWrapping;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
+using DG.Tweening.CustomPlugins;
+using UnityEngine.EventSystems;
 
 public class WiresModule : BombModule
 {
@@ -28,6 +32,8 @@ public class WiresModule : BombModule
     public List<GameObject> wires = new List<GameObject>();
     public List<GameObject> brokenWires = new List<GameObject>();
 
+    public Image correctLight;
+
     private void Awake()
     {
         bomb = GameObject.FindGameObjectWithTag("BOMB").GetComponent<Bomb>();
@@ -36,8 +42,28 @@ public class WiresModule : BombModule
 
     private void Start()
     {
+        DOTween.Init();
         InitiallizeModule();
         DefuseModule();
+
+        //버튼 하이라이트
+        for (int i = 0; i < cut.cutButtons.Count; i++)
+        {
+            int idx = i;
+            EventTrigger trigger = cut.cutButtons[i].gameObject.AddComponent<EventTrigger>();
+            
+            // PointerEnter 이벤트 설정
+            EventTrigger.Entry entryEnter = new EventTrigger.Entry();
+            entryEnter.eventID = EventTriggerType.PointerEnter;
+            entryEnter.callback.AddListener((data) => { OnButtonHighlighted(idx); });
+            trigger.triggers.Add(entryEnter);
+            
+            // PointerExit 이벤트 설정
+            EventTrigger.Entry entryExit = new EventTrigger.Entry();
+            entryExit.eventID = EventTriggerType.PointerExit;
+            entryExit.callback.AddListener((data) => { OnButtonNormal(idx); });
+            trigger.triggers.Add(entryExit);
+        }
     }
 
     //모듈 초기화
@@ -47,6 +73,23 @@ public class WiresModule : BombModule
         GameManager.Instance.incorrectCnt = 0;
         wireCnt = Random.Range(3, 6);
         Debug.Log("Wire의 수는 " + wireCnt + "개 입니다.");
+        correctLight.color = Color.red;
+    }
+
+    private void SetButtonsActive()
+    {
+        for (int i = 0; i < wires.Count; i++)
+        {
+            cut.cutButtons[i].gameObject.SetActive(true);
+        }
+    }
+
+    private void DisableAllButtons()
+    {
+        for (int i = 0; i < cut.cutButtons.Count; i++)
+        {
+            cut.cutButtons[i].interactable = false;
+        }
     }
 
     public override void DefuseModule()
@@ -189,7 +232,7 @@ public class WiresModule : BombModule
             { "White", mats[3] },
             { "Yellow", mats[4] }
         };
-
+        #region addressable
         // 색깔과 Addressable 매테리얼 키 매칭
         //    Dictionary<string, string> colorToMaterialAddress = new Dictionary<string, string>
         //{
@@ -199,6 +242,7 @@ public class WiresModule : BombModule
         //    { "White",  "Assets/08_Materials/White.mat" },
         //    { "Yellow", "Assets/08_Materials/Yellow.mat" }
         //};
+        #endregion
 
         // wirePos의 길이가 count보다 작은 경우 예외 처리
         if (wirePos.Length < count)
@@ -258,7 +302,7 @@ public class WiresModule : BombModule
                 }
             }
 
-
+            #region Addressable
             //handle.Completed += (AsyncOperationHandle<GameObject> completeHandle) =>
             //{
             //    GameObject go_Wire = completeHandle.Result;
@@ -341,10 +385,22 @@ public class WiresModule : BombModule
             //                }
             //            };
             //        };
-
+            #endregion
         }
-        cut.OnClickSetUp();
+
+        SetButtonsActive();
+        //cut.OnClickSetUp();
         return rColors;
+    }
+
+    void OnButtonHighlighted(int idx)
+    {
+        wirePos[idx].DOScale(new Vector3(1.0f, 1.5f, 1.5f), 0.5f);
+    }
+
+    void OnButtonNormal(int idx)
+    {
+        wirePos[idx].DOScale(Vector3.one, 0.5f);
     }
 
     public void CutWire(int idx)
@@ -353,12 +409,13 @@ public class WiresModule : BombModule
         {
             Debug.Log(idx + "번 클릭");
             //프리팹 변경
-            wires[idx-1].SetActive(false);
-            brokenWires[idx-1].SetActive(true);
+            wires[idx - 1].SetActive(false);
+            brokenWires[idx - 1].SetActive(true);
 
             if (idx == correctWireNum)
             {
                 isDefused = true;
+                correctLight.color = Color.green;
                 GameManager.Instance.defuesedCnt++;
                 Debug.Log("와이어 모듈 해제 성공");
                 if (GameManager.Instance.defuesedCnt == GameManager.Instance.totalModuleCnt)
@@ -380,7 +437,7 @@ public class WiresModule : BombModule
         else
         {
             Debug.Log("클릭 처리 안되는 중");
-           
+
         }
     }
 }

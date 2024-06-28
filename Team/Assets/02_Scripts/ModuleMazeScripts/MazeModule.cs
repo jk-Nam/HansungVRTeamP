@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MazeModule : BombModule
 {
@@ -9,6 +10,8 @@ public class MazeModule : BombModule
     public GameObject Goal;
 
     public float moveAmount = 0.1f; // 이동량
+
+    public GameObject mainLight;
 
     // UI 버튼을 연결할 변수
     public UnityEngine.UI.Button upButton;
@@ -134,6 +137,8 @@ public class MazeModule : BombModule
             leftButton.gameObject.SetActive(false);
             rightButton.gameObject.SetActive(false);
             player.gameObject.SetActive(false);
+            mainLight.GetComponent<Image>().color = Color.green;
+
             DefuseModule();
             
         }

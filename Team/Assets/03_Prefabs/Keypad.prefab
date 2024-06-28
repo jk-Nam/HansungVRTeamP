@@ -498,6 +498,7 @@ MonoBehaviour:
   delayTime: 2
   incorrectMax: 3
   isKeypadFail: 0
+  isKeyReady: 0
 --- !u!1 &1003752204659271116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,6 +1349,7 @@ MonoBehaviour:
   delayTime: 1
   incorrectMax: 3
   isKeypadFail: 0
+  isKeyReady: 0
 --- !u!1 &6078779859363070732
 GameObject:
   m_ObjectHideFlags: 0

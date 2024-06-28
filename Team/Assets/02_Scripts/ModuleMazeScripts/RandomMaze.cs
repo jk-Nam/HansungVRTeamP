@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class RandomMaze : MonoBehaviour
 {
+
+    public GameObject mainLight;
+
     void Start()
     {
         ActivateRandomChild();
