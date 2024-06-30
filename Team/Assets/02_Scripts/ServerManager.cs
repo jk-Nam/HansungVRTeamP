@@ -58,6 +58,8 @@ public class ServerManager : MonoBehaviour
 
     private void Start()
     {
+        //PlayerPrefs.DeleteAll();
+        Debug.Log(PlayerPrefs.GetString("PlayerID"));
         //ObjectID 중복 확인
         StartCoroutine(CheckUserId());
     }
@@ -114,7 +116,8 @@ public class ServerManager : MonoBehaviour
         else
         {
             var jsonData = JSON.Parse(www.downloadHandler.text);
-            player1ID = jsonData["userId"];
+            Debug.Log(jsonData);
+            player1ID = jsonData["_id"];
             Debug.Log("고유 아이디 생성 완료: " + player1ID);
 
             // Save PlayerID to PlayerPrefs
@@ -186,7 +189,6 @@ public class ServerManager : MonoBehaviour
         {
             var jsonData = JSON.Parse(www.downloadHandler.text);
             Debug.Log("유저 정보: " + jsonData.ToString());
-            // Handle user info as needed
         }
     }
 

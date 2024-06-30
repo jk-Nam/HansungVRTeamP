@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
             // 두 명의 플레이어가 있는지 확인
             Player[] players = PhotonNetwork.PlayerList;
             string player1ID = players[0].UserId;
-            //string player2ID = players[1].UserId;
+            string player2ID = players[1].UserId;
         }
         else
         {
