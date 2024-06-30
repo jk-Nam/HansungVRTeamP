@@ -9,6 +9,7 @@ public class BombTest : MonoBehaviour
     void Start()
     {
         CreateAllObjects();
+        Debug.Log("여기!!!!!!!!!!!카운트"+GameManager.Instance.totalModuleCnt);
         
     }
 
@@ -22,7 +23,7 @@ public class BombTest : MonoBehaviour
 
         List<int> usedPositions = new List<int>();
 
-        for (int i = 0; i < objectPrefabs.Length; i++)
+        for (int i = 0; i < GameManager.Instance.totalModuleCnt; i++)
         {
             // 랜덤한 faceIndex를 선택
             int faceIndex;

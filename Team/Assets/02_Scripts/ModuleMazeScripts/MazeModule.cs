@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MazeModule : BombModule
 {
@@ -9,6 +10,8 @@ public class MazeModule : BombModule
     public GameObject Goal;
 
     public float moveAmount = 0.1f; // 이동량
+
+    public GameObject mainLight;
 
     // UI 버튼을 연결할 변수
     public UnityEngine.UI.Button upButton;
@@ -111,11 +114,18 @@ public class MazeModule : BombModule
         {
             // 플레이어의 위치를 초기 위치로 리셋
             Debug.Log("실패");
+            SoundMgr.instance.PlaySFX(26);
             player.transform.localPosition = initialPosition;
+            
             //Fail();
             GameManager.Instance.incorrectCnt++;
             if (GameManager.Instance.incorrectCnt >= 3)
             {
+                upButton.gameObject.SetActive(false);
+                downButton.gameObject.SetActive(false);
+                leftButton.gameObject.SetActive(false);
+                rightButton.gameObject.SetActive(false);
+                player.gameObject.SetActive(false);
                 bomb.Fail();
                 Debug.Log("Game Over!!!");
             }
@@ -126,11 +136,14 @@ public class MazeModule : BombModule
         else if (other.gameObject.CompareTag("MazeGoal"))
         {
             Debug.Log("클리어!");
+            SoundMgr.instance.PlaySFX(14);
             upButton.gameObject.SetActive(false);
             downButton.gameObject.SetActive(false);
             leftButton.gameObject.SetActive(false);
             rightButton.gameObject.SetActive(false);
             player.gameObject.SetActive(false);
+            mainLight.GetComponent<Image>().color = Color.green;
+
             DefuseModule();
             
         }

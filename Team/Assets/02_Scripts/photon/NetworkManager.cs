@@ -8,6 +8,24 @@ using UnityEditor.XR;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    
+
+    private static NetworkManager instance;
+    public static NetworkManager Instance { get { return instance; } }
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+
+
     [Header("DisconnectPanel")]
     public InputField NickNameInput;
 
@@ -26,7 +44,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public Text ListText;
     public Text RoomInfoText;
     public Text[] ChatText;
-    public InputField ChatInput;
+    //public InputField ChatInput;
 
     [Header("ETC")]
     public Text StatusText;
@@ -135,7 +153,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         RoomPanel.SetActive(true);
         RoomRenewal();
-        ChatInput.text = "";
+       // ChatInput.text = "";
         for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
     }
 
@@ -165,7 +183,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + "명 / " + PhotonNetwork.CurrentRoom.MaxPlayers + "최대";
     }
 
-    //플레이어가 2명 이상 일때 스타트 버튼이 활성화
+    //플레이어가 2명 이상 일때 스타트 버튼이 활성화 <- 아마 업데이트에 넣어야 함 없애야겠다
     private void UpdateStartButton()
     {
         // 현재 룸에 있는 플레이어 수를 확인
@@ -209,19 +227,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     //    }
     //}
 
-    [PunRPC] 
-    void GameOverRPC()
+    [PunRPC]
+    public void GameOverRPC()
     {
         // GameManager 스크립트의 GameOver 호출
         GameManager gameManager = FindObjectOfType<GameManager>();
         if (gameManager != null)
         {
-            gameManager.GameOver();
+            gameManager.ShowResultUI();
         }
         else
         {
             Debug.LogError("GameManager 스크립트를 찾을 수 없습니다.");
         }
+
+    }
+    public void TriggerGameOver()
+    {
+        // PhotonView를 통해 GameOverRPC를 호출
+        photonView.RPC("GameOverRPC", RpcTarget.All);
     }
     #endregion
 }
