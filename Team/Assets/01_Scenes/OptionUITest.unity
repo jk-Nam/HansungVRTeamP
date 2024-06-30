@@ -4239,6 +4239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficulty: 0
   bomb: {fileID: 8314425121067101438, guid: 7592795d3facbef4aa1072449bb1c300, type: 3}
+  gameOverPanle: {fileID: 0}
   bombPos: {fileID: 0}
   timer: 300
   defuesedCnt: 0
@@ -4274,7 +4275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a830c7c52b4bf45a5a6c34972299cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverPanel: {fileID: 2119494466}
 --- !u!1 &567115807
 GameObject:
   m_ObjectHideFlags: 0
