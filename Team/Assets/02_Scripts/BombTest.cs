@@ -6,13 +6,18 @@ public class BombTest : MonoBehaviour
     public GameObject[] objectPrefabs; // 여러 프리팹을 저장할 배열
     public Transform[] positions; // 각 면에 배치할 위치들
 
+    public Animator animator;
+
     void Start()
     {
         CreateAllObjects();
         Debug.Log("여기!!!!!!!!!!!카운트"+GameManager.Instance.totalModuleCnt);
         
     }
-
+    public void OnBombBtnClick()
+    {
+        animator.SetBool("press", true);
+    }
     void CreateAllObjects()
     {
         if (objectPrefabs.Length == 0 || positions.Length == 0)
