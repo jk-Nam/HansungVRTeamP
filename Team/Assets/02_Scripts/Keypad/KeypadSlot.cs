@@ -51,7 +51,7 @@ public class KeypadSlot : MonoBehaviour
         //게임오버가 감지되거나 오답 최대치가 되면 멈춤
         if (gameManager.incorrectCnt >= incorrectMax)
         {
-            if(!gameManager.isGameOver)GameStop();
+            if(gameManager.isGameOver == false)GameStop();
         }
     }
 

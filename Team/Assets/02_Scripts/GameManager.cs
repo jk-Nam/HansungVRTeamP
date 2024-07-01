@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public enum Difficulty
     {
-        Easy,
-        Hard
+        Easy = 1,
+        Hard = 2
     }
 
     public Difficulty difficulty;
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(this.gameObject);
-        SelectDifficulty();
+        //SelectDifficulty();
         // NetworkManager 인스턴스 참조
         networkManager = NetworkManager.Instance;
 
@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
     }
 
     //난이도 설정 기본은 쉬움
-    public void SelectDifficulty()
+    public void SelectDifficulty(int i)
     {
         switch (difficulty)
         {
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         isGameStart = false;
-       networkManager.TriggerGameOver();
+        networkManager.TriggerGameOver();
     }
 
     public void GameClear()
