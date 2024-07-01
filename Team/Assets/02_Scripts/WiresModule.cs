@@ -232,7 +232,7 @@ public class WiresModule : BombModule
             { "White", mats[3] },
             { "Yellow", mats[4] }
         };
-        #region addressable
+        #region Addressable
         // 색깔과 Addressable 매테리얼 키 매칭
         //    Dictionary<string, string> colorToMaterialAddress = new Dictionary<string, string>
         //{

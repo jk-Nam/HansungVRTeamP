@@ -11,6 +11,7 @@ public class Bomb : MonoBehaviour
     public List<Transform> modulesTr;
 
 
+
     void Start()
     {
         if (modules.Count < GameManager.Instance.totalModuleCnt)

@@ -136,11 +136,9 @@ public class ServerManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        form.AddField("player1", player1ID);
-        form.AddField("player2", player2ID);
         form.AddField("timer", GameManager.Instance.timer.ToString());
         form.AddField("isclear", GameManager.Instance.isClear.ToString());
-        form.AddField("difficulty", Convert.ToInt32(GameManager.Instance.difficulty));
+        form.AddField("difficulty", Convert.ToInt32(GameManager.Instance.difficulty));        
 
         UnityWebRequest www = UnityWebRequest.Post(newResultURL, form);
         yield return www.SendWebRequest();
@@ -152,12 +150,13 @@ public class ServerManager : MonoBehaviour
         else
         {
             Debug.Log(www.downloadHandler.text);
+
             Debug.Log("게임 결과 저장 완료");
-            //var jsonData = SimpleJSON.JSON.Parse(www.downloadHandler.text);
-            //if (www.downloadHandler.text != "")
-            //{
-            //    resultID = jsonData["_id"];                
-            //}
+            var jsonData = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+            if (www.downloadHandler.text != "")
+            {
+                resultID = jsonData["_id"];
+            }
 
 
             //UnityWebRequest www2 = UnityWebRequest.Post(userInfoURL, form);
@@ -256,8 +255,6 @@ public class ServerManager : MonoBehaviour
             rankingCnt = rankingJson.Count;
             //for (int i = 0; i < rankingCnt; i++)
             //{
-            //    Debug.Log(rankingJson[i]["player1"]);
-            //    Debug.Log(rankingJson[i]["player2"]);
             //    Debug.Log(rankingJson[i]["timer"]);
             //    Debug.Log(rankingJson[i]["difficulty"]);
             //}

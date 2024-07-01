@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public enum Difficulty
     {
-        Easy,
-        Hard
+        Easy = 1,
+        Hard = 2
     }
 
     public Difficulty difficulty;
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject bomb;
     public Transform bombPos;
 
+    public GameObject pressDecal;
 
     public float timer = 300.0f;
     public int defuesedCnt = 0;
@@ -64,13 +65,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        SelectDifficulty();
+        //SelectDifficulty();
         isGameOver = false;
         isGameStart = false;
     }
 
     //난이도 설정 기본은 쉬움
-    public void SelectDifficulty()
+    public void SelectDifficulty(int i)
     {
         switch (difficulty)
         {
@@ -88,17 +89,8 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= 1)
-        {
-            // 두 명의 플레이어가 있는지 확인
-            Player[] players = PhotonNetwork.PlayerList;
-            string player1ID = players[0].UserId;
-            string player2ID = players[1].UserId;
-        }
-        else
-        {
-            Debug.LogError("방에 두 명의 플레이어가 없습니다.");
-        }
+        pressDecal = GameObject.FindGameObjectWithTag("Decal");
+        pressDecal.SetActive(true);
         StartCoroutine(ServerManager.Instance.Result());
         isGameOver = false;
         isGameStart = true;
@@ -116,6 +108,7 @@ public class GameManager : MonoBehaviour
     {
         isGameStart = false;
         isClear = true;
+        pressDecal.SetActive(false);
         StartCoroutine(ServerManager.Instance.UpdateData());
     }
 

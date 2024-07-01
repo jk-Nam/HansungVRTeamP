@@ -139,15 +139,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         ChatInput.text = "";
         for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
 
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("playerId", out object playerIdObj))
         {
-            ServerManager.Instance.player1ID = PhotonNetwork.LocalPlayer.UserId;
-            Debug.Log("player1 ID : " +  ServerManager.Instance.player1ID);
-        }
-        else
-        {
-            ServerManager.Instance.player2ID = PhotonNetwork.LocalPlayer.UserId;
-            Debug.Log("Plyer2 ID : " + ServerManager.Instance.player2ID);
+            string playerId = playerIdObj as string;
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                ServerManager.Instance.player1ID = playerId;
+                Debug.Log("player1 ID : " + ServerManager.Instance.player1ID);
+            }
+            else
+            {
+                ServerManager.Instance.player2ID = playerId;
+                Debug.Log("player2 ID : " + ServerManager.Instance.player2ID);
+            }
         }
     }
 
