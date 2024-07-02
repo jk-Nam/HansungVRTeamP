@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         isGameStart = false;
-        networkManager.TriggerGameOver();
+        NetworkManager.Instance.TriggerGameOver();
     }
 
     public void GameClear()

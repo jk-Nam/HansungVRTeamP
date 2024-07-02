@@ -262,13 +262,14 @@ public class KeypadSlot : MonoBehaviour
         if (gameManager.isGameStart)
         {
             gameManager.GameOver(); //게임 매니저 게임오버
-        }
 
-        if (isKeypadFail)
-        {
-            Debug.Log("폭파 원인 : 키패드");
-            //관련문구 추가반영
+            if (isKeypadFail)
+            {
+                Debug.Log("폭파 원인 : 키패드");
+                //isKeypadFail 는 키패드 실패 체크용!!
+            }
         }
+        
     }
 
 }

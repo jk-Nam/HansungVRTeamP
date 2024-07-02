@@ -61,8 +61,10 @@ public class SceneMgr : MonoBehaviour
 
         GameObject bombGrab = bombOBJ.transform.Find("ISDK_HandGrabInteraction").gameObject;
         bombGrab.SetActive(false);
+        bombOBJ.transform.position = backPositions[4].position;
+        bombOBJ.transform.rotation = backPositions[4].rotation;
         yield return new WaitForSecondsRealtime(1.0f);
-        
+
         SceneSwitch(4);
     }
 
@@ -255,6 +257,7 @@ public class SceneMgr : MonoBehaviour
     void GameRetry()
     {
         menus[0].transform.position = menuPositions[2].position;
+        menus[0].transform.rotation = menuPositions[2].rotation;
 
         menus[1].transform.position = menuPositions[1].position;
         menus[1].transform.rotation = menuPositions[1].rotation;
