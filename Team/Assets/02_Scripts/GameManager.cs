@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviour
     //난이도 설정 기본은 쉬움
     public void SelectDifficulty(int i)
     {
+
         switch (difficulty)
         {
             case Difficulty.Easy:
